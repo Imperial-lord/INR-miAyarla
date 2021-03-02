@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "143227575825",
+    "project_id": "healthbag-21752",
+    "storage_bucket": "healthbag-21752.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143227575825:android:894c58dfe340af5be35bb0",
+        "android_client_info": {
+          "package_name": "com.example.health_bag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143227575825-o73g5t5m1qbl727ir0sju08rijo3b3og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.health_bag",
+            "certificate_hash": "6a018fb6a7c9a0ed4ec4b1038d11d567987ad653"
+          }
+        },
+        {
+          "client_id": "143227575825-qhrlq9o7co7depfspcbahelpi3l1m79u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9yatckU0J9CluU_0Tg1QQtaLBEJiu2Rk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143227575825-qhrlq9o7co7depfspcbahelpi3l1m79u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
