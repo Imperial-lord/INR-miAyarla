@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 
+import 'auth/signin.dart';
+
 class Welcome extends StatefulWidget{
+  static String id='welcome';
   @override
   _WelcomeState createState() => _WelcomeState();
 }
@@ -54,7 +58,9 @@ class _WelcomeState extends State<Welcome>{
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.pushNamed(context, SignIn.id);
+        },
         elevation: 0,
         child: Icon(EvaIcons.arrowCircleRight, size: 40,),
         backgroundColor: MyColors.red,
