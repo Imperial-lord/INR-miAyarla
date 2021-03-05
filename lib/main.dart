@@ -6,6 +6,12 @@ import 'package:health_bag/pages/common/splash.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:health_bag/pages/patients/patientHome.dart';
+import 'package:health_bag/pages/patients/patientManagement.dart';
+import 'package:health_bag/pages/patients/patientNotifications.dart';
+import 'package:health_bag/pages/patients/patientProfile.dart';
+import 'package:health_bag/pages/patients/patientReg.dart';
+import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
 import 'package:provider/provider.dart';
 import 'package:country_code_picker/country_localizations.dart';
@@ -60,6 +66,11 @@ class _MyAppState extends State<MyApp> {
                 Welcome.id: (context) => Welcome(),
                 SignIn.id: (context) => SignIn(),
                 HomePage.id: (context) => HomePage(),
+                PatientReg.id: (content) => PatientReg(),
+                PatientHome.id: (context) => PatientHome(),
+                PatientNotifications.id: (context) => PatientNotifications(),
+                PatientProfile.id: (context) => PatientProfile(),
+                PatientManagement.id: (context) => PatientManagement(),
               },
             ),
           );

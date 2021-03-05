@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 
 class LoaderHUD extends StatelessWidget {
