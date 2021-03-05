@@ -6,6 +6,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/welcome.dart';
+import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class _SplashState extends State<Splash> {
   void navigationPage() {
     Provider.of<LoginStore>(context, listen: false).isAlreadyAuthenticated().then((result) {
       if (result) {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const HomePage()), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => PatientManagement()), (Route<dynamic> route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => Welcome()), (Route<dynamic> route) => false);
       }

@@ -4,6 +4,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/home_page.dart';
+import 'package:health_bag/pages/patients/patientReg.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 
 List<Color> bodyColor = [MyColors.white, MyColors.white];
@@ -120,7 +121,7 @@ class _UserTypeState extends State<UserType> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, HomePage.id);
+            Navigator.pushNamed(context, PatientReg.id);
           },
           elevation: 0,
           child: Icon(

@@ -27,11 +27,15 @@ abstract class LoginStoreBase with Store {
   bool isLoginLoading = false;
   @observable
   bool isOtpLoading = false;
+  @observable
+  bool isPatientReg = true;
 
   @observable
   GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
   @observable
   GlobalKey<ScaffoldState> otpScaffoldKey = GlobalKey<ScaffoldState>();
+  @observable
+  GlobalKey<ScaffoldState> patientRegKey = GlobalKey<ScaffoldState>();
 
   @observable
   User firebaseUser;
