@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -308,10 +309,25 @@ class _PatientRegState extends State<PatientReg> {
                                                 MyColors.white)),
                                       );
                                     else {
-                                      print('Yay');
                                       // TODO: Later add data to FireStore from here!
+                                      final firestoreInstance = FirebaseFirestore.instance;
+                                      String uid = loginStore.firebaseUser.uid;
+                                      print(uid);
+                                      firestoreInstance.collection('Patients').doc(uid).set({
+                                        'Name':nameController.text,
+                                        'DOB': dobController.text,
+                                        'Age': ageController.text,
+                                        'Gender': genderController.text,
+                                        'PhoneNumber': phoneNumberController.text,
+                                        'EmailAddress':emailController.text,
+                                        'Address': addressController.text,
+                                        'Illness': illnessController.text,
+                                        'Allergies':allergyController.text,
+                                        'GeneticDiseases':geneticController.text,
+                                        'SignUpDate': signUpDateController.text,
+                                      }).then((value) => print('Successfully added new patient data'));
+                                      Navigator.pushNamed(context, PatientManagement.id);
                                     }
-                                    Navigator.pushNamed(context, PatientManagement.id);
                                   },
                                   padding: EdgeInsets.all(15),
                                   child: MyFonts()
