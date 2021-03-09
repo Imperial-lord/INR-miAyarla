@@ -9,7 +9,7 @@ import 'package:health_bag/functions/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/common/home_page.dart';
+import 'package:health_bag/pages/common/uploadPhoto.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +17,7 @@ import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/loader_hud.dart';
 
 class PatientReg extends StatefulWidget {
-  static String id = 'patient-id';
-
-  const PatientReg({Key key}) : super(key: key);
+  static String id = 'patient-reg';
 
   @override
   _PatientRegState createState() => _PatientRegState();
@@ -314,6 +312,7 @@ class _PatientRegState extends State<PatientReg> {
                                       String uid = loginStore.firebaseUser.uid;
                                       print(uid);
                                       firestoreInstance.collection('Patients').doc(uid).set({
+                                        'Photo': 'https://i.ibb.co/THPy5z3/patient.png',
                                         'Name':nameController.text,
                                         'DOB': dobController.text,
                                         'Age': ageController.text,
@@ -326,7 +325,7 @@ class _PatientRegState extends State<PatientReg> {
                                         'GeneticDiseases':geneticController.text,
                                         'SignUpDate': signUpDateController.text,
                                       }).then((value) => print('Successfully added new patient data'));
-                                      Navigator.pushNamed(context, PatientManagement.id);
+                                      Navigator.pushNamed(context, UploadPhoto.id);
                                     }
                                   },
                                   padding: EdgeInsets.all(15),

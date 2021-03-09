@@ -56,12 +56,7 @@ class _PatientHomeState extends State<PatientHome> {
                   left: 20,
                   right: 20,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MyFonts().title1('Home', MyColors.white),
-                  ],
-                ),
+                child: MyFonts().title1('Home', MyColors.white),
               ),
               Container(
                 padding: EdgeInsets.only(

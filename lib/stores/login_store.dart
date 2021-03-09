@@ -12,7 +12,6 @@ import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:mobx/mobx.dart';
-import 'package:health_bag/pages/common/home_page.dart';
 import 'package:health_bag/pages/common/auth/otpPage.dart';
 
 part 'login_store.g.dart';
@@ -29,6 +28,8 @@ abstract class LoginStoreBase with Store {
   bool isOtpLoading = false;
   @observable
   bool isPatientReg = true;
+  @observable
+  bool isPatientEditProfile = true;
 
   @observable
   GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,6 +37,8 @@ abstract class LoginStoreBase with Store {
   GlobalKey<ScaffoldState> otpScaffoldKey = GlobalKey<ScaffoldState>();
   @observable
   GlobalKey<ScaffoldState> patientRegKey = GlobalKey<ScaffoldState>();
+  @observable
+  GlobalKey<ScaffoldState> patientEditProfileKey = GlobalKey<ScaffoldState>();
 
   @observable
   User firebaseUser;

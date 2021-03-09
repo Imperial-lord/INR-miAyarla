@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
+import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
-import 'package:health_bag/pages/common/home_page.dart';
 import 'package:health_bag/pages/common/splash.dart';
+import 'package:health_bag/pages/common/uploadPhoto.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:health_bag/pages/patients/patientEditProfile.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
@@ -65,12 +67,14 @@ class _MyAppState extends State<MyApp> {
                 UserType.id: (context) => UserType(),
                 Welcome.id: (context) => Welcome(),
                 SignIn.id: (context) => SignIn(),
-                HomePage.id: (context) => HomePage(),
+                AboutApp.id: (context) => AboutApp(),
+                PatientEditProfile.id: (context) => PatientEditProfile(null),
                 PatientReg.id: (content) => PatientReg(),
                 PatientHome.id: (context) => PatientHome(),
                 PatientNotifications.id: (context) => PatientNotifications(),
                 PatientProfile.id: (context) => PatientProfile(),
                 PatientManagement.id: (context) => PatientManagement(),
+                UploadPhoto.id: (context) => UploadPhoto(),
               },
             ),
           );

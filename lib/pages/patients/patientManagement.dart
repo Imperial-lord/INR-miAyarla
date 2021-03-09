@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/pages/common/home_page.dart';
+import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/pages/patients/patientProfile.dart';
@@ -32,7 +32,7 @@ class _PatientManagementState extends State<PatientManagement> {
       PatientHome(),
       PatientNotifications(),
       PatientProfile(),
-      HomePage(),
+      AboutApp(),
     ];
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
         return Scaffold(
