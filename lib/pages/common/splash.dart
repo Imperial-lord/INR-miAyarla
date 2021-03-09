@@ -12,7 +12,6 @@ import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/signin.dart';
-import 'home_page.dart';
 
 class Splash extends StatefulWidget {
   static String id='splash';

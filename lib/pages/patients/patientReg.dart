@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:health_bag/functions/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/common/home_page.dart';
+import 'package:health_bag/pages/common/uploadPhoto.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +17,7 @@ import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/loader_hud.dart';
 
 class PatientReg extends StatefulWidget {
-  static String id = 'patient-id';
-
-  const PatientReg({Key key}) : super(key: key);
+  static String id = 'patient-reg';
 
   @override
   _PatientRegState createState() => _PatientRegState();
@@ -308,10 +307,26 @@ class _PatientRegState extends State<PatientReg> {
                                                 MyColors.white)),
                                       );
                                     else {
-                                      print('Yay');
                                       // TODO: Later add data to FireStore from here!
+                                      final firestoreInstance = FirebaseFirestore.instance;
+                                      String uid = loginStore.firebaseUser.uid;
+                                      print(uid);
+                                      firestoreInstance.collection('Patients').doc(uid).set({
+                                        'Photo': 'https://i.ibb.co/THPy5z3/patient.png',
+                                        'Name':nameController.text,
+                                        'DOB': dobController.text,
+                                        'Age': ageController.text,
+                                        'Gender': genderController.text,
+                                        'PhoneNumber': phoneNumberController.text,
+                                        'EmailAddress':emailController.text,
+                                        'Address': addressController.text,
+                                        'Illness': illnessController.text,
+                                        'Allergies':allergyController.text,
+                                        'GeneticDiseases':geneticController.text,
+                                        'SignUpDate': signUpDateController.text,
+                                      }).then((value) => print('Successfully added new patient data'));
+                                      Navigator.pushNamed(context, UploadPhoto.id);
                                     }
-                                    Navigator.pushNamed(context, PatientManagement.id);
                                   },
                                   padding: EdgeInsets.all(15),
                                   child: MyFonts()
