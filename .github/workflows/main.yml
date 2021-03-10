@@ -6,9 +6,9 @@ name: CI/CD for Flutter Android Release
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,5 +43,5 @@ jobs:
       with:
         artifacts: "build/app/outputs/apk/release/*.apk"
         token: ${{ secrets.TOKEN }}
-        commit: master
+        commit: main
         tag: v0.0.${{ github.run_number }}-alpha
