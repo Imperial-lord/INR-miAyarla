@@ -3,7 +3,11 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/splash.dart';
-import 'package:health_bag/pages/common/uploadPhoto.dart';
+import 'package:health_bag/pages/doctor/addMoreDoctors.dart';
+import 'package:health_bag/pages/doctor/doctorHome.dart';
+import 'package:health_bag/pages/doctor/doctorManagement.dart';
+import 'package:health_bag/pages/doctor/doctorProfile.dart';
+import 'package:health_bag/pages/patients/uploadPhoto.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -75,6 +79,10 @@ class _MyAppState extends State<MyApp> {
                 PatientProfile.id: (context) => PatientProfile(),
                 PatientManagement.id: (context) => PatientManagement(),
                 UploadPhoto.id: (context) => UploadPhoto(),
+                AddMoreDoctors.id: (context) => AddMoreDoctors(),
+                DoctorHome.id: (context) => DoctorHome(),
+                DoctorProfile.id: (context) => DoctorProfile(),
+                DoctorManagement.id: (context) => DoctorManagement(),
               },
             ),
           );
