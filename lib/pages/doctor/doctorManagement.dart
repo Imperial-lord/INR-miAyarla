@@ -75,7 +75,7 @@ class _DoctorManagementState extends State<DoctorManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('Add More Doctors', MyColors.blueLighter),
+                  child: MyFonts().subHeadline('Add Doctors', MyColors.blueLighter),
                 ),
                 icon: Icon(
                   EvaIcons.plusSquareOutline,

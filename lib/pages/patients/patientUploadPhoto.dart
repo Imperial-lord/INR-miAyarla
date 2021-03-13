@@ -14,14 +14,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:health_bag/stores/login_store.dart';
 
-class UploadPhoto extends StatefulWidget {
-  static String id = 'photo-upload';
+class PatientUploadPhoto extends StatefulWidget {
+  static String id = 'patient-upload-photo';
 
   @override
-  _UploadPhotoState createState() => _UploadPhotoState();
+  _PatientUploadPhotoState createState() => _PatientUploadPhotoState();
 }
 
-class _UploadPhotoState extends State<UploadPhoto> {
+class _PatientUploadPhotoState extends State<PatientUploadPhoto> {
   File avatarImageFile;
   bool isLoading = false;
 

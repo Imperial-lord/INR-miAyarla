@@ -9,7 +9,7 @@ import 'package:health_bag/functions/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/patients/uploadPhoto.dart';
+import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:health_bag/widgets/loader_hud.dart';
@@ -327,7 +327,7 @@ class _PatientRegState extends State<PatientReg> {
                                         'GeneticDiseases':geneticController.text,
                                         'SignUpDate': signUpDateController.text,
                                       }).then((value) => print('Successfully added new patient data'));
-                                      Navigator.pushNamed(context, UploadPhoto.id);
+                                      Navigator.pushNamed(context, PatientUploadPhoto.id);
                                     }
                                   },
                                   padding: EdgeInsets.all(15),

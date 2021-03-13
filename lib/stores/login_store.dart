@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -11,6 +13,8 @@ import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
+import 'package:health_bag/pages/doctor/doctorManagement.dart';
+import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:mobx/mobx.dart';
 import 'package:health_bag/pages/common/auth/otpPage.dart';
 
@@ -98,7 +102,7 @@ abstract class LoginStoreBase with Store {
           actualCode = verificationId;
           isLoginLoading = false;
           await Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) =>  const OtpPage()));
+              .push(MaterialPageRoute(builder: (_) => const OtpPage()));
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           actualCode = verificationId;
@@ -135,10 +139,26 @@ abstract class LoginStoreBase with Store {
     isOtpLoading = true;
 
     firebaseUser = result.user;
+    String uid = (firebaseUser.uid);
+    print(uid);
+    bool isDoctor = (await UserTypeValidation().isUserRegDoctor(uid));
+    bool isPatient = (await UserTypeValidation().isUserRegPatient(uid));
 
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => UserType()),
-        (Route<dynamic> route) => false);
+    if (isDoctor) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => DoctorManagement()),
+              (Route<dynamic> route) => false);
+    } else if (isPatient) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => PatientManagement()),
+              (Route<dynamic> route) => false);
+    }
+    else{
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => UserType()),
+              (Route<dynamic> route) => false);
+    }
+
 
     isLoginLoading = false;
     isOtpLoading = false;

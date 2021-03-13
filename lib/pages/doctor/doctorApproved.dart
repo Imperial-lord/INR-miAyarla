@@ -5,6 +5,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
+import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class _DoctorApprovedState extends State<DoctorApproved> {
   }
 
   void navigationPage() {
-    Navigator.pushNamed(context, DoctorManagement.id);
+    Navigator.pushNamed(context, DoctorReg.id);
   }
 
   @override
