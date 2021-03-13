@@ -34,7 +34,7 @@ class _DoctorRejectedState extends State<DoctorRejected> {
                   MyFonts().title1('Sorry, you are not in our database!',
                       MyColors.redLighter),
                   MyFonts().heading1(
-                      'For security reasons, you need to first ask a colleague to add you to the database',
+                      'For security reasons, you need to first ask a colleague to add your phone number to the database.',
                       MyColors.gray),
                   MySpaces.vLargeGapInBetween,
                   MyFonts().title1('Are you a patient?', MyColors.black),

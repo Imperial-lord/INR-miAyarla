@@ -1,22 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/functions/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
-import 'package:health_bag/globals/myColors.dart';
-import 'package:health_bag/globals/myColors.dart';
-import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/pages/common/auth/signin.dart';
+import 'package:health_bag/pages/common/auth/otpPage.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:mobx/mobx.dart';
-import 'package:health_bag/pages/common/auth/otpPage.dart';
 
 part 'login_store.g.dart';
 
