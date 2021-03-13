@@ -12,14 +12,16 @@ import 'package:health_bag/pages/doctor/doctorApproved.dart';
 import 'package:health_bag/pages/doctor/doctorHome.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorProfile.dart';
+import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/pages/doctor/doctorRejected.dart';
+import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/pages/patients/patientProfile.dart';
 import 'package:health_bag/pages/patients/patientReg.dart';
-import 'package:health_bag/pages/patients/uploadPhoto.dart';
+import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
 
@@ -78,13 +80,15 @@ class _MyAppState extends State<MyApp> {
                 PatientNotifications.id: (context) => PatientNotifications(),
                 PatientProfile.id: (context) => PatientProfile(),
                 PatientManagement.id: (context) => PatientManagement(),
-                UploadPhoto.id: (context) => UploadPhoto(),
+                PatientUploadPhoto.id: (context) => PatientUploadPhoto(),
                 DoctorApproved.id: (context) => DoctorApproved(),
                 DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),
                 DoctorHome.id: (context) => DoctorHome(),
                 DoctorProfile.id: (context) => DoctorProfile(),
                 DoctorManagement.id: (context) => DoctorManagement(),
+                DoctorReg.id: (context) => DoctorReg(),
+                DoctorUploadPhoto.id: (context) => DoctorUploadPhoto(),
               },
             ),
           );
