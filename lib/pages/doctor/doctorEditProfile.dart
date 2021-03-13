@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -11,24 +10,25 @@ import 'package:health_bag/functions/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/patients/patientManagement.dart';
+import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class PatientEditProfile extends StatefulWidget {
+// ignore: must_be_immutable
+class DoctorEditProfile extends StatefulWidget {
   static String id = 'patient-edit-profile';
   var userProfileData;
 
-  PatientEditProfile(this.userProfileData);
+  DoctorEditProfile(this.userProfileData);
 
   @override
-  _PatientEditProfileState createState() =>
-      _PatientEditProfileState(userProfileData);
+  _DoctorEditProfileState createState() =>
+      _DoctorEditProfileState(userProfileData);
 }
 
-Widget _getRowPatientEditProfile(
+Widget _getRowDoctorEditProfile(
     String heading,
     String placeholder,
     Icon icon,
@@ -78,52 +78,18 @@ String setControllerText(
   return ans;
 }
 
-DateTime selectedDate = DateTime.now();
-
-class _PatientEditProfileState extends State<PatientEditProfile> {
+class _DoctorEditProfileState extends State<DoctorEditProfile> {
   var userProfileData;
 
-  _PatientEditProfileState(this.userProfileData);
+  _DoctorEditProfileState(this.userProfileData);
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController dobController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController illnessController = TextEditingController();
-  TextEditingController allergyController = TextEditingController();
-  TextEditingController geneticController = TextEditingController();
+  TextEditingController specialisationController = TextEditingController();
+  TextEditingController hospitalController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController deptController = TextEditingController();
   TextEditingController signUpDateController = TextEditingController();
-
-  // Open a mini calendar to make the user select the date:
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (BuildContext context, Widget child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
-              primary: MyColors.blueLighter,
-            ),
-          ),
-          child: child,
-        );
-      },
-      initialDate: selectedDate,
-    );
-    if (picked != null)
-      setState(() {
-        selectedDate = picked;
-        dobController.text = picked.toString().split(' ')[0];
-        ageController.text =
-            (max((DateTime.now().difference(picked).inDays / 365).floor(), 0))
-                .toString();
-      });
-  }
 
   // Update Image in Edit Profile
   File avatarImageFile;
@@ -174,7 +140,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
     uploadTask.whenComplete(() async {
       var url = await ref.getDownloadURL();
       final firestoreInstance = FirebaseFirestore.instance;
-      firestoreInstance.collection('Patients').doc(uid).update({'Photo': url});
+      firestoreInstance.collection('Doctors').doc(uid).update({'Photo': url});
       setState(() {
         isLoading = false;
       });
@@ -187,22 +153,14 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
   Widget build(BuildContext context) {
     nameController.text =
         setControllerText(nameController, userProfileData['Name']);
-    dobController.text =
-        setControllerText(dobController, userProfileData['DOB']);
-    ageController.text =
-        setControllerText(ageController, userProfileData['Age']);
-    genderController.text =
-        setControllerText(genderController, userProfileData['Gender']);
-    emailController.text =
-        setControllerText(emailController, userProfileData['EmailAddress']);
-    addressController.text =
-        setControllerText(addressController, userProfileData['Address']);
-    illnessController.text =
-        setControllerText(illnessController, userProfileData['Illness']);
-    allergyController.text =
-        setControllerText(allergyController, userProfileData['Allergies']);
-    geneticController.text = setControllerText(
-        geneticController, userProfileData['GeneticDiseases']);
+    specialisationController.text = setControllerText(
+        specialisationController, userProfileData['Specialisation']);
+    hospitalController.text =
+        setControllerText(hospitalController, userProfileData['HospitalName']);
+    cityController.text =
+        setControllerText(cityController, userProfileData['CityName']);
+    deptController.text =
+        setControllerText(deptController, userProfileData['DepartmentName']);
     signUpDateController.text =
         setControllerText(signUpDateController, userProfileData['SignUpDate']);
 
@@ -270,7 +228,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                             ],
                           ),
                           MySpaces.vGapInBetween,
-                          _getRowPatientEditProfile(
+                          _getRowDoctorEditProfile(
                               'Your full name',
                               'Enter your name',
                               Icon(EvaIcons.personOutline),
@@ -278,62 +236,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               TextInputType.name,
                               1,
                               true),
-                          InkWell(
-                            onTap: () {
-                              _selectDate(context);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: MyFonts().heading2(
-                                      'Your date of birth', MyColors.gray),
-                                ),
-                                CupertinoTextField(
-                                  enabled: false,
-                                  expands: false,
-                                  padding: EdgeInsets.all(15),
-                                  maxLines: 1,
-                                  placeholder: 'Select a date',
-                                  decoration: BoxDecoration(
-                                      color: MyColors.backgroundColor,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10))),
-                                  prefix: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Icon(
-                                      EvaIcons.calendarOutline,
-                                    ),
-                                  ),
-                                  style: TextStyle(
-                                      fontFamily: 'poppins-semi',
-                                      fontSize: 17,
-                                      color: MyColors.black),
-                                  controller: dobController,
-                                  keyboardType: TextInputType.datetime,
-                                ),
-                              ],
-                            ),
-                          ),
-                          _getRowPatientEditProfile(
-                              'Your age',
-                              'Enter your age',
-                              Icon(EvaIcons.menu),
-                              ageController,
-                              TextInputType.number,
-                              1,
-                              false),
-                          _getRowPatientEditProfile(
-                              'Your gender',
-                              'Enter Male / Female / Other',
-                              Icon(EvaIcons.paperPlane),
-                              genderController,
-                              TextInputType.text,
-                              1,
-                              true),
-                          _getRowPatientEditProfile(
+                          _getRowDoctorEditProfile(
                               'Your phone number',
                               'Enter your phone number',
                               Icon(EvaIcons.phoneCallOutline),
@@ -341,54 +244,49 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               TextInputType.number,
                               1,
                               false),
-                          _getRowPatientEditProfile(
-                              'Your email address',
-                              'Enter your email',
-                              Icon(EvaIcons.emailOutline),
-                              emailController,
-                              TextInputType.emailAddress,
-                              1,
+                          _getRowDoctorEditProfile(
+                              'Your specialisation',
+                              'What do you specialise in?',
+                              Icon(EvaIcons.shoppingBagOutline),
+                              specialisationController,
+                              TextInputType.text,
+                              2,
                               true),
-                          _getRowPatientEditProfile(
-                              'Your residence address',
-                              'Enter your complete address',
-                              Icon(CupertinoIcons.location),
-                              addressController,
-                              TextInputType.streetAddress,
-                              3,
-                              true),
-                          _getRowPatientEditProfile(
-                              'Your ailments',
-                              'What diseases are you suffering from?',
+                          _getRowDoctorEditProfile(
+                              'Hospital Name',
+                              'Which hospital do you work in?',
                               Icon(Icons.local_hospital_outlined),
-                              illnessController,
+                              hospitalController,
                               TextInputType.text,
-                              4,
+                              2,
                               true),
-                          _getRowPatientEditProfile(
-                              'Your allergies',
-                              'Do you have any specific allergies?',
-                              Icon(CupertinoIcons.doc),
-                              allergyController,
+                          _getRowDoctorEditProfile(
+                              'Your City Name',
+                              'Enter your city name',
+                              Icon(CupertinoIcons.building_2_fill),
+                              cityController,
                               TextInputType.text,
-                              4,
-                              true),
-                          _getRowPatientEditProfile(
-                              'Your genetic disorders',
-                              'Do you have any genetic disorders?',
-                              Icon(Icons.account_tree_outlined),
-                              geneticController,
-                              TextInputType.text,
-                              4,
-                              true),
-                          _getRowPatientEditProfile(
-                              'Your sign up date',
-                              "Today's date",
-                              Icon(EvaIcons.calendarOutline),
-                              signUpDateController,
-                              TextInputType.datetime,
                               1,
-                              false),
+                              true),
+                          _getRowDoctorEditProfile(
+                              'Your Department Name',
+                              'Enter your department name',
+                              Icon(CupertinoIcons.home),
+                              deptController,
+                              TextInputType.text,
+                              1,
+                              true),
+                          Visibility(
+                            visible: true,
+                            child: _getRowDoctorEditProfile(
+                                'Your sign up date',
+                                "Today's date",
+                                Icon(EvaIcons.calendarOutline),
+                                signUpDateController,
+                                TextInputType.datetime,
+                                1,
+                                false),
+                          ),
                           MySpaces.vMediumGapInBetween,
                           Row(children: [
                             Expanded(
@@ -397,67 +295,43 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                 // List of fields that should not be empty
                                 List<TextEditingController> controllers = [
                                   nameController,
-                                  dobController,
-                                  genderController,
-                                  emailController,
-                                  addressController
+                                  specialisationController,
+                                  hospitalController,
+                                  cityController,
+                                  deptController,
                                 ];
                                 if (FormValidation()
                                     .emptyFieldsValidation(controllers)) {
-                                  final emptyFieldsSnackbar = SnackBar(
+                                  final emptyFieldSnackbar = SnackBar(
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: MyColors.black,
                                       content: MyFonts().body(
                                           'One or more fields are empty',
                                           MyColors.white));
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar(emptyFieldsSnackbar);
-                                } else if (FormValidation()
-                                    .ageValidation(ageController.text)) {
-                                  final validDOBSnackBar = SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: MyColors.black,
-                                      content: MyFonts().body(
-                                          'Please enter a valid date of birth',
-                                          MyColors.white));
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(validDOBSnackBar);
-                                } else if (FormValidation()
-                                    .emailValidation(emailController.text)) {
-                                  final validEmailSnackBar = SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: MyColors.black,
-                                      content: MyFonts().body(
-                                          'Please enter a valid email',
-                                          MyColors.white));
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(validEmailSnackBar);
+                                      .showSnackBar(emptyFieldSnackbar);
                                 } else {
-                                  // TODO: Later add data to FireStore from here!
                                   final firestoreInstance =
                                       FirebaseFirestore.instance;
                                   String uid = loginStore.firebaseUser.uid;
-
+                                  print(uid);
                                   firestoreInstance
-                                      .collection('Patients')
+                                      .collection('Doctors')
                                       .doc(uid)
                                       .update({
                                     'Name': nameController.text,
-                                    'DOB': dobController.text,
-                                    'Age': ageController.text,
-                                    'Gender': genderController.text,
                                     'PhoneNumber': phoneNumberController.text,
-                                    'EmailAddress': emailController.text,
-                                    'Address': addressController.text,
-                                    'Illness': illnessController.text,
-                                    'Allergies': allergyController.text,
-                                    'GeneticDiseases': geneticController.text,
+                                    'Specialisation':
+                                        specialisationController.text,
+                                    'HospitalName': hospitalController.text,
+                                    'CityName': cityController.text,
+                                    'DepartmentName': deptController.text,
                                     'SignUpDate': signUpDateController.text,
                                   }).then((value) => print(
-                                          'Successfully added new patient data'));
-                                  Navigator.pushNamed(
-                                      context, PatientManagement.id);
+                                          'Successfully added new doctor data'));
                                 }
+                                Navigator.pushNamed(
+                                    context, DoctorManagement.id);
                               },
                               padding: EdgeInsets.all(15),
                               child: MyFonts()
