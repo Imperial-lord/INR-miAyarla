@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
@@ -8,10 +7,7 @@ import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/stores/login_store.dart';
-import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:provider/provider.dart';
-
-import 'auth/signin.dart';
 
 class Splash extends StatefulWidget {
   static String id='splash';

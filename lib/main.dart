@@ -1,27 +1,27 @@
+import 'package:country_code_picker/country_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/splash.dart';
+import 'package:health_bag/pages/common/userType.dart';
+import 'package:health_bag/pages/common/welcome.dart';
 import 'package:health_bag/pages/doctor/addMoreDoctors.dart';
+import 'package:health_bag/pages/doctor/doctorApproved.dart';
 import 'package:health_bag/pages/doctor/doctorHome.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorProfile.dart';
-import 'package:health_bag/pages/patients/uploadPhoto.dart';
-import 'package:health_bag/pages/common/userType.dart';
-import 'package:health_bag/pages/common/welcome.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:health_bag/pages/doctor/doctorRejected.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/pages/patients/patientProfile.dart';
 import 'package:health_bag/pages/patients/patientReg.dart';
-import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
-import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
-import 'package:provider/provider.dart';
-import 'package:country_code_picker/country_localizations.dart';
+import 'package:health_bag/pages/patients/uploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +79,8 @@ class _MyAppState extends State<MyApp> {
                 PatientProfile.id: (context) => PatientProfile(),
                 PatientManagement.id: (context) => PatientManagement(),
                 UploadPhoto.id: (context) => UploadPhoto(),
+                DoctorApproved.id: (context) => DoctorApproved(),
+                DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),
                 DoctorHome.id: (context) => DoctorHome(),
                 DoctorProfile.id: (context) => DoctorProfile(),

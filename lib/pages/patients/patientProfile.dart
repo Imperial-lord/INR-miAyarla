@@ -131,7 +131,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                     builder: (context) => PatientEditProfile(userProfileData),
                                   ));
                                 },
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(15),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -146,7 +146,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                 ),
                                 color: MyColors.blueLighter,
                               ),
-                              MySpaces.vSmallestGapInBetween,
+                              MySpaces.vGapInBetween,
                               RaisedButton(
                                 onPressed: () {
                                   showDialog(
@@ -154,7 +154,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                     builder: (BuildContext context) => _logoutPopup(context, loginStore),
                                   );
                                 },
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(15),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

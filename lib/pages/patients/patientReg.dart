@@ -10,11 +10,10 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/patients/uploadPhoto.dart';
-import 'package:health_bag/pages/patients/patientManagement.dart';
-import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
-import 'package:provider/provider.dart';
 import 'package:health_bag/stores/login_store.dart';
+import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:provider/provider.dart';
 
 class PatientReg extends StatefulWidget {
   static String id = 'patient-reg';
@@ -252,14 +251,17 @@ class _PatientRegState extends State<PatientReg> {
                                   TextInputType.text,
                                   4,
                                   true),
-                              _getRowPatientReg(
-                                  'Your sign up date',
-                                  "Today's date",
-                                  Icon(EvaIcons.calendarOutline),
-                                  signUpDateController,
-                                  TextInputType.datetime,
-                                  1,
-                                  false),
+                              Visibility(
+                                visible: false,
+                                child: _getRowPatientReg(
+                                    'Your sign up date',
+                                    "Today's date",
+                                    Icon(EvaIcons.calendarOutline),
+                                    signUpDateController,
+                                    TextInputType.datetime,
+                                    1,
+                                    false),
+                              ),
                               MySpaces.vMediumGapInBetween,
                               Row(children: [
                                 Expanded(
