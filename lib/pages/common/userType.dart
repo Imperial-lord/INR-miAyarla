@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/doctor/doctorApproved.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/patients/patientReg.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
@@ -123,7 +124,7 @@ class _UserTypeState extends State<UserType> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (bodyColor[0] == MyColors.red)
-              Navigator.pushNamed(context, DoctorManagement.id);
+              Navigator.pushNamed(context, DoctorApproved.id);
             else if (bodyColor[1] == MyColors.red)
               Navigator.pushNamed(context, PatientReg.id);
             else {
