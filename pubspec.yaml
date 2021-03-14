@@ -41,6 +41,7 @@ dependencies:
   country_code_picker: ^1.7.0
   bottom_navy_bar: ^5.6.0
   image_picker:
+  fuzzy: ^0.3.0
 
 
 dev_dependencies:
