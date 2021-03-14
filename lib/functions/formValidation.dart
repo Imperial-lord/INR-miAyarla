@@ -18,4 +18,11 @@ class FormValidation {
     }
     return false;
   }
+
+  bool phoneNumberValidation(String number){
+    String pattern = r'^(?:[+0][1-9])?[0-9]{10,12}$';
+    RegExp regExp = new RegExp(pattern);
+
+    return regExp.hasMatch(number);
+  }
 }
