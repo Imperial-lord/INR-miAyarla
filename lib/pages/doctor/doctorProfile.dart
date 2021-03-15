@@ -18,12 +18,17 @@ class DoctorProfile extends StatefulWidget {
 }
 
 Widget _getRow(String key, String val) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  return Column(
     children: [
-      MyFonts().heading2(key, MyColors.blueLighter),
-      MySpaces.hLargeGapInBetween,
-      Flexible(child: MyFonts().heading2(val, MyColors.gray)),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MyFonts().heading2(key, MyColors.blueLighter),
+          MySpaces.hLargeGapInBetween,
+          Flexible(child: MyFonts().heading2(val, MyColors.gray)),
+        ],
+      ),
+      Divider(),
     ],
   );
 }

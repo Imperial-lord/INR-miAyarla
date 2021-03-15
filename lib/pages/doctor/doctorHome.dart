@@ -7,6 +7,7 @@ import 'package:health_bag/functions/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -45,7 +46,9 @@ class _DoctorHomeState extends State<DoctorHome> {
           ),
           title: MyFonts().heading1(item.split(':')[0], MyColors.black),
           subtitle: MyFonts().heading2(item.split(':')[1], MyColors.gray),
-          onTap: (){},
+          onTap: (){
+            Navigator.pushNamed(context, DoctorPatientInterface.id);
+          },
         ),
       ),
     );

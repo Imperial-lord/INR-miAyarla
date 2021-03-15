@@ -11,6 +11,7 @@ import 'package:health_bag/pages/doctor/addMoreDoctors.dart';
 import 'package:health_bag/pages/doctor/doctorApproved.dart';
 import 'package:health_bag/pages/doctor/doctorHome.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
+import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/pages/doctor/doctorProfile.dart';
 import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/pages/doctor/doctorRejected.dart';
@@ -89,6 +90,7 @@ class _MyAppState extends State<MyApp> {
                 DoctorManagement.id: (context) => DoctorManagement(),
                 DoctorReg.id: (context) => DoctorReg(),
                 DoctorUploadPhoto.id: (context) => DoctorUploadPhoto(),
+                DoctorPatientInterface.id: (context) => DoctorPatientInterface(),
               },
             ),
           );
