@@ -5,7 +5,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:health_bag/functions/formValidation.dart';
+import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -220,7 +220,7 @@ class _PatientRegState extends State<PatientReg> {
                                             setState(() {
                                               if (bodyColor[0] == MyColors.white) {
                                                 genderController.text='Male';
-                                                bodyColor[0] = MyColors.redLighter;
+                                                bodyColor[0] = MyColors.red;
                                                 contentColor[0] = MyColors.white;
                                                 // make the other button unselected!
                                                 bodyColor[1] = MyColors.white;
@@ -244,7 +244,7 @@ class _PatientRegState extends State<PatientReg> {
                                             setState(() {
                                               if (bodyColor[1] == MyColors.white) {
                                                 genderController.text='Female';
-                                                bodyColor[1] = MyColors.redLighter;
+                                                bodyColor[1] = MyColors.red;
                                                 contentColor[1] = MyColors.white;
                                                 // make the other button unselected!
                                                 bodyColor[0] = MyColors.white;

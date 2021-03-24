@@ -23,13 +23,15 @@ class _DoctorManagementState extends State<DoctorManagement> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [
-      DoctorHome(),
-      DoctorProfile(),
-      AddMoreDoctors(),
-      AboutApp(),
-    ];
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
+      List<Widget> pages = [
+        DoctorHome(
+          doctorUID: loginStore.firebaseUser.uid,
+        ),
+        DoctorProfile(),
+        AddMoreDoctors(),
+        AboutApp(),
+      ];
       return Scaffold(
         body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavyBar(

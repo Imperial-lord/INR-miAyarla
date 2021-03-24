@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,8 +16,13 @@ import 'addDoctorNotes.dart';
 class MonitorPatientHealth extends StatefulWidget {
   static String id = 'monitor-patient-health';
 
+  final String patientUID;
+
+  MonitorPatientHealth({@required this.patientUID});
+
   @override
-  _MonitorPatientHealthState createState() => _MonitorPatientHealthState();
+  _MonitorPatientHealthState createState() =>
+      _MonitorPatientHealthState(patientUID: patientUID);
 }
 
 Widget _getRow(String key, String val) {
@@ -36,6 +42,10 @@ Widget _getRow(String key, String val) {
 }
 
 class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
+  final String patientUID;
+
+  _MonitorPatientHealthState({@required this.patientUID});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
@@ -51,7 +61,19 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                   left: 20,
                   right: 20,
                 ),
-                child: MyFonts().title1("Prashant's Health 📈", MyColors.white),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('Patients')
+                        .doc(patientUID)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        String title = snapshot.data.data()['Name'].split(' ')[0];
+                        return MyFonts()
+                            .title1("$title's Health 📈", MyColors.white);
+                      } else
+                        return CircularProgressIndicator();
+                    }),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -62,9 +84,15 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      AddDoctorNotes(),
-                      AddVisitDates(),
-                      AddMedicines(),
+                      AddDoctorNotes(
+                        patientUID: patientUID,
+                      ),
+                      Divider(thickness: 4,),
+                      AddVisitDates(patientUID: patientUID,),
+                      MySpaces.vSmallGapInBetween,
+                      Divider(thickness: 4,),
+                      AddMedicines(patientUID: patientUID,),
+                      MySpaces.vSmallGapInBetween,
                     ],
                   ),
                 ),

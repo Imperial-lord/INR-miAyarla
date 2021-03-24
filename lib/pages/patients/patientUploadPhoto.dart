@@ -9,6 +9,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
+import 'package:health_bag/pages/patients/patientSelectDoctor.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -155,9 +156,10 @@ class _PatientUploadPhotoState extends State<PatientUploadPhoto> {
                                 children: [
                                   // ignore: deprecated_member_use
                                   Expanded(
+                                    // ignore: deprecated_member_use
                                     child: RaisedButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(context, PatientManagement.id);
+                                        Navigator.pushNamed(context, PatientSelectDoctor.id);
                                       },
                                       padding: EdgeInsets.all(20),
                                       child: Row(

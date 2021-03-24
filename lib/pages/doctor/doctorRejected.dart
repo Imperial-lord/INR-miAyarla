@@ -33,7 +33,7 @@ class _DoctorRejectedState extends State<DoctorRejected> {
                   MySpaces.vLargeGapInBetween,
                   MyFonts().title1('Sorry, you are not in our database!',
                       MyColors.redLighter),
-                  MyFonts().heading1(
+                  MyFonts().heading2(
                       'For security reasons, you need to first ask a colleague to add your phone number to the database.',
                       MyColors.gray),
                   MySpaces.vLargeGapInBetween,
@@ -44,7 +44,9 @@ class _DoctorRejectedState extends State<DoctorRejected> {
                       // ignore: deprecated_member_use
                       Expanded(
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                           padding: EdgeInsets.all(20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

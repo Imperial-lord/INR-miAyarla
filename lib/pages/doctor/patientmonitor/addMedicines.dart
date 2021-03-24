@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -6,18 +7,39 @@ import 'package:health_bag/globals/mySpaces.dart';
 
 class AddMedicines extends StatefulWidget {
   static String id = 'add-medicines';
+  final String patientUID;
+
+  AddMedicines({@required this.patientUID});
 
   @override
-  _AddMedicinesState createState() => _AddMedicinesState();
+  _AddMedicinesState createState() => _AddMedicinesState(patientUID: patientUID);
+}
+
+Future<DocumentSnapshot> getData(String uid) async {
+  return await FirebaseFirestore.instance
+      .collection('Medicines')
+      .doc(uid)
+      .get();
 }
 
 class _AddMedicinesState extends State<AddMedicines> {
+  final String patientUID;
+
+  _AddMedicinesState({@required this.patientUID});
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey(); // backing data
-  List<String> _dataMedicines = [
-    'Sinarest',
-    'Paracetamol'
-  ];
+  List<dynamic> _dataMedicines;
+
+  @override
+  initState() {
+    super.initState();
+    print(patientUID);
+    getData(patientUID).then((value) {
+      setState(() {
+        _dataMedicines = value.data()['Medicine'];
+      });
+    });
+  }
 
   Widget _buildItem(String item, Animation animation, int index) {
     return SizeTransition(
@@ -25,7 +47,8 @@ class _AddMedicinesState extends State<AddMedicines> {
       child: Column(
         children: [
           ListTile(
-            leading: Image(image: NetworkImage('https://i.ibb.co/fv0ztpr/medicine.png')),
+            leading: Image(
+                image: NetworkImage('https://i.ibb.co/fv0ztpr/medicine.png')),
             tileColor: MyColors.white,
             title: MyFonts().heading2(item, MyColors.blueLighter),
             trailing: IconButton(
@@ -47,6 +70,11 @@ class _AddMedicinesState extends State<AddMedicines> {
   }
 
   void _removeSingleItems(int index) {
+    String item = _dataMedicines[index];
+    FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+    firestoreInstance.collection('Medicines').doc(patientUID).update({
+      'Medicine': FieldValue.arrayRemove([item]),
+    });
     int removeIndex = index;
     String removedItem = _dataMedicines.removeAt(removeIndex);
 
@@ -96,20 +124,26 @@ class _AddMedicinesState extends State<AddMedicines> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    if(doctorNoteController.text=='')
-                    {
+                    if (doctorNoteController.text == '') {
                       Navigator.pop(context);
                       final emptyNoteSnackBar = SnackBar(
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: MyColors.black,
                           content: MyFonts().body(
-                              "Please enter a medicine name",
-                              MyColors.white));
+                              "Please enter a medicine name", MyColors.white));
                       ScaffoldMessenger.of(context)
                           .showSnackBar(emptyNoteSnackBar);
-                    }
-                    else {
+                    } else {
                       _insertSingleItem(doctorNoteController.text);
+                      FirebaseFirestore firestoreInstance =
+                          FirebaseFirestore.instance;
+                      firestoreInstance
+                          .collection('Medicines')
+                          .doc(patientUID)
+                          .update({
+                        'Medicine':
+                        FieldValue.arrayUnion([doctorNoteController.text]),
+                      });
                       Navigator.pop(context);
                     }
                   },
@@ -117,7 +151,7 @@ class _AddMedicinesState extends State<AddMedicines> {
                   style: ElevatedButton.styleFrom(
                       primary: MyColors.blueLighter,
                       padding:
-                      EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
                 ),
               ],
             ),
@@ -129,38 +163,41 @@ class _AddMedicinesState extends State<AddMedicines> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        MySpaces.vGapInBetween,
-        Row(
-          children: [
-            MyFonts().heading1('Medications', MyColors.black),
-            Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _addDocNotePopup(),
-                );
-              },
-              child: MyFonts()
-                  .subHeadline('Add medicines'.toUpperCase(), MyColors.white),
-              style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
-            ),
-          ],
-        ),
-        MySpaces.vGapInBetween,
-        AnimatedList(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          key: _listKey,
-          initialItemCount: _dataMedicines.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(_dataMedicines[index], animation, index);
-          },
-        ),
-      ]),
-    );
+    if (_dataMedicines == null)
+      return Container();
+    else
+      return Material(
+        color: Colors.transparent,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          MySpaces.vGapInBetween,
+          Row(
+            children: [
+              MyFonts().heading1('Medications', MyColors.black),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => _addDocNotePopup(),
+                  );
+                },
+                child: MyFonts()
+                    .subHeadline('Add medicines'.toUpperCase(), MyColors.white),
+                style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
+              ),
+            ],
+          ),
+          MySpaces.vGapInBetween,
+          AnimatedList(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            key: _listKey,
+            initialItemCount: _dataMedicines.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(_dataMedicines[index], animation, index);
+            },
+          ),
+        ]),
+      );
   }
 }

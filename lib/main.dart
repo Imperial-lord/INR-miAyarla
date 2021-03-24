@@ -23,6 +23,7 @@ import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/pages/patients/patientProfile.dart';
 import 'package:health_bag/pages/patients/patientReg.dart';
+import 'package:health_bag/pages/patients/patientSelectDoctor.dart';
 import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
                 PatientProfile.id: (context) => PatientProfile(),
                 PatientManagement.id: (context) => PatientManagement(),
                 PatientUploadPhoto.id: (context) => PatientUploadPhoto(),
+                PatientSelectDoctor.id: (context) => PatientSelectDoctor(),
                 DoctorApproved.id: (context) => DoctorApproved(),
                 DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),

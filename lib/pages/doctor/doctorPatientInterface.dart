@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -10,9 +11,13 @@ import 'package:provider/provider.dart';
 
 class DoctorPatientInterface extends StatefulWidget {
   static String id = 'doctor-patient-interface';
+  final String patientNumber;
+
+  DoctorPatientInterface({@required this.patientNumber});
 
   @override
-  _DoctorPatientInterfaceState createState() => _DoctorPatientInterfaceState();
+  _DoctorPatientInterfaceState createState() =>
+      _DoctorPatientInterfaceState(patientNumber: patientNumber);
 }
 
 Widget _getRow(String key, String val) {
@@ -32,133 +37,180 @@ Widget _getRow(String key, String val) {
 }
 
 class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
+  final String patientNumber;
+
+  _DoctorPatientInterfaceState({@required this.patientNumber});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       var doctorUid = loginStore.firebaseUser.uid;
       return Scaffold(
         body: SafeArea(
-          child: Stack(
-            children: [
-              FourthBackground(),
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05,
-                  left: 20,
-                  right: 20,
-                ),
-                child: MyFonts().title1("Prashant's Profile", MyColors.white),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.15,
-                  left: 20,
-                  right: 20,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('Patients')
+                  .where('PhoneNumber', isEqualTo: patientNumber)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                else {
+                  var userData = snapshot.data.docs[0].data();
+                  var patientUID = snapshot.data.docs[0].id;
+                  String title = userData['Name'].split(' ')[0];
+                  return Stack(
                     children: [
-                      MySpaces.vSmallGapInBetween,
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/icons/patient.png'),
-                          radius: 60,
+                      FourthBackground(),
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.05,
+                          left: 20,
+                          right: 20,
                         ),
+                        child:
+                            MyFonts().title1("$title's Profile", MyColors.white),
                       ),
-                      MySpaces.vSmallestGapInBetween,
-                      Center(
-                          child: MyFonts()
-                              .heading1('Prashant Khatri', MyColors.black)),
-                      MySpaces.vSmallGapInBetween,
-                      Row(
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            onPressed: () {},
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  EvaIcons.paperPlaneOutline,
-                                  color: MyColors.white,
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.15,
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MySpaces.vSmallGapInBetween,
+                              Center(
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(userData['Photo']),
+                                  radius: 60,
                                 ),
-                                MySpaces.hGapInBetween,
-                                MyFonts().heading2('Chat', MyColors.white),
-                              ],
-                            ),
-                            color: MyColors.blueLighter,
-                          ),
-                          Spacer(),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            onPressed: () {},
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  EvaIcons.bellOutline,
-                                  color: MyColors.white,
-                                ),
-                                MySpaces.hGapInBetween,
-                                MyFonts().heading2(
-                                    'Send Notification', MyColors.white),
-                              ],
-                            ),
-                            color: MyColors.redLighter,
-                          ),
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Personal', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      _getRow('DOB', '10-01-2000'),
-                      _getRow('Age', '21'),
-                      _getRow('Gender', 'Male'),
-                      _getRow('Phone Number', '+91-8756715653'),
-                      _getRow('Email Address', 'prashant@gmail.com'),
-                      _getRow('Residential Address', 'Room 328, IIT Guwahati'),
-                      _getRow('Sign-up Date', '13-04-2021'),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Medical History', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      _getRow('Illness', 'Common Cold, Flu'),
-                      _getRow('Allergies', 'None'),
-                      _getRow('Genetic Diseases', 'None'),
-                      MySpaces.vSmallGapInBetween,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RaisedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, MonitorPatientHealth.id);
-                              },
-                              padding: EdgeInsets.all(15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              ),
+                              MySpaces.vSmallestGapInBetween,
+                              Center(
+                                  child: MyFonts().heading1(
+                                      '${userData['Name']}', MyColors.black)),
+                              MySpaces.vSmallGapInBetween,
+                              Row(
                                 children: [
-                                  Icon(
-                                    EvaIcons.activityOutline,
+                                  // ignore: deprecated_member_use
+                                  RaisedButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          EvaIcons.paperPlaneOutline,
+                                          color: MyColors.white,
+                                        ),
+                                        MySpaces.hGapInBetween,
+                                        MyFonts()
+                                            .heading2('Chat', MyColors.white),
+                                      ],
+                                    ),
                                     color: MyColors.blueLighter,
                                   ),
-                                  MySpaces.hGapInBetween,
-                                  MyFonts().heading2(
-                                      'Monitor Patient Health', MyColors.blueLighter),
+                                  Spacer(),
+                                  // ignore: deprecated_member_use
+                                  RaisedButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          EvaIcons.bellOutline,
+                                          color: MyColors.white,
+                                        ),
+                                        MySpaces.hGapInBetween,
+                                        MyFonts().heading2('Send Notification',
+                                            MyColors.white),
+                                      ],
+                                    ),
+                                    color: MyColors.redLighter,
+                                  ),
                                 ],
                               ),
-                              color: MyColors.white,
-                            ),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts().heading1('Personal', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              _getRow('DOB', userData['DOB']),
+                              _getRow('Age', userData['Age']),
+                              _getRow('Gender', userData['Gender']),
+                              _getRow('Phone Number', userData['PhoneNumber']),
+                              _getRow(
+                                  'Email Address', userData['EmailAddress']),
+                              _getRow(
+                                  'Residential Address', userData['Address']),
+                              _getRow('Sign-up Date', userData['SignUpDate']),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts()
+                                  .heading1('Medical History', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              _getRow(
+                                  'Illness',
+                                  userData['Illness'] == ''
+                                      ? 'No Data Available'
+                                      : userData['Illness']),
+                              _getRow(
+                                  'Allergies',
+                                  userData['Allergies'] == ''
+                                      ? 'No Data Available'
+                                      : userData['Allergies']),
+                              _getRow(
+                                  'Genetic Diseases',
+                                  userData['GeneticDiseases'] == ''
+                                      ? 'No Data Available'
+                                      : userData['GeneticDiseases']),
+                              MySpaces.vSmallGapInBetween,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        MonitorPatientHealth(
+                                                          patientUID:
+                                                              patientUID,
+                                                        )));
+                                      },
+                                      padding: EdgeInsets.all(15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            EvaIcons.activityOutline,
+                                            color: MyColors.blueLighter,
+                                          ),
+                                          MySpaces.hGapInBetween,
+                                          MyFonts().heading2(
+                                              'Monitor Patient Health',
+                                              MyColors.blueLighter),
+                                        ],
+                                      ),
+                                      color: MyColors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              MySpaces.vLargeGapInBetween,
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                      MySpaces.vLargeGapInBetween,
                     ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                  );
+                }
+              }),
         ),
       );
     });
