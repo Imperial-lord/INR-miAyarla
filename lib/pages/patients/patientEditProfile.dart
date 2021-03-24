@@ -14,6 +14,7 @@ import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
+import 'package:health_bag/widgets/multilineRow.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -79,6 +80,8 @@ String setControllerText(
 }
 
 DateTime selectedDate = DateTime.now();
+List<Color> bodyColor = [MyColors.white, MyColors.white];
+List<Color> contentColor = [MyColors.gray, MyColors.gray];
 
 class _PatientEditProfileState extends State<PatientEditProfile> {
   var userProfileData;
@@ -96,6 +99,22 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
   TextEditingController allergyController = TextEditingController();
   TextEditingController geneticController = TextEditingController();
   TextEditingController signUpDateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (userProfileData['Gender'] == 'Male') {
+      setState(() {
+        bodyColor[0] = MyColors.redLighter;
+        contentColor[0] = MyColors.white;
+      });
+    } else {
+      setState(() {
+        bodyColor[1] = MyColors.redLighter;
+        contentColor[1] = MyColors.white;
+      });
+    }
+  }
 
   // Open a mini calendar to make the user select the date:
   Future<Null> _selectDate(BuildContext context) async {
@@ -325,14 +344,80 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               TextInputType.number,
                               1,
                               false),
-                          _getRowPatientEditProfile(
-                              'Your gender',
-                              'Enter Male / Female / Other',
-                              Icon(EvaIcons.paperPlane),
-                              genderController,
-                              TextInputType.text,
-                              1,
-                              true),
+                          // _getRowPatientEditProfile(
+                          //     'Your gender',
+                          //     'Enter Male / Female / Other',
+                          //     Icon(EvaIcons.paperPlane),
+                          //     genderController,
+                          //     TextInputType.text,
+                          //     1,
+                          //     true),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: MyFonts()
+                                    .heading2('Your gender', MyColors.gray),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RaisedButton(
+                                      child: MyFonts()
+                                          .heading2('Male', contentColor[0]),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (bodyColor[0] == MyColors.white) {
+                                            genderController.text = 'Male';
+                                            bodyColor[0] = MyColors.redLighter;
+                                            contentColor[0] = MyColors.white;
+                                            // make the other button unselected!
+                                            bodyColor[1] = MyColors.white;
+                                            contentColor[1] = MyColors.gray;
+                                          } else {
+                                            genderController.text = '';
+                                            bodyColor[0] = MyColors.white;
+                                            contentColor[0] = MyColors.gray;
+                                          }
+                                        });
+                                      },
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 15),
+                                      color: bodyColor[0],
+                                    ),
+                                  ),
+                                  MySpaces.hLargeGapInBetween,
+                                  Expanded(
+                                    child: RaisedButton(
+                                      child: MyFonts()
+                                          .heading2('Female', contentColor[1]),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (bodyColor[1] == MyColors.white) {
+                                            genderController.text = 'Female';
+                                            bodyColor[1] = MyColors.redLighter;
+                                            contentColor[1] = MyColors.white;
+                                            // make the other button unselected!
+                                            bodyColor[0] = MyColors.white;
+                                            contentColor[0] = MyColors.gray;
+                                          } else {
+                                            genderController.text = '';
+                                            bodyColor[1] = MyColors.white;
+                                            contentColor[1] = MyColors.gray;
+                                          }
+                                        });
+                                      },
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 15),
+                                      color: bodyColor[1],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                           _getRowPatientEditProfile(
                               'Your phone number',
                               'Enter your phone number',
@@ -349,7 +434,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               TextInputType.emailAddress,
                               1,
                               true),
-                          _getRowPatientEditProfile(
+                          MultilineRow().getMultilineRow(
                               'Your residence address',
                               'Enter your complete address',
                               Icon(CupertinoIcons.location),
@@ -357,38 +442,41 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               TextInputType.streetAddress,
                               3,
                               true),
-                          _getRowPatientEditProfile(
+                          MultilineRow().getMultilineRow(
                               'Your ailments',
                               'What diseases are you suffering from?',
                               Icon(Icons.local_hospital_outlined),
                               illnessController,
-                              TextInputType.text,
+                              TextInputType.multiline,
                               4,
                               true),
-                          _getRowPatientEditProfile(
+                          MultilineRow().getMultilineRow(
                               'Your allergies',
                               'Do you have any specific allergies?',
                               Icon(CupertinoIcons.doc),
                               allergyController,
-                              TextInputType.text,
+                              TextInputType.multiline,
                               4,
                               true),
-                          _getRowPatientEditProfile(
+                          MultilineRow().getMultilineRow(
                               'Your genetic disorders',
                               'Do you have any genetic disorders?',
                               Icon(Icons.account_tree_outlined),
                               geneticController,
-                              TextInputType.text,
+                              TextInputType.multiline,
                               4,
                               true),
-                          _getRowPatientEditProfile(
-                              'Your sign up date',
-                              "Today's date",
-                              Icon(EvaIcons.calendarOutline),
-                              signUpDateController,
-                              TextInputType.datetime,
-                              1,
-                              false),
+                          Visibility(
+                            visible: false,
+                            child: _getRowPatientEditProfile(
+                                'Your sign up date',
+                                "Today's date",
+                                Icon(EvaIcons.calendarOutline),
+                                signUpDateController,
+                                TextInputType.datetime,
+                                1,
+                                false),
+                          ),
                           MySpaces.vMediumGapInBetween,
                           Row(children: [
                             Expanded(
@@ -455,8 +543,10 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                     'SignUpDate': signUpDateController.text,
                                   }).then((value) => print(
                                           'Successfully added new patient data'));
-                                  Navigator.pushNamed(
-                                      context, PatientManagement.id);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      PatientManagement.id,
+                                      (Route<dynamic> route) => false);
                                 }
                               },
                               padding: EdgeInsets.all(15),

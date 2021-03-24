@@ -6,6 +6,7 @@ import 'package:health_bag/functions/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
@@ -43,6 +44,8 @@ class _SplashState extends State<Splash> {
         print(uid);
         bool isDoctor = (await UserTypeValidation().isUserRegDoctor(uid));
         bool isPatient = (await UserTypeValidation().isUserRegPatient(uid));
+
+
         if (isDoctor) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => DoctorManagement()),
@@ -51,6 +54,11 @@ class _SplashState extends State<Splash> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => PatientManagement()),
               (Route<dynamic> route) => false);
+        }
+        else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => UserType()),
+                  (Route<dynamic> route) => false);
         }
       } else {
         Navigator.of(context).pushAndRemoveUntil(
