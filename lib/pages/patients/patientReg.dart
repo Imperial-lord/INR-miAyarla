@@ -13,6 +13,7 @@ import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:health_bag/widgets/multilineRow.dart';
 import 'package:provider/provider.dart';
 
 class PatientReg extends StatefulWidget {
@@ -59,6 +60,8 @@ Widget _getRowPatientReg(
 }
 
 DateTime selectedDate = DateTime.now();
+List<Color> bodyColor = [MyColors.white, MyColors.white];
+List<Color> contentColor = [MyColors.gray, MyColors.gray];
 
 class _PatientRegState extends State<PatientReg> {
   TextEditingController nameController = TextEditingController();
@@ -107,7 +110,11 @@ class _PatientRegState extends State<PatientReg> {
     return Consumer<LoginStore>(
       builder: (_, loginStore, __) {
         String number = loginStore.firebaseUser.phoneNumber;
-        phoneNumberController.text = number.substring(0,3)+'-'+number.substring(3,);
+        phoneNumberController.text = number.substring(0, 3) +
+            '-' +
+            number.substring(
+              3,
+            );
         return Observer(
           builder: (_) => LoaderHUD(
             inAsyncCall: loginStore.isOtpLoading,
@@ -195,14 +202,68 @@ class _PatientRegState extends State<PatientReg> {
                                   TextInputType.number,
                                   1,
                                   false),
-                              _getRowPatientReg(
-                                  'Your gender',
-                                  'Enter Male / Female / Other',
-                                  Icon(EvaIcons.paperPlane),
-                                  genderController,
-                                  TextInputType.text,
-                                  1,
-                                  true),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: MyFonts().heading2(
+                                        'Your gender', MyColors.gray),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: RaisedButton(
+                                          child: MyFonts().heading2('Male', contentColor[0]),
+                                          onPressed: (){
+                                            setState(() {
+                                              if (bodyColor[0] == MyColors.white) {
+                                                genderController.text='Male';
+                                                bodyColor[0] = MyColors.redLighter;
+                                                contentColor[0] = MyColors.white;
+                                                // make the other button unselected!
+                                                bodyColor[1] = MyColors.white;
+                                                contentColor[1] = MyColors.gray;
+                                              } else {
+                                                genderController.text='';
+                                                bodyColor[0] = MyColors.white;
+                                                contentColor[0] = MyColors.gray;
+                                              }
+                                            });
+                                          },
+                                          padding: EdgeInsets.symmetric(vertical: 15),
+                                          color: bodyColor[0],
+                                        ),
+                                      ),
+                                      MySpaces.hLargeGapInBetween,
+                                      Expanded(
+                                        child: RaisedButton(
+                                          child: MyFonts().heading2('Female', contentColor[1]),
+                                          onPressed: (){
+                                            setState(() {
+                                              if (bodyColor[1] == MyColors.white) {
+                                                genderController.text='Female';
+                                                bodyColor[1] = MyColors.redLighter;
+                                                contentColor[1] = MyColors.white;
+                                                // make the other button unselected!
+                                                bodyColor[0] = MyColors.white;
+                                                contentColor[0] = MyColors.gray;
+                                              } else {
+                                                genderController.text='';
+                                                bodyColor[1] = MyColors.white;
+                                                contentColor[1] = MyColors.gray;
+                                              }
+                                            });
+                                          },
+                                          padding: EdgeInsets.symmetric(vertical: 15),
+                                          color: bodyColor[1],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                               _getRowPatientReg(
                                   'Your phone number',
                                   'Enter your phone number',
@@ -219,7 +280,7 @@ class _PatientRegState extends State<PatientReg> {
                                   TextInputType.emailAddress,
                                   1,
                                   true),
-                              _getRowPatientReg(
+                              MultilineRow().getMultilineRow(
                                   'Your residence address',
                                   'Enter your complete address',
                                   Icon(CupertinoIcons.location),
@@ -227,28 +288,28 @@ class _PatientRegState extends State<PatientReg> {
                                   TextInputType.streetAddress,
                                   3,
                                   true),
-                              _getRowPatientReg(
+                              MultilineRow().getMultilineRow(
                                   'Your ailments',
                                   'What diseases are you suffering from?',
                                   Icon(Icons.local_hospital_outlined),
                                   illnessController,
-                                  TextInputType.text,
+                                  TextInputType.multiline,
                                   4,
                                   true),
-                              _getRowPatientReg(
+                              MultilineRow().getMultilineRow(
                                   'Your allergies',
                                   'Do you have any specific allergies?',
                                   Icon(CupertinoIcons.doc),
                                   allergyController,
-                                  TextInputType.text,
+                                  TextInputType.multiline,
                                   4,
                                   true),
-                              _getRowPatientReg(
+                              MultilineRow().getMultilineRow(
                                   'Your genetic disorders',
                                   'Do you have any genetic disorders?',
                                   Icon(Icons.account_tree_outlined),
                                   geneticController,
-                                  TextInputType.text,
+                                  TextInputType.multiline,
                                   4,
                                   true),
                               Visibility(
@@ -310,24 +371,33 @@ class _PatientRegState extends State<PatientReg> {
                                       );
                                     else {
                                       // TODO: Later add data to FireStore from here!
-                                      final firestoreInstance = FirebaseFirestore.instance;
+                                      final firestoreInstance =
+                                          FirebaseFirestore.instance;
                                       String uid = loginStore.firebaseUser.uid;
                                       print(uid);
-                                      firestoreInstance.collection('Patients').doc(uid).set({
-                                        'Photo': 'https://i.ibb.co/THPy5z3/patient.png',
-                                        'Name':nameController.text,
+                                      firestoreInstance
+                                          .collection('Patients')
+                                          .doc(uid)
+                                          .set({
+                                        'Photo':
+                                            'https://i.ibb.co/THPy5z3/patient.png',
+                                        'Name': nameController.text,
                                         'DOB': dobController.text,
                                         'Age': ageController.text,
                                         'Gender': genderController.text,
-                                        'PhoneNumber': phoneNumberController.text,
-                                        'EmailAddress':emailController.text,
+                                        'PhoneNumber':
+                                            phoneNumberController.text,
+                                        'EmailAddress': emailController.text,
                                         'Address': addressController.text,
                                         'Illness': illnessController.text,
-                                        'Allergies':allergyController.text,
-                                        'GeneticDiseases':geneticController.text,
+                                        'Allergies': allergyController.text,
+                                        'GeneticDiseases':
+                                            geneticController.text,
                                         'SignUpDate': signUpDateController.text,
-                                      }).then((value) => print('Successfully added new patient data'));
-                                      Navigator.pushNamed(context, PatientUploadPhoto.id);
+                                      }).then((value) => print(
+                                              'Successfully added new patient data'));
+                                      Navigator.pushNamed(
+                                          context, PatientUploadPhoto.id);
                                     }
                                   },
                                   padding: EdgeInsets.all(15),

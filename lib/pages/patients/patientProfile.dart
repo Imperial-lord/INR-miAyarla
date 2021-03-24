@@ -34,7 +34,8 @@ Widget _getRow(String key, String val) {
 
 Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
   return new AlertDialog(
-    title: MyFonts().heading1('Are you sure you want to logout?', MyColors.black),
+    title:
+        MyFonts().heading1('Are you sure you want to logout?', MyColors.black),
     actions: <Widget>[
       FlatButton(
         onPressed: () {
@@ -49,29 +50,30 @@ Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
 class _PatientProfileState extends State<PatientProfile> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginStore>(builder: (_, loginStore, __) {
-      var uid = loginStore.firebaseUser.uid;
-      return Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              FourthBackground(),
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05,
-                  left: 20,
-                  right: 20,
+    return Consumer<LoginStore>(
+      builder: (_, loginStore, __) {
+        var uid = loginStore.firebaseUser.uid;
+        return Scaffold(
+          body: SafeArea(
+            child: Stack(
+              children: [
+                FourthBackground(),
+                Container(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.05,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: MyFonts().title1('Your Profile', MyColors.white),
                 ),
-                child: MyFonts().title1('Your Profile', MyColors.white),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.15,
-                  left: 20,
-                  right: 20,
-                ),
-                child: SingleChildScrollView(
-                  child: StreamBuilder(
+                Container(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.15,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: SingleChildScrollView(
+                    child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('Patients')
                           .doc(uid)
@@ -94,9 +96,9 @@ class _PatientProfileState extends State<PatientProfile> {
                               MySpaces.vGapInBetween,
                               Center(
                                 child: CircleAvatar(
-                                  backgroundImage: (userProfileData['Photo'] == null)
-                                      ? AssetImage(
-                                      'assets/icons/patient.png')
+                                  backgroundImage: (userProfileData['Photo'] ==
+                                          null)
+                                      ? AssetImage('assets/icons/patient.png')
                                       : NetworkImage(userProfileData['Photo']),
                                   radius: 100,
                                 ),
@@ -112,8 +114,11 @@ class _PatientProfileState extends State<PatientProfile> {
                                   userProfileData['EmailAddress']),
                               _getRow('Residential Address',
                                   userProfileData['Address']),
-                              _getRow('Sign-up Date',
-                                  userProfileData['SignUpDate']),
+                              Visibility(
+                                visible: false,
+                                child: _getRow('Sign-up Date',
+                                    userProfileData['SignUpDate']),
+                              ),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
                                   .heading1('Medical History', MyColors.black),
@@ -126,9 +131,12 @@ class _PatientProfileState extends State<PatientProfile> {
                               MySpaces.vLargeGapInBetween,
                               RaisedButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => PatientEditProfile(userProfileData),
-                                  ));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PatientEditProfile(userProfileData),
+                                      ));
                                 },
                                 padding: EdgeInsets.all(15),
                                 child: Row(
@@ -150,7 +158,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                 onPressed: () {
                                   showDialog(
                                     context: context,
-                                    builder: (BuildContext context) => _logoutPopup(context, loginStore),
+                                    builder: (BuildContext context) =>
+                                        _logoutPopup(context, loginStore),
                                   );
                                 },
                                 padding: EdgeInsets.all(15),
@@ -172,13 +181,15 @@ class _PatientProfileState extends State<PatientProfile> {
                             ],
                           );
                         }
-                      }),
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
