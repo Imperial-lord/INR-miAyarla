@@ -1,33 +1,67 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:health_bag/functions/fuzzySearchListManagement.dart';
+import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
-import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:provider/provider.dart';
 
 class DoctorHome extends StatefulWidget {
   static String id = 'doctor-home';
 
+  final String doctorUID;
+
+  DoctorHome({@required this.doctorUID});
+
   @override
-  _DoctorHomeState createState() => _DoctorHomeState();
+  _DoctorHomeState createState() => _DoctorHomeState(doctorUID: doctorUID);
+}
+
+Future<QuerySnapshot> getData() async {
+  return await FirebaseFirestore.instance.collection('Patients').get();
 }
 
 class _DoctorHomeState extends State<DoctorHome> {
+  final String doctorUID;
+
+  _DoctorHomeState({@required this.doctorUID});
+
   TextEditingController searchController = new TextEditingController();
   final GlobalKey<AnimatedListState> _listKey = GlobalKey(); // backing data
-  List<String> _data = FuzzySearchListManagement().patientList;
+  List<dynamic> _patientList, _patientListStatic;
+  List<String> _data;
+
+  @override
+  void initState() {
+    super.initState();
+    getData().then((value) {
+      List<dynamic> docList = [];
+      for (int i = 0; i < value.docs.length; i++) {
+        var documentData = value.docs[i].data();
+        if (documentData['DoctorUID'] == doctorUID) {
+          docList.add(documentData);
+        }
+      }
+      setState(() {
+        _patientList = docList;
+        _patientListStatic = docList;
+        _data = FuzzySearchListManagement(patientList: _patientListStatic)
+            .convertDynamicToString(_patientList);
+      });
+    });
+  }
 
   void _getUpdate(String query) {
     setState(() {
-      _data = FuzzySearchListManagement().searchResults(query);
+      _patientList = FuzzySearchListManagement(patientList: _patientListStatic)
+          .searchResults(query);
+      _data = FuzzySearchListManagement(patientList: _patientListStatic)
+          .convertDynamicToString(_patientList);
     });
   }
 
@@ -42,12 +76,16 @@ class _DoctorHomeState extends State<DoctorHome> {
                 height: 60,
                 width: 60,
                 fit: BoxFit.cover,
-                image: AssetImage('assets/icons/patient.png')),
+                image: NetworkImage(_patientList[index]['Photo'])),
           ),
           title: MyFonts().heading1(item.split(':')[0], MyColors.black),
           subtitle: MyFonts().heading2(item.split(':')[1], MyColors.gray),
-          onTap: (){
-            Navigator.pushNamed(context, DoctorPatientInterface.id);
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => DoctorPatientInterface(
+                        patientNumber: _patientList[index]['PhoneNumber'])));
           },
         ),
       ),
@@ -56,7 +94,7 @@ class _DoctorHomeState extends State<DoctorHome> {
 
   @override
   Widget build(BuildContext context) {
-    if (_data == []) {
+    if (_data == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -117,9 +155,8 @@ class _DoctorHomeState extends State<DoctorHome> {
                   ),
                   child: _data.length == 0
                       ? Center(
-                          child: MyFonts().heading2(
-                              'No results found for this search',
-                              MyColors.gray),
+                          child: MyFonts()
+                              .heading2('No results found', MyColors.gray),
                         )
                       : AnimatedList(
                           scrollDirection: Axis.vertical,

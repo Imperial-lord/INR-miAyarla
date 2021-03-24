@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,24 +16,25 @@ class PatientHome extends StatefulWidget {
   _PatientHomeState createState() => _PatientHomeState();
 }
 
-Widget _medicineCard(String name)
-{
+Widget _medicineCard(String name) {
   return Expanded(
     child: Card(
-      elevation: 3,
+        elevation: 3,
         child: Container(
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              Image(image: NetworkImage('https://i.ibb.co/fv0ztpr/medicine.png'),fit: BoxFit.contain,),
+              Image(
+                image: NetworkImage('https://i.ibb.co/fv0ztpr/medicine.png'),
+                fit: BoxFit.contain,
+              ),
               MyFonts().heading2(name, MyColors.blueLighter),
               MyFonts().body('Medicine Notes', MyColors.gray),
               MySpaces.vSmallestGapInBetween,
-              MyFonts().subHeadline('9:00 AM  6:00 PM',MyColors.redLighter)
+              MyFonts().subHeadline('9:00 AM  6:00 PM', MyColors.redLighter)
             ],
           ),
-        )
-    ),
+        )),
   );
 }
 
@@ -40,6 +42,7 @@ class _PatientHomeState extends State<PatientHome> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
+      String uid = loginStore.firebaseUser.uid;
       return Scaffold(
         body: SafeArea(
           child: Stack(
@@ -60,151 +63,218 @@ class _PatientHomeState extends State<PatientHome> {
                   right: 20,
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      MyFonts().heading1('Doctor Details', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                'https://i.ibb.co/5G7M8Lj/ezgif-com-webp-to-png.png'),
-                            radius: 50,
-                          ),
-                          MySpaces.hLargeGapInBetween,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                MyFonts().heading2('Dr. Elizabeth Owens',
-                                    MyColors.blueLighter),
-                                MyFonts().body('Endocrinology',
-                                    MyColors.blueLighter),
-                                MyFonts().subHeadline(
-                                    'State Hospital, Los Angeles, (Department)',
-                                    MyColors.blueLighter),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      Row(
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            onPressed: () {},
-                            padding: EdgeInsets.all(15),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  EvaIcons.paperPlaneOutline,
-                                  color: MyColors.white,
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('Assigned Doctor')
+                          .doc(uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          return Center(child: CircularProgressIndicator());
+                        else {
+                          String doctorUID =
+                              (snapshot.data.data()['DoctorUID']);
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              MyFonts()
+                                  .heading1('Doctor Details', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Doctors')
+                                      .doc(doctorUID)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData)
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    else {
+                                      var doctorInfo = snapshot.data.data();
+                                      return Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                doctorInfo['Photo']),
+                                            radius: 50,
+                                          ),
+                                          MySpaces.hLargeGapInBetween,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                MyFonts().heading2(
+                                                    doctorInfo['Name'],
+                                                    MyColors.blueLighter),
+                                                MyFonts().body(
+                                                    doctorInfo[
+                                                        'Specialisation'],
+                                                    MyColors.blueLighter),
+                                                MyFonts().subHeadline(
+                                                    '${doctorInfo['HospitalName']}, ${doctorInfo['DepartmentName']} Department',
+                                                    MyColors.blueLighter),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }
+                                  }),
+                              MySpaces.vSmallGapInBetween,
+                              Row(
+                                children: [
+                                  // ignore: deprecated_member_use
+                                  RaisedButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.all(15),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          EvaIcons.paperPlaneOutline,
+                                          color: MyColors.white,
+                                        ),
+                                        MySpaces.hGapInBetween,
+                                        MyFonts()
+                                            .heading2('Chat', MyColors.white),
+                                      ],
+                                    ),
+                                    color: MyColors.blueLighter,
+                                  ),
+                                  Spacer(),
+                                  RaisedButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.all(15),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          EvaIcons.bellOutline,
+                                          color: MyColors.white,
+                                        ),
+                                        MySpaces.hGapInBetween,
+                                        MyFonts().heading2('Send Notification',
+                                            MyColors.white),
+                                      ],
+                                    ),
+                                    color: MyColors.redLighter,
+                                  ),
+                                ],
+                              ),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts()
+                                  .heading1('Doctor Notes', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Doctor Notes')
+                                      .doc(uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData)
+                                      return Container();
+                                    else {
+                                      var notes = snapshot.data.data()['Note'];
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          for (int i = 0; i < notes.length; i++)
+                                            MyFonts().body(
+                                                '• ${notes[i]}',
+                                                MyColors.blueLighter)
+                                        ],
+                                      );
+                                    }
+                                  }),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts()
+                                  .heading1('Important Dates', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Important Dates')
+                                      .doc(uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData)
+                                      return Container();
+                                    else {
+                                      var dates = snapshot.data.data();
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              MyFonts().heading2(
+                                                  '• Last Visit: ',
+                                                  MyColors.blueLighter),
+                                              MyFonts().heading2(
+                                                  dates['LastVisit'],
+                                                  MyColors.redLighter)
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              MyFonts().heading2(
+                                                  '• Next Visit: ',
+                                                  MyColors.blueLighter),
+                                              MyFonts().heading2(
+                                                  dates['NextVisit'],
+                                                  MyColors.redLighter)
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                  }),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts().heading1(
+                                  'Current Medications', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      _medicineCard('Paracetamol'),
+                                      MySpaces.hSmallestGapInBetween,
+                                      _medicineCard('Sinarest'),
+                                    ],
+                                  ),
+                                  MySpaces.vSmallestGapInBetween,
+                                  Row(
+                                    children: [
+                                      _medicineCard('Paracetamol'),
+                                      MySpaces.hSmallestGapInBetween,
+                                      _medicineCard('Sinarest'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              MySpaces.vSmallGapInBetween,
+                              MyFonts().heading1(
+                                  'Latest Test Results', MyColors.black),
+                              MySpaces.vGapInBetween,
+                              for (int i = 0; i < 2; i++)
+                                Card(
+                                  elevation: 3,
+                                  child: ListTile(
+                                    leading: Container(
+                                        height: double.infinity,
+                                        child:
+                                            Icon(CupertinoIcons.doc_checkmark)),
+                                    title: MyFonts().heading2(
+                                        'Pregnancy Test', MyColors.blueLighter),
+                                    subtitle: MyFonts().body(
+                                        '9:00 AM Saturday', MyColors.gray),
+                                    trailing: Icon(EvaIcons.downloadOutline),
+                                  ),
                                 ),
-                                MySpaces.hGapInBetween,
-                                MyFonts().heading2('Chat', MyColors.white),
-                              ],
-                            ),
-                            color: MyColors.blueLighter,
-                          ),
-                          Spacer(),
-                          RaisedButton(
-                            onPressed: () {},
-                            padding: EdgeInsets.all(15),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  EvaIcons.bellOutline,
-                                  color: MyColors.white,
-                                ),
-                                MySpaces.hGapInBetween,
-                                MyFonts().heading2(
-                                    'Send Notification', MyColors.white),
-                              ],
-                            ),
-                            color: MyColors.redLighter,
-                          ),
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Doctor Notes', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          MyFonts().body('• Remember to take medicines on time',
-                              MyColors.blueLighter),
-                          MyFonts().body('• Remember to eat and drink on time',
-                              MyColors.blueLighter),
-                          MyFonts().body('• Remember to visit me on time',
-                              MyColors.blueLighter),
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Important Dates', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              MyFonts().heading2(
-                                  '• Last Visit: ', MyColors.blueLighter),
-                              MyFonts().heading2(
-                                  DateTime.now().toString().split(' ')[0],
-                                  MyColors.redLighter)
+                              MySpaces.vSmallGapInBetween,
                             ],
-                          ),
-                          Row(
-                            children: [
-                              MyFonts().heading2(
-                                  '• Next Visit: ', MyColors.blueLighter),
-                              MyFonts().heading2(
-                                  DateTime(1900).toString().split(' ')[0],
-                                  MyColors.redLighter)
-                            ],
-                          ),
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Current Medications', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              _medicineCard('Paracetamol'),
-                              MySpaces.hSmallestGapInBetween,
-                              _medicineCard('Sinarest'),
-                            ],
-                          ),
-                          MySpaces.vSmallestGapInBetween,
-                          Row(
-                            children: [
-                              _medicineCard('Paracetamol'),
-                              MySpaces.hSmallestGapInBetween,
-                              _medicineCard('Sinarest'),
-                            ],
-                          ),
-                        ],
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      MyFonts().heading1('Latest Test Results', MyColors.black),
-                      MySpaces.vGapInBetween,
-                      for(int i=0;i<2;i++)
-                        Card(
-                          elevation: 3,
-                          child: ListTile(
-                            leading: Container(height:double.infinity,child: Icon(CupertinoIcons.doc_checkmark)),
-                            title: MyFonts().heading2('Pregnancy Test', MyColors.blueLighter),
-                            subtitle: MyFonts().body('9:00 AM Saturday', MyColors.gray),
-                            trailing: Icon(EvaIcons.downloadOutline),
-                          ),
-                        ),
-                      MySpaces.vSmallGapInBetween,
-                    ],
-                  ),
+                          );
+                        }
+                      }),
                 ),
               ),
             ],

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,20 @@ import 'package:health_bag/globals/mySpaces.dart';
 class AddVisitDates extends StatefulWidget {
   static String id = 'add-visit-dates';
 
+  final String patientUID;
+
+  AddVisitDates({@required this.patientUID});
+
   @override
-  _AddVisitDatesState createState() => _AddVisitDatesState();
+  _AddVisitDatesState createState() =>
+      _AddVisitDatesState(patientUID: patientUID);
+}
+
+Future<DocumentSnapshot> getData(String uid) async {
+  return await FirebaseFirestore.instance
+      .collection('Important Dates')
+      .doc(uid)
+      .get();
 }
 
 Widget _getRowDoctorAddVisitDates(String heading, String placeholder,
@@ -46,10 +59,26 @@ Widget _getRowDoctorAddVisitDates(String heading, String placeholder,
 }
 
 class _AddVisitDatesState extends State<AddVisitDates> {
+  final String patientUID;
+
+  _AddVisitDatesState({@required this.patientUID});
+
   TextEditingController lastVisitController = new TextEditingController();
   TextEditingController nextVisitController = new TextEditingController();
   bool toggleEnabled = false;
   String buttonText = 'Edit';
+
+  @override
+  initState() {
+    super.initState();
+    print(patientUID);
+    getData(patientUID).then((value) {
+      setState(() {
+        lastVisitController.text = value.data()['LastVisit'];
+        nextVisitController.text = value.data()['NextVisit'];
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +98,18 @@ class _AddVisitDatesState extends State<AddVisitDates> {
                     toggleEnabled = !toggleEnabled;
                     if (buttonText == 'Edit')
                       buttonText = 'Save';
-                    else
+                    else {
                       buttonText = 'Edit';
+                      FirebaseFirestore firestoreInstance =
+                          FirebaseFirestore.instance;
+                      firestoreInstance
+                          .collection('Important Dates')
+                          .doc(patientUID)
+                          .set({
+                        'LastVisit': lastVisitController.text,
+                        'NextVisit': nextVisitController.text,
+                      });
+                    }
                   });
                 },
                 child: MyFonts()

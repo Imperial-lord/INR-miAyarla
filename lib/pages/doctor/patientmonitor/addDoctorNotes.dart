@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -7,17 +8,40 @@ import 'package:health_bag/globals/mySpaces.dart';
 class AddDoctorNotes extends StatefulWidget {
   static String id = 'add-doc-notes';
 
+  final String patientUID;
+
+  AddDoctorNotes({@required this.patientUID});
+
   @override
-  _AddDoctorNotesState createState() => _AddDoctorNotesState();
+  _AddDoctorNotesState createState() =>
+      _AddDoctorNotesState(patientUID: patientUID);
+}
+
+Future<DocumentSnapshot> getData(String uid) async {
+  return await FirebaseFirestore.instance
+      .collection('Doctor Notes')
+      .doc(uid)
+      .get();
 }
 
 class _AddDoctorNotesState extends State<AddDoctorNotes> {
+  final String patientUID;
+
+  _AddDoctorNotesState({@required this.patientUID});
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey(); // backing data
-  List<String> _dataDocNotes = [
-    'Take medicines on time',
-    'Remember to exercise daily'
-  ];
+  List<dynamic> _dataDocNotes;
+
+  @override
+  initState() {
+    super.initState();
+    print(patientUID);
+    getData(patientUID).then((value) {
+      setState(() {
+        _dataDocNotes = value.data()['Note'];
+      });
+    });
+  }
 
   Widget _buildItem(String item, Animation animation, int index) {
     return SizeTransition(
@@ -47,6 +71,11 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
   }
 
   void _removeSingleItems(int index) {
+    String item = _dataDocNotes[index];
+    FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+    firestoreInstance.collection('Doctor Notes').doc(patientUID).update({
+      'Note': FieldValue.arrayRemove([item]),
+    });
     int removeIndex = index;
     String removedItem = _dataDocNotes.removeAt(removeIndex);
 
@@ -96,20 +125,26 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    if(doctorNoteController.text=='')
-                    {
+                    if (doctorNoteController.text == '') {
                       Navigator.pop(context);
                       final emptyNoteSnackBar = SnackBar(
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: MyColors.black,
-                          content: MyFonts().body(
-                              "Can't add a blank note",
-                              MyColors.white));
+                          content: MyFonts()
+                              .body("Can't add a blank note", MyColors.white));
                       ScaffoldMessenger.of(context)
                           .showSnackBar(emptyNoteSnackBar);
-                    }
-                    else {
+                    } else {
                       _insertSingleItem(doctorNoteController.text);
+                      FirebaseFirestore firestoreInstance =
+                          FirebaseFirestore.instance;
+                      firestoreInstance
+                          .collection('Doctor Notes')
+                          .doc(patientUID)
+                          .update({
+                        'Note':
+                            FieldValue.arrayUnion([doctorNoteController.text]),
+                      });
                       Navigator.pop(context);
                     }
                   },
@@ -117,7 +152,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
                   style: ElevatedButton.styleFrom(
                       primary: MyColors.blueLighter,
                       padding:
-                      EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
                 ),
               ],
             ),
@@ -129,38 +164,41 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        MySpaces.vGapInBetween,
-        Row(
-          children: [
-            MyFonts().heading1('Doctor Notes', MyColors.black),
-            Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _addDocNotePopup(),
-                );
-              },
-              child: MyFonts()
-                  .subHeadline('Add a note'.toUpperCase(), MyColors.white),
-              style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
-            ),
-          ],
-        ),
-        MySpaces.vGapInBetween,
-        AnimatedList(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          key: _listKey,
-          initialItemCount: _dataDocNotes.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(_dataDocNotes[index], animation, index);
-          },
-        ),
-      ]),
-    );
+    if (_dataDocNotes == null)
+      return Container();
+    else
+      return Material(
+        color: Colors.transparent,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          MySpaces.vGapInBetween,
+          Row(
+            children: [
+              MyFonts().heading1('Doctor Notes', MyColors.black),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => _addDocNotePopup(),
+                  );
+                },
+                child: MyFonts()
+                    .subHeadline('Add a note'.toUpperCase(), MyColors.white),
+                style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
+              ),
+            ],
+          ),
+          MySpaces.vGapInBetween,
+          AnimatedList(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            key: _listKey,
+            initialItemCount: _dataDocNotes.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(_dataDocNotes[index], animation, index);
+            },
+          ),
+        ]),
+      );
   }
 }
