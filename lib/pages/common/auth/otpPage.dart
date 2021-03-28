@@ -10,7 +10,7 @@ import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:provider/provider.dart';
 import 'package:health_bag/stores/login_store.dart';
-import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:health_bag/widgets/loaderHud.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({Key key}) : super(key: key);

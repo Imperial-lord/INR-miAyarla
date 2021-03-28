@@ -10,7 +10,7 @@ import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
-import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:health_bag/widgets/loaderHud.dart';
 import 'package:provider/provider.dart';
 
 import 'doctorManagement.dart';

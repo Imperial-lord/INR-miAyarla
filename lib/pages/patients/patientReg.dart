@@ -12,7 +12,7 @@ import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
-import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:health_bag/widgets/loaderHud.dart';
 import 'package:health_bag/widgets/multilineRow.dart';
 import 'package:provider/provider.dart';
 

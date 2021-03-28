@@ -10,7 +10,7 @@ import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
-import 'package:health_bag/widgets/loader_hud.dart';
+import 'package:health_bag/widgets/loaderHud.dart';
 import 'package:provider/provider.dart';
 
 class PatientNotifications extends StatefulWidget {

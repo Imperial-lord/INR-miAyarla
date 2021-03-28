@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates: [
                 CountryLocalizations.delegate,
               ],
-              title: 'Health Bag',
+              title: 'INR-miAyarla',
               debugShowCheckedModeBanner: false,
               theme: ThemeData.light(),
               home: Splash(),
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
 
         // Otherwise, show something whilst waiting for initialization to complete
         return MaterialApp(
-          title: 'Health Bag',
+          title: 'INR-miAyarla',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(),
           home: Material(
