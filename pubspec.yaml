@@ -43,6 +43,9 @@ dependencies:
   image_picker:
   fuzzy: ^0.3.0
   url_launcher: ^5.7.1
+  cached_network_image:
+  photo_view:
+  flutter_linkify:
 
 
 dev_dependencies:

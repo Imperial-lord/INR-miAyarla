@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/common/chat/chat.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -70,8 +71,8 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                           left: 20,
                           right: 20,
                         ),
-                        child:
-                            MyFonts().title1("$title's Profile", MyColors.white),
+                        child: MyFonts()
+                            .title1("$title's Profile", MyColors.white),
                       ),
                       Container(
                         padding: EdgeInsets.only(
@@ -100,7 +101,19 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                 children: [
                                   // ignore: deprecated_member_use
                                   RaisedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Chat(
+                                                    peerName: userData['Name'],
+                                                    id: doctorUid,
+                                                    peerId: patientUID,
+                                                    peerAvatar:
+                                                        userData['Photo'],
+                                                  )));
+                                    },
                                     padding: EdgeInsets.all(10),
                                     child: Row(
                                       children: [

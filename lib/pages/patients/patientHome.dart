@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/common/chat/chat.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:provider/provider.dart';
@@ -91,75 +92,92 @@ class _PatientHomeState extends State<PatientHome> {
                                           child: CircularProgressIndicator());
                                     else {
                                       var doctorInfo = snapshot.data.data();
-                                      return Row(
+                                      return Column(
                                         children: [
-                                          CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                doctorInfo['Photo']),
-                                            radius: 50,
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    doctorInfo['Photo']),
+                                                radius: 50,
+                                              ),
+                                              MySpaces.hLargeGapInBetween,
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    MyFonts().heading2(
+                                                        doctorInfo['Name'],
+                                                        MyColors.blueLighter),
+                                                    MyFonts().body(
+                                                        doctorInfo[
+                                                            'Specialisation'],
+                                                        MyColors.blueLighter),
+                                                    MyFonts().subHeadline(
+                                                        '${doctorInfo['HospitalName']}, ${doctorInfo['DepartmentName']} Department',
+                                                        MyColors.blueLighter),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                          MySpaces.hLargeGapInBetween,
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                MyFonts().heading2(
-                                                    doctorInfo['Name'],
-                                                    MyColors.blueLighter),
-                                                MyFonts().body(
-                                                    doctorInfo[
-                                                        'Specialisation'],
-                                                    MyColors.blueLighter),
-                                                MyFonts().subHeadline(
-                                                    '${doctorInfo['HospitalName']}, ${doctorInfo['DepartmentName']} Department',
-                                                    MyColors.blueLighter),
-                                              ],
-                                            ),
-                                          )
+                                          MySpaces.vSmallGapInBetween,
+                                          Row(
+                                            children: [
+                                              // ignore: deprecated_member_use
+                                              RaisedButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              Chat(
+                                                                  peerName: doctorInfo['Name'],
+                                                                  id: uid,
+                                                                  peerId: doctorUID,
+                                                                  peerAvatar: doctorInfo['Photo'])));
+                                                },
+                                                padding: EdgeInsets.all(15),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      EvaIcons
+                                                          .paperPlaneOutline,
+                                                      color: MyColors.white,
+                                                    ),
+                                                    MySpaces.hGapInBetween,
+                                                    MyFonts().heading2(
+                                                        'Chat', MyColors.white),
+                                                  ],
+                                                ),
+                                                color: MyColors.blueLighter,
+                                              ),
+                                              Spacer(),
+                                              RaisedButton(
+                                                onPressed: () {},
+                                                padding: EdgeInsets.all(15),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      EvaIcons.bellOutline,
+                                                      color: MyColors.white,
+                                                    ),
+                                                    MySpaces.hGapInBetween,
+                                                    MyFonts().heading2(
+                                                        'Send Notification',
+                                                        MyColors.white),
+                                                  ],
+                                                ),
+                                                color: MyColors.redLighter,
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       );
                                     }
                                   }),
-                              MySpaces.vSmallGapInBetween,
-                              Row(
-                                children: [
-                                  // ignore: deprecated_member_use
-                                  RaisedButton(
-                                    onPressed: () {},
-                                    padding: EdgeInsets.all(15),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          EvaIcons.paperPlaneOutline,
-                                          color: MyColors.white,
-                                        ),
-                                        MySpaces.hGapInBetween,
-                                        MyFonts()
-                                            .heading2('Chat', MyColors.white),
-                                      ],
-                                    ),
-                                    color: MyColors.blueLighter,
-                                  ),
-                                  Spacer(),
-                                  RaisedButton(
-                                    onPressed: () {},
-                                    padding: EdgeInsets.all(15),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          EvaIcons.bellOutline,
-                                          color: MyColors.white,
-                                        ),
-                                        MySpaces.hGapInBetween,
-                                        MyFonts().heading2('Send Notification',
-                                            MyColors.white),
-                                      ],
-                                    ),
-                                    color: MyColors.redLighter,
-                                  ),
-                                ],
-                              ),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
                                   .heading1('Doctor Notes', MyColors.black),
@@ -179,8 +197,7 @@ class _PatientHomeState extends State<PatientHome> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           for (int i = 0; i < notes.length; i++)
-                                            MyFonts().body(
-                                                '• ${notes[i]}',
+                                            MyFonts().body('• ${notes[i]}',
                                                 MyColors.blueLighter)
                                         ],
                                       );
