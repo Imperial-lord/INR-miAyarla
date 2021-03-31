@@ -46,6 +46,7 @@ dependencies:
   cached_network_image:
   photo_view:
   flutter_linkify:
+  firebase_messaging: 
 
 
 dev_dependencies:

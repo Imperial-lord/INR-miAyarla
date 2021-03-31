@@ -2,6 +2,7 @@ import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
+import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/splash.dart';
@@ -15,6 +16,7 @@ import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/pages/doctor/doctorProfile.dart';
 import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/pages/doctor/doctorRejected.dart';
+import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
 import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
@@ -40,6 +42,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  void initState() {
+    super.initState();
+    Notifications().configureFCM();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +96,21 @@ class _MyAppState extends State<MyApp> {
                 DoctorApproved.id: (context) => DoctorApproved(),
                 DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),
-                DoctorHome.id: (context) => DoctorHome(),
+                DoctorHome.id: (context) => DoctorHome(
+                      doctorUID: null,
+                    ),
                 DoctorProfile.id: (context) => DoctorProfile(),
                 DoctorManagement.id: (context) => DoctorManagement(),
                 DoctorReg.id: (context) => DoctorReg(),
                 DoctorUploadPhoto.id: (context) => DoctorUploadPhoto(),
-                DoctorPatientInterface.id: (context) => DoctorPatientInterface(),
-                MonitorPatientHealth.id: (context) => MonitorPatientHealth(),
+                DoctorPatientInterface.id: (context) => DoctorPatientInterface(
+                      patientNumber: null,
+                    ),
+                MonitorPatientHealth.id: (context) => MonitorPatientHealth(
+                      patientUID: null,
+                    ),
+                DoctorSendNotifications.id: (context) =>
+                    DoctorSendNotifications(patientUID: null),
               },
             ),
           );

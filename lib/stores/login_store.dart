@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -133,24 +135,37 @@ abstract class LoginStoreBase with Store {
     firebaseUser = result.user;
     String uid = (firebaseUser.uid);
     print(uid);
+
+    // Everytime a user logs in add a device token (override if exists)
+    final FirebaseMessaging _fcm = FirebaseMessaging();
+    String fcmToken = await _fcm.getToken();
+    FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+    firestoreInstance
+        .collection('Users')
+        .doc(uid)
+        .collection('tokens')
+        .doc(fcmToken)
+        .set({
+      'token': fcmToken,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+
     bool isDoctor = (await UserTypeValidation().isUserRegDoctor(uid));
     bool isPatient = (await UserTypeValidation().isUserRegPatient(uid));
 
     if (isDoctor) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => DoctorManagement()),
-              (Route<dynamic> route) => false);
+          (Route<dynamic> route) => false);
     } else if (isPatient) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => PatientManagement()),
-              (Route<dynamic> route) => false);
-    }
-    else{
+          (Route<dynamic> route) => false);
+    } else {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => UserType()),
-              (Route<dynamic> route) => false);
+          (Route<dynamic> route) => false);
     }
-
 
     isLoginLoading = false;
     isOtpLoading = false;
