@@ -9,7 +9,10 @@ class Notifications {
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
-        firestoreInstance.collection('Bubbles').doc(patientUID).set({'bubble':true});
+        firestoreInstance
+            .collection('Bubbles')
+            .doc(patientUID)
+            .set({'bubble': true});
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
