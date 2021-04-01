@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
+import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +43,15 @@ Widget _medicineCard(String name) {
 
 class _PatientHomeState extends State<PatientHome> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       String uid = loginStore.firebaseUser.uid;
+      Notifications().configureFCM(uid);
       return Scaffold(
         body: SafeArea(
           child: Stack(
@@ -134,10 +142,15 @@ class _PatientHomeState extends State<PatientHome> {
                                                           builder: (BuildContext
                                                                   context) =>
                                                               Chat(
-                                                                  peerName: doctorInfo['Name'],
+                                                                  peerName:
+                                                                      doctorInfo[
+                                                                          'Name'],
                                                                   id: uid,
-                                                                  peerId: doctorUID,
-                                                                  peerAvatar: doctorInfo['Photo'])));
+                                                                  peerId:
+                                                                      doctorUID,
+                                                                  peerAvatar:
+                                                                      doctorInfo[
+                                                                          'Photo'])));
                                                 },
                                                 padding: EdgeInsets.all(15),
                                                 child: Row(
@@ -155,23 +168,70 @@ class _PatientHomeState extends State<PatientHome> {
                                                 color: MyColors.blueLighter,
                                               ),
                                               Spacer(),
-                                              RaisedButton(
-                                                onPressed: () {},
-                                                padding: EdgeInsets.all(15),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      EvaIcons.bellOutline,
-                                                      color: MyColors.white,
-                                                    ),
-                                                    MySpaces.hGapInBetween,
-                                                    MyFonts().heading2(
-                                                        'Send Notification',
-                                                        MyColors.white),
-                                                  ],
-                                                ),
-                                                color: MyColors.redLighter,
-                                              ),
+
+                                              StreamBuilder(
+                                                  stream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Bubbles')
+                                                      .doc(uid)
+                                                      .snapshots(),
+                                                  builder: (context, snapshot) {
+                                                    if (!snapshot.hasData)
+                                                      return Container();
+                                                    else {
+                                                      bool isUnread = snapshot
+                                                          .data
+                                                          .data()['bubble'];
+                                                      return Stack(
+                                                        clipBehavior: Clip.none,
+                                                        children: [
+                                                          RaisedButton(
+                                                            onPressed: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  PatientNotifications
+                                                                      .id);
+                                                            },
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    15),
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  CupertinoIcons
+                                                                      .bell_solid,
+                                                                  color: MyColors
+                                                                      .white,
+                                                                ),
+                                                                MySpaces
+                                                                    .hGapInBetween,
+                                                                MyFonts().heading2(
+                                                                    'Show Notification',
+                                                                    MyColors
+                                                                        .white),
+                                                              ],
+                                                            ),
+                                                            color: MyColors
+                                                                .redLighter,
+                                                          ),
+                                                          Visibility(
+                                                            visible: isUnread,
+                                                            child: Positioned(
+                                                              top: 0,
+                                                              right: 0,
+                                                              child: Icon(
+                                                                Icons
+                                                                    .brightness_1,
+                                                                color: MyColors
+                                                                    .white,
+                                                                size: 15,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }
+                                                  }),
                                             ],
                                           ),
                                         ],

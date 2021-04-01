@@ -2,7 +2,6 @@ import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
-import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
 import 'package:health_bag/pages/common/splash.dart';
@@ -42,12 +41,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
-  @override
-  void initState() {
-    super.initState();
-    Notifications().configureFCM();
-  }
 
   @override
   Widget build(BuildContext context) {
