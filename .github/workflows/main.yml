@@ -31,7 +31,6 @@ jobs:
     - run: flutter upgrade
     - run: flutter pub upgrade
     - run: flutter pub get
-    - run: flutter test
     - run: flutter build apk --split-per-abi
       env:
         KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
