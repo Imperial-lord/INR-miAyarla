@@ -1,1 +1,1 @@
-# PatientNotifications
+![INR-miAyarla](https://socialify.git.ci/Imperial-lord/INR-miAyarla/image?description=1&forks=1&issues=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FLN23p27%2Fblood-drop.png&owner=1&pulls=1&stargazers=1&theme=Light)
