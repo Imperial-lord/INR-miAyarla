@@ -1,41 +1,49 @@
 {
   "project_info": {
-    "project_number": "143227575825",
-    "project_id": "healthbag-21752",
-    "storage_bucket": "healthbag-21752.appspot.com"
+    "project_number": "114001846106",
+    "project_id": "inr-ayarla",
+    "storage_bucket": "inr-ayarla.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:143227575825:android:894c58dfe340af5be35bb0",
+        "mobilesdk_app_id": "1:114001846106:android:1861a6dbf7b7843e805d63",
         "android_client_info": {
           "package_name": "com.example.health_bag"
         }
       },
       "oauth_client": [
         {
-          "client_id": "143227575825-o73g5t5m1qbl727ir0sju08rijo3b3og.apps.googleusercontent.com",
+          "client_id": "114001846106-30l2iu1loujvo8qvd5r3vfmcst6elk91.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.health_bag",
-            "certificate_hash": "6a018fb6a7c9a0ed4ec4b1038d11d567987ad653"
+            "certificate_hash": "8fbf625270ebe21f09a0edd536f3ab368419da0a"
           }
         },
         {
-          "client_id": "143227575825-qhrlq9o7co7depfspcbahelpi3l1m79u.apps.googleusercontent.com",
+          "client_id": "114001846106-kk14619b3p6b1poc9umv3us860pr6a0j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.health_bag",
+            "certificate_hash": "a2875fee29be788d608ba9683c6a1a6c75757287"
+          }
+        },
+        {
+          "client_id": "114001846106-qb23c25uda5ngrd30mkt37avg3tns5ri.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC9yatckU0J9CluU_0Tg1QQtaLBEJiu2Rk"
+          "current_key": "AIzaSyCvQ9xdYAnpohigcaUL8xeXMJdXyqZFosY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "143227575825-qhrlq9o7co7depfspcbahelpi3l1m79u.apps.googleusercontent.com",
+              "client_id": "114001846106-qb23c25uda5ngrd30mkt37avg3tns5ri.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

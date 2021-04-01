@@ -15,6 +15,7 @@ import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/pages/doctor/doctorProfile.dart';
 import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/pages/doctor/doctorRejected.dart';
+import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
 import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
@@ -88,13 +89,21 @@ class _MyAppState extends State<MyApp> {
                 DoctorApproved.id: (context) => DoctorApproved(),
                 DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),
-                DoctorHome.id: (context) => DoctorHome(),
+                DoctorHome.id: (context) => DoctorHome(
+                      doctorUID: null,
+                    ),
                 DoctorProfile.id: (context) => DoctorProfile(),
                 DoctorManagement.id: (context) => DoctorManagement(),
                 DoctorReg.id: (context) => DoctorReg(),
                 DoctorUploadPhoto.id: (context) => DoctorUploadPhoto(),
-                DoctorPatientInterface.id: (context) => DoctorPatientInterface(),
-                MonitorPatientHealth.id: (context) => MonitorPatientHealth(),
+                DoctorPatientInterface.id: (context) => DoctorPatientInterface(
+                      patientNumber: null,
+                    ),
+                MonitorPatientHealth.id: (context) => MonitorPatientHealth(
+                      patientUID: null,
+                    ),
+                DoctorSendNotifications.id: (context) =>
+                    DoctorSendNotifications(patientUID: null),
               },
             ),
           );

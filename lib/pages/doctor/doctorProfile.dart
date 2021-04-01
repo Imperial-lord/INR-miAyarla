@@ -37,6 +37,7 @@ Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
   return new AlertDialog(
     title: MyFonts().heading1('Are you sure you want to logout?', MyColors.black),
     actions: <Widget>[
+      // ignore: deprecated_member_use
       FlatButton(
         onPressed: () {
           loginStore.signOut(context);

@@ -5,6 +5,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
+import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -131,7 +132,14 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                   Spacer(),
                                   // ignore: deprecated_member_use
                                   RaisedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  DoctorSendNotifications(
+                                                      patientUID: patientUID)));
+                                    },
                                     padding: EdgeInsets.all(10),
                                     child: Row(
                                       children: [
