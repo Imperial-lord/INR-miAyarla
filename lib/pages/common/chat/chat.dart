@@ -7,6 +7,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -508,14 +509,21 @@ class ChatScreenState extends State<ChatScreen> {
             .collection('users')
             .doc(id)
             .update({'chattingWith': null});
-      FirebaseFirestore fi = FirebaseFirestore.instance;
-      fi.collection('Patient Chat Bubbles').doc(id).set({
-        'bubble': false,
-      });
-      FirebaseFirestore fi1 = FirebaseFirestore.instance;
-      fi1.collection('Doctor Chat Bubbles').doc(id).set({
-        'bubble': false,
-      });
+
+      bool isDoc = await UserTypeValidation().isUserRegDoctor(id);
+      if (!isDoc) {
+        FirebaseFirestore fi = FirebaseFirestore.instance;
+        fi.collection('Patient Chat Bubbles').doc(id).set({
+          'bubble': false,
+        });
+      }
+      else
+      {
+        FirebaseFirestore fi = FirebaseFirestore.instance;
+        fi.collection('Doctor Chat Bubbles').doc(peerId).set({
+          'bubble': false,
+        });
+      }
       Navigator.pop(context);
     }
 
