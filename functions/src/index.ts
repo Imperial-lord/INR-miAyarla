@@ -33,15 +33,15 @@ export const sendNotifForChat = functions.firestore.document('Messages/{ChatID}/
     let title = notif.idFrom;
     let content = (notif.type == 1) ? 'Sent a photo' : notif.content;
 
-    const patient = db.collection('Patients').doc(notif.idTo);
-    const doctor = db.collection('Doctors').doc(notif.idTo);
+    const patient = db.collection('Patients').doc(notif.idFrom);
     patient.get().then((docSnapshot) => {
         if (docSnapshot.exists) {
             title = docSnapshot.data() ? ['Name'] : title;
         } else {
-            doctor.get().then((docSnapshot) => {
-                if (docSnapshot.exists) {
-                    title = docSnapshot.data() ? ['Name'] : title;
+            const doctor = db.collection('Doctors').doc(notif.idFrom);
+            doctor.get().then((docSnapshot1) => {
+                if (docSnapshot1.exists) {
+                    title = docSnapshot1.data() ? ['Name'] : title;
                 }
             });
         }

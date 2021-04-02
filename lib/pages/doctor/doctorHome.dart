@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -76,6 +77,7 @@ class _DoctorHomeState extends State<DoctorHome> {
             return Container();
           else {
             var patientUID = snapshot.data.docs[0].id;
+            Notifications().configureFCM(patientUID);
             return SizeTransition(
               sizeFactor: animation,
               child: Card(
