@@ -137,7 +137,7 @@ class _PatientHomeState extends State<PatientHome> {
                                                   stream: FirebaseFirestore
                                                       .instance
                                                       .collection(
-                                                          'Chat Bubbles')
+                                                          'Patient Chat Bubbles')
                                                       .doc(uid)
                                                       .snapshots(),
                                                   builder: (context, snapshot) {
@@ -153,20 +153,7 @@ class _PatientHomeState extends State<PatientHome> {
                                                           // ignore: deprecated_member_use
                                                           RaisedButton(
                                                             onPressed: () {
-                                                              if (isUnread) {
-                                                                FirebaseFirestore
-                                                                    fi =
-                                                                    FirebaseFirestore
-                                                                        .instance;
-                                                                fi
-                                                                    .collection(
-                                                                        'Chat Bubbles')
-                                                                    .doc(uid)
-                                                                    .set({
-                                                                  'bubble':
-                                                                      false,
-                                                                });
-                                                              }
+                                                              
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(

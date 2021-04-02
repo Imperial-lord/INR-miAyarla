@@ -22,8 +22,11 @@ class AdditionalPatientCollections {
     firestoreInstance.collection('Doctor Notes').doc(uid).set({
       'Note': [],
     });
-    firestoreInstance.collection('Chat Bubbles').doc(uid).set({
-      'IsUnread': false,
+    firestoreInstance.collection('Patient Chat Bubbles').doc(uid).set({
+      'bubble': false,
+    });
+    firestoreInstance.collection('Doctor Chat Bubbles').doc(uid).set({
+      'bubble': false,
     });
   }
 }

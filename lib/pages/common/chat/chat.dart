@@ -367,20 +367,20 @@ class ChatScreenState extends State<ChatScreen> {
                         constraints: BoxConstraints(maxWidth: 250),
                         // child: MyFonts()
                         //     .body(document.data()['content'], MyColors.black),
-                  child: Linkify(
-                    onOpen: (link) async => await canLaunch(link.url)
-                        ? await launch(link.url)
-                        : throw 'Could not launch ${link.url}',
-                    text: document.data()['content'],
-                    style: TextStyle(
-                        fontFamily: 'lato',
-                        fontSize: 15,
-                        color: MyColors.black),
-                    linkStyle: TextStyle(
-                        fontFamily: 'lato',
-                        fontSize: 15,
-                        color: MyColors.black),
-                  ),
+                        child: Linkify(
+                          onOpen: (link) async => await canLaunch(link.url)
+                              ? await launch(link.url)
+                              : throw 'Could not launch ${link.url}',
+                          text: document.data()['content'],
+                          style: TextStyle(
+                              fontFamily: 'lato',
+                              fontSize: 15,
+                              color: MyColors.black),
+                          linkStyle: TextStyle(
+                              fontFamily: 'lato',
+                              fontSize: 15,
+                              color: MyColors.black),
+                        ),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: MyColors.backgroundColor,
@@ -508,6 +508,14 @@ class ChatScreenState extends State<ChatScreen> {
             .collection('users')
             .doc(id)
             .update({'chattingWith': null});
+      FirebaseFirestore fi = FirebaseFirestore.instance;
+      fi.collection('Patient Chat Bubbles').doc(id).set({
+        'bubble': false,
+      });
+      FirebaseFirestore fi1 = FirebaseFirestore.instance;
+      fi1.collection('Doctor Chat Bubbles').doc(id).set({
+        'bubble': false,
+      });
       Navigator.pop(context);
     }
 
