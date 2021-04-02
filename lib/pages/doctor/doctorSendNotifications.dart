@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fifthBackground.dart';
-import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
-import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
-import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:health_bag/widgets/multilineRow.dart';
 import 'package:provider/provider.dart';
 

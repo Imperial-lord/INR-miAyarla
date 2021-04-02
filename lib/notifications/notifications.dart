@@ -16,7 +16,7 @@ class Notifications {
       print('$android and $notification');
       FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
       firestoreInstance
-          .collection('Bubbles')
+          .collection('Chat Bubbles')
           .doc(patientUID)
           .set({'bubble': true});
     });

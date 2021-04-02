@@ -133,46 +133,11 @@ class _PatientHomeState extends State<PatientHome> {
                                           MySpaces.vSmallGapInBetween,
                                           Row(
                                             children: [
-                                              // ignore: deprecated_member_use
-                                              RaisedButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              Chat(
-                                                                  peerName:
-                                                                      doctorInfo[
-                                                                          'Name'],
-                                                                  id: uid,
-                                                                  peerId:
-                                                                      doctorUID,
-                                                                  peerAvatar:
-                                                                      doctorInfo[
-                                                                          'Photo'])));
-                                                },
-                                                padding: EdgeInsets.all(15),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      EvaIcons
-                                                          .paperPlaneOutline,
-                                                      color: MyColors.white,
-                                                    ),
-                                                    MySpaces.hGapInBetween,
-                                                    MyFonts().heading2(
-                                                        'Chat', MyColors.white),
-                                                  ],
-                                                ),
-                                                color: MyColors.blueLighter,
-                                              ),
-                                              Spacer(),
-
                                               StreamBuilder(
                                                   stream: FirebaseFirestore
                                                       .instance
-                                                      .collection('Bubbles')
+                                                      .collection(
+                                                          'Chat Bubbles')
                                                       .doc(uid)
                                                       .snapshots(),
                                                   builder: (context, snapshot) {
@@ -185,12 +150,35 @@ class _PatientHomeState extends State<PatientHome> {
                                                       return Stack(
                                                         clipBehavior: Clip.none,
                                                         children: [
+                                                          // ignore: deprecated_member_use
                                                           RaisedButton(
                                                             onPressed: () {
-                                                              Navigator.pushNamed(
+                                                              if (isUnread) {
+                                                                FirebaseFirestore
+                                                                    fi =
+                                                                    FirebaseFirestore
+                                                                        .instance;
+                                                                fi
+                                                                    .collection(
+                                                                        'Chat Bubbles')
+                                                                    .doc(uid)
+                                                                    .set({
+                                                                  'bubble':
+                                                                      false,
+                                                                });
+                                                              }
+                                                              Navigator.push(
                                                                   context,
-                                                                  PatientNotifications
-                                                                      .id);
+                                                                  MaterialPageRoute(
+                                                                      builder: (BuildContext context) => Chat(
+                                                                          peerName: doctorInfo[
+                                                                              'Name'],
+                                                                          id:
+                                                                              uid,
+                                                                          peerId:
+                                                                              doctorUID,
+                                                                          peerAvatar:
+                                                                              doctorInfo['Photo'])));
                                                             },
                                                             padding:
                                                                 EdgeInsets.all(
@@ -199,31 +187,31 @@ class _PatientHomeState extends State<PatientHome> {
                                                               children: [
                                                                 Icon(
                                                                   CupertinoIcons
-                                                                      .bell_solid,
+                                                                      .paperplane_fill,
                                                                   color: MyColors
                                                                       .white,
                                                                 ),
                                                                 MySpaces
                                                                     .hGapInBetween,
                                                                 MyFonts().heading2(
-                                                                    'Show Notification',
+                                                                    'Chat',
                                                                     MyColors
                                                                         .white),
                                                               ],
                                                             ),
                                                             color: MyColors
-                                                                .redLighter,
+                                                                .blueLighter,
                                                           ),
                                                           Visibility(
                                                             visible: isUnread,
                                                             child: Positioned(
-                                                              top: 0,
-                                                              right: 0,
+                                                              top: -5,
+                                                              right: -5,
                                                               child: Icon(
                                                                 Icons
                                                                     .brightness_1,
                                                                 color: MyColors
-                                                                    .white,
+                                                                    .redLighter,
                                                                 size: 15,
                                                               ),
                                                             ),
@@ -232,6 +220,27 @@ class _PatientHomeState extends State<PatientHome> {
                                                       );
                                                     }
                                                   }),
+                                              Spacer(),
+                                              RaisedButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context,
+                                                      PatientNotifications.id);
+                                                },
+                                                padding: EdgeInsets.all(15),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      CupertinoIcons.bell_solid,
+                                                      color: MyColors.white,
+                                                    ),
+                                                    MySpaces.hGapInBetween,
+                                                    MyFonts().heading2(
+                                                        'Show Notification',
+                                                        MyColors.white),
+                                                  ],
+                                                ),
+                                                color: MyColors.redLighter,
+                                              ),
                                             ],
                                           ),
                                         ],
