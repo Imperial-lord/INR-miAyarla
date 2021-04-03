@@ -33,7 +33,16 @@ Widget _getRow(String key, String val) {
         children: [
           MyFonts().heading2(key, MyColors.blueLighter),
           MySpaces.hLargeGapInBetween,
-          Flexible(child: MyFonts().heading2(val, MyColors.gray)),
+          Flexible(
+              child: Text(
+            val,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontFamily: 'poppins-semi',
+              fontSize: 15,
+              color: MyColors.gray,
+            ),
+          )),
         ],
       ),
       Divider(),
@@ -68,7 +77,8 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        String title = snapshot.data.data()['Name'].split(' ')[0];
+                        String title =
+                            snapshot.data.data()['Name'].split(' ')[0];
                         return MyFonts()
                             .title1("$title's Health 📈", MyColors.white);
                       } else
@@ -87,11 +97,19 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                       AddDoctorNotes(
                         patientUID: patientUID,
                       ),
-                      Divider(thickness: 4,),
-                      AddVisitDates(patientUID: patientUID,),
+                      Divider(
+                        thickness: 4,
+                      ),
+                      AddVisitDates(
+                        patientUID: patientUID,
+                      ),
                       MySpaces.vSmallGapInBetween,
-                      Divider(thickness: 4,),
-                      AddMedicines(patientUID: patientUID,),
+                      Divider(
+                        thickness: 4,
+                      ),
+                      AddMedicines(
+                        patientUID: patientUID,
+                      ),
                       MySpaces.vSmallGapInBetween,
                     ],
                   ),
