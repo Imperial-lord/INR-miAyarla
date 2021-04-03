@@ -285,8 +285,8 @@ class _PatientRegState extends State<PatientReg> {
                                   'Enter your complete address',
                                   Icon(CupertinoIcons.location),
                                   addressController,
-                                  TextInputType.streetAddress,
-                                  3,
+                                  TextInputType.multiline,
+                                  4,
                                   true),
                               MultilineRow().getMultilineRow(
                                   'Your ailments',

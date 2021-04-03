@@ -24,7 +24,17 @@ Widget _getRow(String key, String val) {
         children: [
           MyFonts().heading2(key, MyColors.blueLighter),
           MySpaces.hLargeGapInBetween,
-          Flexible(child: MyFonts().heading2(val, MyColors.gray)),
+          Flexible(
+              // child: MyFonts().heading2(val, MyColors.gray),
+              child: Text(
+            val,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontFamily: 'poppins-semi',
+              fontSize: 15,
+              color: MyColors.gray,
+            ),
+          )),
         ],
       ),
       Divider(),

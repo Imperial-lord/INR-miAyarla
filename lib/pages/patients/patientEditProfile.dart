@@ -439,7 +439,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               'Enter your complete address',
                               Icon(CupertinoIcons.location),
                               addressController,
-                              TextInputType.streetAddress,
+                              TextInputType.multiline,
                               3,
                               true),
                           MultilineRow().getMultilineRow(
