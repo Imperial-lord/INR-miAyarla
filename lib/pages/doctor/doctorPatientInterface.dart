@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
@@ -119,7 +120,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                     child: Row(
                                       children: [
                                         Icon(
-                                          EvaIcons.paperPlaneOutline,
+                                          CupertinoIcons.paperplane_fill,
                                           color: MyColors.white,
                                         ),
                                         MySpaces.hGapInBetween,
@@ -144,7 +145,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                     child: Row(
                                       children: [
                                         Icon(
-                                          EvaIcons.bellOutline,
+                                          CupertinoIcons.bell_solid,
                                           color: MyColors.white,
                                         ),
                                         MySpaces.hGapInBetween,

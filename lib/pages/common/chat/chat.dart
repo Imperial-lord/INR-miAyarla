@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/widgets/fullPhoto.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -47,7 +48,21 @@ class Chat extends StatelessWidget {
             EvaIcons.arrowBack,
             color: MyColors.blueLighter,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () async {
+            bool isDoc = await UserTypeValidation().isUserRegDoctor(id);
+            if (!isDoc) {
+              FirebaseFirestore fi = FirebaseFirestore.instance;
+              fi.collection('Patient Chat Bubbles').doc(id).set({
+                'bubble': false,
+              });
+            } else {
+              FirebaseFirestore fi = FirebaseFirestore.instance;
+              fi.collection('Doctor Chat Bubbles').doc(peerId).set({
+                'bubble': false,
+              });
+            }
+            Navigator.of(context).pop();
+          },
         ),
         backgroundColor: MyColors.white,
         title: Row(
@@ -207,9 +222,24 @@ class ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  void onSendMessage(String content, int type) {
+  Future<void> onSendMessage(String content, int type) async {
     // type: 0 = text, 1 = image, 2 = sticker
     if (content.trim() != '') {
+      bool isDoc = await UserTypeValidation().isUserRegDoctor(id);
+      if (!isDoc) {
+        FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+        firestoreInstance
+            .collection('Doctor Chat Bubbles')
+            .doc(id)
+            .set({'bubble': true});
+      } else {
+        FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+        firestoreInstance
+            .collection('Patient Chat Bubbles')
+            .doc(peerId)
+            .set({'bubble': true});
+      }
+
       textEditingController.clear();
 
       var documentReference = FirebaseFirestore.instance
@@ -367,20 +397,20 @@ class ChatScreenState extends State<ChatScreen> {
                         constraints: BoxConstraints(maxWidth: 250),
                         // child: MyFonts()
                         //     .body(document.data()['content'], MyColors.black),
-                  child: Linkify(
-                    onOpen: (link) async => await canLaunch(link.url)
-                        ? await launch(link.url)
-                        : throw 'Could not launch ${link.url}',
-                    text: document.data()['content'],
-                    style: TextStyle(
-                        fontFamily: 'lato',
-                        fontSize: 15,
-                        color: MyColors.black),
-                    linkStyle: TextStyle(
-                        fontFamily: 'lato',
-                        fontSize: 15,
-                        color: MyColors.black),
-                  ),
+                        child: Linkify(
+                          onOpen: (link) async => await canLaunch(link.url)
+                              ? await launch(link.url)
+                              : throw 'Could not launch ${link.url}',
+                          text: document.data()['content'],
+                          style: TextStyle(
+                              fontFamily: 'lato',
+                              fontSize: 15,
+                              color: MyColors.black),
+                          linkStyle: TextStyle(
+                              fontFamily: 'lato',
+                              fontSize: 15,
+                              color: MyColors.black),
+                        ),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: MyColors.backgroundColor,
@@ -508,6 +538,19 @@ class ChatScreenState extends State<ChatScreen> {
             .collection('users')
             .doc(id)
             .update({'chattingWith': null});
+
+      bool isDoc = await UserTypeValidation().isUserRegDoctor(id);
+      if (!isDoc) {
+        FirebaseFirestore fi = FirebaseFirestore.instance;
+        fi.collection('Patient Chat Bubbles').doc(id).set({
+          'bubble': false,
+        });
+      } else {
+        FirebaseFirestore fi = FirebaseFirestore.instance;
+        fi.collection('Doctor Chat Bubbles').doc(peerId).set({
+          'bubble': false,
+        });
+      }
       Navigator.pop(context);
     }
 

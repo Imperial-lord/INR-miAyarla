@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -66,30 +67,67 @@ class _DoctorHomeState extends State<DoctorHome> {
   }
 
   Widget _buildItem(String item, Animation animation, int index) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: Card(
-        child: ListTile(
-          contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          leading: ClipOval(
-            child: Image(
-                height: 60,
-                width: 60,
-                fit: BoxFit.cover,
-                image: NetworkImage(_patientList[index]['Photo'])),
-          ),
-          title: MyFonts().heading1(item.split(':')[0], MyColors.black),
-          subtitle: MyFonts().heading2(item.split(':')[1], MyColors.gray),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => DoctorPatientInterface(
-                        patientNumber: _patientList[index]['PhoneNumber'])));
-          },
-        ),
-      ),
-    );
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('Patients')
+            .where('PhoneNumber', isEqualTo: _patientList[index]['PhoneNumber'])
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Container();
+          else {
+            var patientUID = snapshot.data.docs[0].id;
+            return SizeTransition(
+              sizeFactor: animation,
+              child: Card(
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('Doctor Chat Bubbles')
+                        .doc(patientUID)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData)
+                        return Container();
+                      else {
+                        bool isUnread = snapshot.data.data()['bubble'];
+                        return ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          leading: ClipOval(
+                            child: Image(
+                                height: 60,
+                                width: 60,
+                                fit: BoxFit.cover,
+                                image:
+                                    NetworkImage(_patientList[index]['Photo'])),
+                          ),
+                          title: MyFonts()
+                              .heading1(item.split(':')[0], MyColors.black),
+                          subtitle: MyFonts()
+                              .heading2(item.split(':')[1], MyColors.gray),
+                          trailing: Visibility(
+                            visible: isUnread,
+                            child: Icon(
+                              Icons.brightness_1,
+                              color: MyColors.redLighter,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        DoctorPatientInterface(
+                                            patientNumber: _patientList[index]
+                                                ['PhoneNumber'])));
+                          },
+                        );
+                      }
+                    }),
+              ),
+            );
+          }
+        });
   }
 
   @override
@@ -100,6 +138,7 @@ class _DoctorHomeState extends State<DoctorHome> {
       );
     } else {
       return Consumer<LoginStore>(builder: (_, loginStore, __) {
+        String uid = loginStore.firebaseUser.uid;
         return Scaffold(
           body: SafeArea(
             child: Stack(
