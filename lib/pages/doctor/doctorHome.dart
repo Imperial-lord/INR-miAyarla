@@ -77,7 +77,6 @@ class _DoctorHomeState extends State<DoctorHome> {
             return Container();
           else {
             var patientUID = snapshot.data.docs[0].id;
-            Notifications().configureFCM(patientUID);
             return SizeTransition(
               sizeFactor: animation,
               child: Card(
@@ -139,6 +138,7 @@ class _DoctorHomeState extends State<DoctorHome> {
       );
     } else {
       return Consumer<LoginStore>(builder: (_, loginStore, __) {
+        String uid = loginStore.firebaseUser.uid;
         return Scaffold(
           body: SafeArea(
             child: Stack(

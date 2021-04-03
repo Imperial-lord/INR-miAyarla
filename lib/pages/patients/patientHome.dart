@@ -51,7 +51,6 @@ class _PatientHomeState extends State<PatientHome> {
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       String uid = loginStore.firebaseUser.uid;
-      Notifications().configureFCM(uid);
       return Scaffold(
         body: SafeArea(
           child: Stack(
@@ -153,7 +152,6 @@ class _PatientHomeState extends State<PatientHome> {
                                                           // ignore: deprecated_member_use
                                                           RaisedButton(
                                                             onPressed: () {
-                                                              
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(

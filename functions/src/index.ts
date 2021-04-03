@@ -30,22 +30,14 @@ export const sendNotifForChat = functions.firestore.document('Messages/{ChatID}/
 
     const tokens = querySnapshot.docs.map(snap => snap.id);
 
-    let title = notif.idFrom;
+    var title = notif.idFrom as string;
     let content = (notif.type == 1) ? 'Sent a photo' : notif.content;
 
-    const patient = db.collection('Patients').doc(notif.idFrom);
-    patient.get().then((docSnapshot) => {
-        if (docSnapshot.exists) {
-            title = docSnapshot.data() ? ['Name'] : title;
-        } else {
-            const doctor = db.collection('Doctors').doc(notif.idFrom);
-            doctor.get().then((docSnapshot1) => {
-                if (docSnapshot1.exists) {
-                    title = docSnapshot1.data() ? ['Name'] : title;
-                }
-            });
-        }
-    });
+    const patient = await db.collection('Patients').doc(notif.idFrom).get();
+    const doctor = await db.collection('Doctors').doc(notif.idFrom).get();
+    if (patient.exists) title = patient.data()!.Name;
+    else title = doctor.data()!.Name;
+
 
     const payload: admin.messaging.MessagingPayload = {
         notification: {
