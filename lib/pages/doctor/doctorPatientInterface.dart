@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -168,7 +169,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                               MySpaces.vSmallGapInBetween,
                               MyFonts().heading1('Personal', MyColors.black),
                               MySpaces.vGapInBetween,
-                              _getRow('DOB', userData['DOB']),
+                              _getRow('DOB', formatDateTime(userData['DOB'])),
                               _getRow('Age', userData['Age']),
                               _getRow('Gender', userData['Gender']),
                               _getRow('Phone Number', userData['PhoneNumber']),
@@ -176,7 +177,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                   'Email Address', userData['EmailAddress']),
                               _getRow(
                                   'Residential Address', userData['Address']),
-                              _getRow('Sign-up Date', userData['SignUpDate']),
+                              _getRow('Sign-up Date', formatDateTime(userData['SignUpDate'])),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
                                   .heading1('Medical History', MyColors.black),

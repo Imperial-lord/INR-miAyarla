@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -115,7 +116,8 @@ class _PatientProfileState extends State<PatientProfile> {
                               ),
                               MySpaces.vGapInBetween,
                               _getRow('Name', userProfileData['Name']),
-                              _getRow('DOB', userProfileData['DOB']),
+                              _getRow('DOB',
+                                  formatDateTime(userProfileData['DOB'])),
                               _getRow('Age', userProfileData['Age']),
                               _getRow('Gender', userProfileData['Gender']),
                               _getRow('Phone Number',
@@ -127,7 +129,7 @@ class _PatientProfileState extends State<PatientProfile> {
                               Visibility(
                                 visible: false,
                                 child: _getRow('Sign-up Date',
-                                    userProfileData['SignUpDate']),
+                                    formatDateTime(userProfileData['SignUpDate'])),
                               ),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
