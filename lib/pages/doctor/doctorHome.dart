@@ -136,7 +136,6 @@ class _DoctorHomeState extends State<DoctorHome> {
         child: CircularProgressIndicator(),
       );
     } else {
-      print(_data);
       return Consumer<LoginStore>(builder: (_, loginStore, __) {
         String uid = loginStore.firebaseUser.uid;
         return Scaffold(
@@ -214,7 +213,6 @@ class _DoctorHomeState extends State<DoctorHome> {
                             key: _listKey,
                             itemCount: _data.length,
                             itemBuilder: (context, index) {
-                              print('Build here $_data $index');
                               if (index < _data.length)
                                 return _buildItem(_data[index], index);
                               else
