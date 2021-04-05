@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/pages/common/latestTestResults.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/addMedicines.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/addVisitDates.dart';
 import 'package:health_bag/stores/login_store.dart';
@@ -94,23 +95,14 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      AddDoctorNotes(
-                        patientUID: patientUID,
-                      ),
-                      Divider(
-                        thickness: 4,
-                      ),
-                      AddVisitDates(
-                        patientUID: patientUID,
-                      ),
-                      MySpaces.vSmallGapInBetween,
-                      Divider(
-                        thickness: 4,
-                      ),
-                      AddMedicines(
-                        patientUID: patientUID,
-                      ),
-                      MySpaces.vSmallGapInBetween,
+                      AddDoctorNotes(patientUID: patientUID),
+                      MySpaces.vMediumGapInBetween,
+                      AddVisitDates(patientUID: patientUID),
+                      MySpaces.vMediumGapInBetween,
+                      AddMedicines(patientUID: patientUID),
+                      MySpaces.vMediumGapInBetween,
+                      LatestTestResults(patientUID: patientUID),
+                      MySpaces.vMediumGapInBetween,
                     ],
                   ),
                 ),

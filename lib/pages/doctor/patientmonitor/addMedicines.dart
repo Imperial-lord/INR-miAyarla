@@ -182,7 +182,7 @@ class _AddMedicinesState extends State<AddMedicines> {
                   );
                 },
                 child: MyFonts()
-                    .subHeadline('Add medicines'.toUpperCase(), MyColors.white),
+                    .body('Add a medicine', MyColors.white),
                 style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
               ),
             ],

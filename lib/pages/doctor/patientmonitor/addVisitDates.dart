@@ -113,7 +113,7 @@ class _AddVisitDatesState extends State<AddVisitDates> {
                   });
                 },
                 child: MyFonts()
-                    .subHeadline(buttonText.toUpperCase(), MyColors.white),
+                    .body(buttonText, MyColors.white),
                 style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
               ),
             ],

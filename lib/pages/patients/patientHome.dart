@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/notifications/notifications.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
+import 'package:health_bag/pages/common/latestTestResults.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -323,24 +322,7 @@ class _PatientHomeState extends State<PatientHome> {
                                 ],
                               ),
                               MySpaces.vSmallGapInBetween,
-                              MyFonts().heading1(
-                                  'Latest Test Results', MyColors.black),
-                              MySpaces.vGapInBetween,
-                              for (int i = 0; i < 2; i++)
-                                Card(
-                                  elevation: 3,
-                                  child: ListTile(
-                                    leading: Container(
-                                        height: double.infinity,
-                                        child:
-                                            Icon(CupertinoIcons.doc_checkmark)),
-                                    title: MyFonts().heading2(
-                                        'Pregnancy Test', MyColors.blueLighter),
-                                    subtitle: MyFonts().body(
-                                        '9:00 AM Saturday', MyColors.gray),
-                                    trailing: Icon(EvaIcons.downloadOutline),
-                                  ),
-                                ),
+                              LatestTestResults(patientUID: uid),
                               MySpaces.vSmallGapInBetween,
                             ],
                           );

@@ -47,6 +47,9 @@ dependencies:
   photo_view:
   flutter_linkify:
   firebase_messaging: ^8.0.0-dev.14
+  file_picker:
+  flutter_downloader:
+  permission_handler:
 
 
 dev_dependencies:

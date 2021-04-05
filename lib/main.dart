@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
@@ -29,8 +30,9 @@ import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(debug: false);
   runApp(MyApp());
 }
 
