@@ -94,9 +94,9 @@ flutter:
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
 
-    - family: lato
+    - family: rubik
       fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Rubik-Regular.ttf
           weight: 500
 
 

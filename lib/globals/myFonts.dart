@@ -18,14 +18,14 @@ class MyFonts{
   }
 
   Text body(text, color){
-    return Text(text,style: TextStyle(fontFamily: 'lato', fontSize: 15, color: color),);
+    return Text(text,style: TextStyle(fontFamily: 'rubik', fontSize: 15, color: color),);
   }
 
   Text subHeadline(text, color){
-    return Text(text,style: TextStyle(fontFamily: 'lato', fontSize: 13, color: color),);
+    return Text(text,style: TextStyle(fontFamily: 'rubik', fontSize: 13, color: color),);
   }
 
   Text caption(text, color){
-    return Text(text,style: TextStyle(fontFamily: 'lato', fontSize: 11, color: color),);
+    return Text(text,style: TextStyle(fontFamily: 'rubik', fontSize: 11, color: color),);
   }
 }
