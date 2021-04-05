@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/notifications/notifications.dart';
+import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -66,7 +68,7 @@ class _DoctorHomeState extends State<DoctorHome> {
     });
   }
 
-  Widget _buildItem(String item, Animation animation, int index) {
+  Widget _buildItem(String item, int index) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('Patients')
@@ -77,54 +79,51 @@ class _DoctorHomeState extends State<DoctorHome> {
             return Container();
           else {
             var patientUID = snapshot.data.docs[0].id;
-            return SizeTransition(
-              sizeFactor: animation,
-              child: Card(
-                child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('Doctor Chat Bubbles')
-                        .doc(patientUID)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData)
-                        return Container();
-                      else {
-                        bool isUnread = snapshot.data.data()['bubble'];
-                        return ListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 10),
-                          leading: ClipOval(
-                            child: Image(
-                                height: 60,
-                                width: 60,
-                                fit: BoxFit.cover,
-                                image:
-                                    NetworkImage(_patientList[index]['Photo'])),
+            return Card(
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('Doctor Chat Bubbles')
+                      .doc(patientUID)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return Container();
+                    else {
+                      bool isUnread = snapshot.data.data()['bubble'];
+                      return ListTile(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        leading: ClipOval(
+                          child: Image(
+                              height: 60,
+                              width: 60,
+                              fit: BoxFit.cover,
+                              image:
+                                  NetworkImage(_patientList[index]['Photo'])),
+                        ),
+                        title: MyFonts()
+                            .heading1(item.split(':')[0], MyColors.black),
+                        subtitle: MyFonts()
+                            .heading2(item.split(':')[1], MyColors.gray),
+                        trailing: Visibility(
+                          visible: isUnread,
+                          child: Icon(
+                            Icons.brightness_1,
+                            color: MyColors.redLighter,
                           ),
-                          title: MyFonts()
-                              .heading1(item.split(':')[0], MyColors.black),
-                          subtitle: MyFonts()
-                              .heading2(item.split(':')[1], MyColors.gray),
-                          trailing: Visibility(
-                            visible: isUnread,
-                            child: Icon(
-                              Icons.brightness_1,
-                              color: MyColors.redLighter,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        DoctorPatientInterface(
-                                            patientNumber: _patientList[index]
-                                                ['PhoneNumber'])));
-                          },
-                        );
-                      }
-                    }),
-              ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      DoctorPatientInterface(
+                                          patientNumber: _patientList[index]
+                                              ['PhoneNumber'])));
+                        },
+                      );
+                    }
+                  }),
             );
           }
         });
@@ -137,6 +136,7 @@ class _DoctorHomeState extends State<DoctorHome> {
         child: CircularProgressIndicator(),
       );
     } else {
+      print(_data);
       return Consumer<LoginStore>(builder: (_, loginStore, __) {
         String uid = loginStore.firebaseUser.uid;
         return Scaffold(
@@ -197,17 +197,30 @@ class _DoctorHomeState extends State<DoctorHome> {
                           child: MyFonts()
                               .heading2('No results found', MyColors.gray),
                         )
-                      : AnimatedList(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          key: _listKey,
-                          initialItemCount: _data.length,
-                          itemBuilder: (context, index, animation) {
-                            if (index < _data.length)
-                              return _buildItem(_data[index], animation, index);
-                            else
-                              return Container();
+                      : RefreshIndicator(
+                          onRefresh: () async {
+                            setState(() {
+                              _patientList = FuzzySearchListManagement(
+                                      patientList: _patientListStatic)
+                                  .searchResults(searchController.text);
+                              _data = FuzzySearchListManagement(
+                                      patientList: _patientListStatic)
+                                  .convertDynamicToString(_patientList);
+                            });
                           },
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            key: _listKey,
+                            itemCount: _data.length,
+                            itemBuilder: (context, index) {
+                              print('Build here $_data $index');
+                              if (index < _data.length)
+                                return _buildItem(_data[index], index);
+                              else
+                                return Container();
+                            },
+                          ),
                         ),
                 ),
               ],
