@@ -183,7 +183,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
                   );
                 },
                 child: MyFonts()
-                    .subHeadline('Add a note'.toUpperCase(), MyColors.white),
+                    .body('Add a note', MyColors.white),
                 style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
               ),
             ],
