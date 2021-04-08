@@ -6,6 +6,7 @@ import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
 import 'package:health_bag/pages/common/latestTestResults.dart';
+import 'package:health_bag/pages/patients/patientMedications/currentMedications.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -299,28 +300,7 @@ class _PatientHomeState extends State<PatientHome> {
                                     }
                                   }),
                               MySpaces.vSmallGapInBetween,
-                              MyFonts().heading1(
-                                  'Current Medications', MyColors.black),
-                              MySpaces.vGapInBetween,
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      _medicineCard('Paracetamol'),
-                                      MySpaces.hSmallestGapInBetween,
-                                      _medicineCard('Sinarest'),
-                                    ],
-                                  ),
-                                  MySpaces.vSmallestGapInBetween,
-                                  Row(
-                                    children: [
-                                      _medicineCard('Paracetamol'),
-                                      MySpaces.hSmallestGapInBetween,
-                                      _medicineCard('Sinarest'),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              CurrentMedications(patientUID: uid),
                               MySpaces.vSmallGapInBetween,
                               LatestTestResults(patientUID: uid),
                               MySpaces.vSmallGapInBetween,

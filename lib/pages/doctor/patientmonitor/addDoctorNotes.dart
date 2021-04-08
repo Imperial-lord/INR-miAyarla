@@ -191,6 +191,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
           MySpaces.vGapInBetween,
           AnimatedList(
             scrollDirection: Axis.vertical,
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             key: _listKey,
             initialItemCount: _dataDocNotes.length,

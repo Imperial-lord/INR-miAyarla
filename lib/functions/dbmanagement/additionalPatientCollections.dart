@@ -18,7 +18,6 @@ class AdditionalPatientCollections {
     firestoreInstance.collection('Prescription and Test Results').doc(uid).set({
       'Photo': [],
     });
-    firestoreInstance.collection('Medicines').doc(uid).set({'Medicine': []});
     firestoreInstance.collection('Doctor Notes').doc(uid).set({
       'Note': [],
     });
