@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
-import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';

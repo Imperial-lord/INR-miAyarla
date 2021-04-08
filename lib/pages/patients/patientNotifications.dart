@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -18,6 +19,7 @@ class _PatientNotificationsState extends State<PatientNotifications> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
+      String patientUID = loginStore.firebaseUser.uid;
       return Scaffold(
         body: SafeArea(
           child: Stack(
@@ -43,41 +45,45 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                   right: 15,
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      for (int i = 0; i < 3; i++)
-                        Card(
-                          elevation: 3,
-                          child: ListTile(
-                            leading: Container(
-                                height: double.infinity,
-                                child: Icon(Icons.notifications_active,
-                                    color: MyColors.redLighter)),
-                            title: MyFonts().heading2(
-                                'Upcoming Notifications', MyColors.blueLighter),
-                            subtitle: MyFonts()
-                                .body('9:00 AM Saturday', MyColors.gray),
-                          ),
-                        ),
-                      for (int i = 0; i < 6; i++)
-                        Card(
-                          child: ListTile(
-                            leading: Container(
-                                height: double.infinity,
-                                child: Icon(
-                                  Icons.notifications_active,
-                                  color: MyColors.redLightest,
-                                )),
-                            title: MyFonts().heading2(
-                                'Past Notifications', MyColors.blueLightest),
-                            subtitle: MyFonts().body('9:00 AM Friday',
-                                MyColors.gray.withOpacity(0.5)),
-                          ),
-                        ),
-                      MySpaces.vSmallGapInBetween,
-                    ],
-                  ),
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('Notifications')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          return Container();
+                        else {
+                          List<Map> notificationData = [];
+                          for (int i = 0; i < snapshot.data.docs.length; i++)
+                            if (snapshot.data.docs[i].data()['PatientUID'] ==
+                                patientUID)
+                              notificationData
+                                  .add(snapshot.data.docs[i].data());
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              for (int i = 0; i < notificationData.length; i++)
+                                Card(
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.all(10),
+                                    leading: Container(
+                                        height: double.infinity,
+                                        child: Icon(Icons.notifications_active,
+                                            color: MyColors.redLighter)),
+                                    title: MyFonts().heading2(
+                                        notificationData[i]['Title'],
+                                        MyColors.blueLighter),
+                                    subtitle: MyFonts().body(
+                                        notificationData[i]['Body'],
+                                        MyColors.gray),
+                                    trailing: Icon(CupertinoIcons.wrench_fill),
+                                  ),
+                                ),
+                              MySpaces.vSmallGapInBetween,
+                            ],
+                          );
+                        }
+                      }),
                 ),
               ),
             ],

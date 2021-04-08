@@ -19,6 +19,8 @@ import 'package:health_bag/pages/doctor/doctorRejected.dart';
 import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
 import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
+import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/addMedicine.dart';
+import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/timingsNotes.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
@@ -91,21 +93,20 @@ class _MyAppState extends State<MyApp> {
                 DoctorApproved.id: (context) => DoctorApproved(),
                 DoctorRejected.id: (context) => DoctorRejected(),
                 AddMoreDoctors.id: (context) => AddMoreDoctors(),
-                DoctorHome.id: (context) => DoctorHome(
-                      doctorUID: null,
-                    ),
+                DoctorHome.id: (context) => DoctorHome(),
                 DoctorProfile.id: (context) => DoctorProfile(),
                 DoctorManagement.id: (context) => DoctorManagement(),
                 DoctorReg.id: (context) => DoctorReg(),
                 DoctorUploadPhoto.id: (context) => DoctorUploadPhoto(),
-                DoctorPatientInterface.id: (context) => DoctorPatientInterface(
-                      patientNumber: null,
-                    ),
-                MonitorPatientHealth.id: (context) => MonitorPatientHealth(
-                      patientUID: null,
-                    ),
+                DoctorPatientInterface.id: (context) =>
+                    DoctorPatientInterface(),
+                MonitorPatientHealth.id: (context) =>
+                    MonitorPatientHealth(patientUID: null),
                 DoctorSendNotifications.id: (context) =>
-                    DoctorSendNotifications(patientUID: null),
+                    DoctorSendNotifications(),
+                AddMedicine.id: (context) => AddMedicine(),
+                TimingsAndNotes.id: (context) =>
+                    TimingsAndNotes(),
               },
             ),
           );

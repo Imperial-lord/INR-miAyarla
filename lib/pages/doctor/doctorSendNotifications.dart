@@ -26,8 +26,6 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
       new TextEditingController();
   TextEditingController notificationBodyController =
       new TextEditingController();
-  TextEditingController notificationAttachmentController =
-      new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +69,6 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
                         TextInputType.multiline,
                         5,
                         true),
-                    MultilineRow().getMultilineRow(
-                        'Attachment',
-                        'Add an attachment',
-                        Icon(CupertinoIcons.paperclip),
-                        notificationAttachmentController,
-                        TextInputType.multiline,
-                        1,
-                        false),
                     MySpaces.vMediumGapInBetween,
                     Row(
                       children: [

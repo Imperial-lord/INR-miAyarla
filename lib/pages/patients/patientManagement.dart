@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
@@ -48,7 +49,7 @@ class _PatientManagementState extends State<PatientManagement> {
                     child: MyFonts().subHeadline('Home', MyColors.blueLighter),
                   ),
                   icon: Icon(
-                    EvaIcons.homeOutline,
+                    CupertinoIcons.house_fill,
                   )),
               BottomNavyBarItem(
                   inactiveColor: MyColors.gray,
@@ -58,7 +59,7 @@ class _PatientManagementState extends State<PatientManagement> {
                     child: MyFonts().subHeadline('Notifications', MyColors.blueLighter),
                   ),
                   icon: Icon(
-                    EvaIcons.bellOutline,
+                    CupertinoIcons.bell_fill,
                   )
               ),
               BottomNavyBarItem(
@@ -69,7 +70,7 @@ class _PatientManagementState extends State<PatientManagement> {
                     child: MyFonts().subHeadline('Profile', MyColors.blueLighter),
                   ),
                   icon: Icon(
-                    EvaIcons.personOutline,
+                    CupertinoIcons.person_alt,
                   )
               ),
               BottomNavyBarItem(
@@ -80,7 +81,7 @@ class _PatientManagementState extends State<PatientManagement> {
                     child: MyFonts().subHeadline('About', MyColors.blueLighter),
                   ),
                   icon: Icon(
-                    EvaIcons.infoOutline,
+                    CupertinoIcons.info_circle_fill,
                   )
               ),
             ],
