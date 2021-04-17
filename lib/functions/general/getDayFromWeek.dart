@@ -14,3 +14,16 @@ int getDayFromWeek(String weekDayName) {
   else
     return 6;
 }
+
+String getWeekFromDay(int day) {
+  List<String> weekDayName = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
+  return weekDayName[day];
+}

@@ -50,3 +50,20 @@ export const sendNotifForChat = functions.firestore.document('Messages/{ChatID}/
 
     return fcm.sendToDevice(tokens, payload);
 });
+
+export const sendNotifForAddMedicine = functions.firestore.document('Medicines/{MedicineID}').onCreate(async snapshot => {
+    const notif = snapshot.data();
+    const querySnapshot = await db.collection('Users').doc(notif.PatientUID).collection('tokens').get();
+
+    const tokens = querySnapshot.docs.map(snap => snap.id);
+    const payload: admin.messaging.MessagingPayload = {
+        notification: {
+            title: 'New medicine added',
+            body: 'A new medicine was added by your doctor. Tap on this to check it out!',
+            icon: 'https://i.ibb.co/LN23p27/blood-drop.png',
+            clickAction: 'FLUTTER_NOTIFICATION_CLICK'
+        }
+    };
+
+    return fcm.sendToDevice(tokens, payload);
+});

@@ -32,6 +32,7 @@ import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(debug: false);

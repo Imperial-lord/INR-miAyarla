@@ -240,6 +240,7 @@ class _EditMedicineState extends State<EditMedicine> {
                                         .collection('Medicines')
                                         .doc(medicineID)
                                         .set({
+                                      'medicineScheduled': false,
                                       'PatientUID': patientUID,
                                       'DoctorUID': doctorUID,
                                       'Name': medicineNameController.text,
