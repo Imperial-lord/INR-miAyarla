@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:health_bag/functions/validations/userTypeValidation.dart';
 
 class Notifications {
   void configureFCM(String id, String peerId) {

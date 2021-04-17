@@ -204,6 +204,7 @@ class _AddMedicineState extends State<AddMedicine> {
                                         .collection('Medicines')
                                         .doc()
                                         .set({
+                                      'medicineScheduled': false,
                                       'PatientUID': patientUID,
                                       'DoctorUID': doctorUID,
                                       'Name': medicineNameController.text,

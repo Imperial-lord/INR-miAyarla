@@ -32,7 +32,7 @@ class _SplashState extends State<Splash> {
   }
 
   _loadWidget() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(milliseconds: 500);
     return Timer(_duration, navigationPage);
   }
 
