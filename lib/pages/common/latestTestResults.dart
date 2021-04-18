@@ -1,17 +1,18 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LatestTestResults extends StatefulWidget {
   static String id = 'patient-latest-test-results';
@@ -49,6 +50,31 @@ class _LatestTestResultsState extends State<LatestTestResults> {
   final String patientUID;
 
   _LatestTestResultsState({@required this.patientUID});
+
+  Future<String> downloadFile(String url, String fileName, String dir) async {
+    HttpClient httpClient = new HttpClient();
+    File file;
+    String filePath = '';
+    String myUrl = '';
+
+    try {
+      myUrl = url;
+      var request = await httpClient.getUrl(Uri.parse(myUrl));
+      var response = await request.close();
+      print(response);
+      if (response.statusCode == 200) {
+        var bytes = await consolidateHttpClientResponseBytes(response);
+        filePath = '$dir/$fileName';
+        file = File(filePath);
+        await file.writeAsBytes(bytes);
+      } else
+        filePath = 'Error code: ' + response.statusCode.toString();
+    } catch (ex) {
+      filePath = 'Can not fetch url';
+    }
+
+    return filePath;
+  }
 
   Future getFile() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -143,8 +169,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                             onPressed: () {
                               getFile();
                             },
-                            child: MyFonts()
-                                .body('Upload', MyColors.white),
+                            child: MyFonts().body('Upload', MyColors.white),
                             color: MyColors.blueLighter,
                           ),
                         ],
@@ -159,15 +184,23 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                                 elevation: 3,
                                 child: ListTile(
                                   onTap: () async {
-                                    final taskId =
-                                        await FlutterDownloader.enqueue(
-                                      fileName:
-                                          reportList[i].data()['File Name'],
-                                      url: reportList[i].data()['File Url'],
-                                      savedDir: 'storage/emulated/0/Download',
-                                      showNotification: true,
-                                      openFileFromNotification: true,
-                                    );
+                                    final downloadingPhotoSnackBar = SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: MyColors.black,
+                                        content: MyFonts()
+                                            .body('Downloading ${reportList[i].data()['File Name']}', MyColors.white));
+                                    ScaffoldMessenger.of(context).showSnackBar(downloadingPhotoSnackBar);
+                                    String filePath = await (downloadFile(
+                                        reportList[i].data()['File Url'],
+                                        reportList[i].data()['File Name'],
+                                        'storage/emulated/0/Download'));
+                                    var _openResult = 'Unknown';
+                                    final result =
+                                        await OpenFile.open(filePath);
+                                    setState(() {
+                                      _openResult =
+                                          "type=${result.type}  message=${result.message}";
+                                    });
                                   },
                                   leading: Container(
                                       height: double.infinity,
@@ -199,7 +232,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                   ),
                   isLoading
                       ? Container(
-                          height: (70+reportList.length*80).toDouble(),
+                          height: (70 + reportList.length * 80).toDouble(),
                           child: Center(
                             child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(

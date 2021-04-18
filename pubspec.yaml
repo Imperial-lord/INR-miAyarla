@@ -48,7 +48,7 @@ dependencies:
   flutter_linkify:
   firebase_messaging: ^8.0.0-dev.14
   file_picker:
-  flutter_downloader:
+  open_file:
   permission_handler:
   flutter_local_notifications: ^4.0.1+2
 
