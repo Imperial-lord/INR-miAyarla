@@ -152,7 +152,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
     ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
 
-    pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+    pickedFile = await imagePicker.getImage(source: ImageSource.gallery, imageQuality: 75);
     File image;
     if (pickedFile != null) {
       image = File(pickedFile.path);
