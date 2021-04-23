@@ -186,7 +186,7 @@ class ChatScreenState extends State<ChatScreen> {
     ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
 
-    pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+    pickedFile = await imagePicker.getImage(source: ImageSource.gallery, imageQuality: 75);
     imageFile = File(pickedFile.path);
 
     if (imageFile != null) {
