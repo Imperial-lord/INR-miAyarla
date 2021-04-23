@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/general/createDownloadDirectory.dart';
 import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
@@ -13,6 +14,7 @@ import 'package:health_bag/globals/mySpaces.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
 
 class LatestTestResults extends StatefulWidget {
   static String id = 'patient-latest-test-results';
@@ -184,23 +186,35 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                                 elevation: 3,
                                 child: ListTile(
                                   onTap: () async {
-                                    final downloadingPhotoSnackBar = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: MyColors.black,
-                                        content: MyFonts()
-                                            .body('Downloading ${reportList[i].data()['File Name']}', MyColors.white));
-                                    ScaffoldMessenger.of(context).showSnackBar(downloadingPhotoSnackBar);
-                                    String filePath = await (downloadFile(
-                                        reportList[i].data()['File Url'],
-                                        reportList[i].data()['File Name'],
-                                        'storage/emulated/0/Download'));
-                                    var _openResult = 'Unknown';
-                                    final result =
-                                        await OpenFile.open(filePath);
-                                    setState(() {
-                                      _openResult =
-                                          "type=${result.type}  message=${result.message}";
-                                    });
+                                    Directory appDir =
+                                        await getExternalStorageDirectory();
+                                    Directory directory = Directory(
+                                        createDownloadDirectory(appDir));
+                                    if (!await directory.exists()) {
+                                      await directory.create(recursive: true);
+                                    }
+                                    if (await directory.exists()) {
+                                      final downloadingPhotoSnackBar = SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: MyColors.black,
+                                          content: MyFonts().body(
+                                              'Opening ${reportList[i].data()['File Name']}',
+                                              MyColors.white));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                              downloadingPhotoSnackBar);
+                                      String filePath = await (downloadFile(
+                                          reportList[i].data()['File Url'],
+                                          reportList[i].data()['File Name'],
+                                          directory.path));
+                                      var _openResult = 'Unknown';
+                                      final result =
+                                          await OpenFile.open(filePath);
+                                      setState(() {
+                                        _openResult =
+                                            "type=${result.type}  message=${result.message}";
+                                      });
+                                    }
                                   },
                                   leading: Container(
                                       height: double.infinity,
