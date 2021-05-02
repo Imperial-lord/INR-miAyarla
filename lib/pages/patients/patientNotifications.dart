@@ -47,7 +47,7 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                 child: SingleChildScrollView(
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('Notifications')
+                          .collection('Notifications').orderBy('TimeOfCreation',descending: true)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData)
@@ -59,32 +59,37 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                                 patientUID)
                               notificationData
                                   .add(snapshot.data.docs[i].data());
-                          return (notificationData.length==0)?MyFonts().body(
-                              'Sorry you have no notifications at the moment!',
-                              MyColors.gray):
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              for (int i = 0; i < notificationData.length; i++)
-                                Card(
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.all(10),
-                                    leading: Container(
-                                        height: double.infinity,
-                                        child: Icon(Icons.notifications_active,
-                                            color: MyColors.redLighter)),
-                                    title: MyFonts().heading2(
-                                        notificationData[i]['Title'],
-                                        MyColors.blueLighter),
-                                    subtitle: MyFonts().body(
-                                        notificationData[i]['Body'],
-                                        MyColors.gray),
-                                    trailing: Icon(CupertinoIcons.wrench_fill),
-                                  ),
-                                ),
-                              MySpaces.vSmallGapInBetween,
-                            ],
-                          );
+                          return (notificationData.length == 0)
+                              ? MyFonts().body(
+                                  'Sorry you have no notifications at the moment!',
+                                  MyColors.gray)
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    for (int i = 0;
+                                        i < notificationData.length;
+                                        i++)
+                                      Card(
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.all(10),
+                                          leading: Container(
+                                              height: double.infinity,
+                                              child: Icon(
+                                                  Icons.notifications_active,
+                                                  color: MyColors.redLighter)),
+                                          title: MyFonts().heading2(
+                                              notificationData[i]['Title'],
+                                              MyColors.blueLighter),
+                                          subtitle: MyFonts().body(
+                                              notificationData[i]['Body'],
+                                              MyColors.gray),
+                                          trailing:
+                                              Icon(CupertinoIcons.wrench_fill),
+                                        ),
+                                      ),
+                                    MySpaces.vSmallGapInBetween,
+                                  ],
+                                );
                         }
                       }),
                 ),

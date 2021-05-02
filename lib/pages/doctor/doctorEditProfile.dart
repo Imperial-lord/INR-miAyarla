@@ -331,8 +331,7 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                                   }).then((value) => print(
                                           'Successfully added new doctor data'));
                                 }
-                                Navigator.pushNamed(
-                                    context, DoctorManagement.id);
+                                Navigator.pop(context);
                               },
                               padding: EdgeInsets.all(15),
                               child: MyFonts()

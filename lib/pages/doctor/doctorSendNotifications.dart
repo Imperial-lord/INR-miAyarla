@@ -86,6 +86,7 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
                                 'PatientUID': patientUID,
                                 'Title': notificationTitleController.text,
                                 'Body': notificationBodyController.text,
+                                'TimeOfCreation': DateTime.now(),
                               });
                               Navigator.pop(context);
                             },
