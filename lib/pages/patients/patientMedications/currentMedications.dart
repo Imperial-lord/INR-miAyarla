@@ -136,95 +136,104 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                     medicineID.add(snapshot.data.docs[i].id);
                     medicineScheduled
                         .add(snapshot.data.docs[i].data()['medicineScheduled']);
-                    if (medicineScheduled[i] == false)
+                    if (medicineScheduled.last == false)
                       icon.add(schedule);
                     else
                       icon.add(done);
                   }
                 }
-                return (medicineData.length==0)? MyFonts().body(
-                    'Sorry you doctor has not added any medicine for you at the moment.',
-                    MyColors.gray):
-                Column(
-                  children: [
-                    for (int i = 0; i < medicineData.length; i++)
-                      Column(
+                return (medicineData.length == 0)
+                    ? MyFonts().body(
+                        'Sorry you doctor has not added any medicine for you at the moment.',
+                        MyColors.gray)
+                    : Column(
                         children: [
-                          InkWell(
-                            onTap: () {
-                              globals.timingsAndNotesArray[0] =
-                                  List.from(medicineData[i]['Monday']);
-                              globals.timingsAndNotesArray[1] =
-                                  List.from(medicineData[i]['Tuesday']);
-                              globals.timingsAndNotesArray[2] =
-                                  List.from(medicineData[i]['Wednesday']);
-                              globals.timingsAndNotesArray[3] =
-                                  List.from(medicineData[i]['Thursday']);
-                              globals.timingsAndNotesArray[4] =
-                                  List.from(medicineData[i]['Friday']);
-                              globals.timingsAndNotesArray[5] =
-                                  List.from(medicineData[i]['Saturday']);
-                              globals.timingsAndNotesArray[6] =
-                                  List.from(medicineData[i]['Sunday']);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          ViewMedicine(
-                                            medicineData: medicineData[i],
-                                            medicineID: medicineID[i],
-                                          )));
-                            },
-                            child: ListTile(
-                              contentPadding: EdgeInsets.all(10),
-                              tileColor: MyColors.white,
-                              leading: Image(
-                                  image: AssetImage('assets/icons/pills.png')),
-                              title: MyFonts().heading2(
-                                  medicineData[i]['Name'], MyColors.black),
-                              subtitle: MyFonts().body(
-                                  'Ends On: ${medicineData[i]['End Date']}',
-                                  MyColors.gray),
-                              trailing: Container(
-                                decoration: BoxDecoration(
-                                    color: icon[i] == schedule
-                                        ? MyColors.redLighter
-                                        : Colors.greenAccent,
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: IconButton(
-                                  onPressed: () {
-                                    if (icon[i] == schedule) {
-                                      setState(() {
-                                        FirebaseFirestore firestoreInstance =
-                                            FirebaseFirestore.instance;
-                                        firestoreInstance
-                                            .collection('Medicines')
-                                            .doc(medicineID[i])
-                                            .update(
-                                                {'medicineScheduled': true});
-                                      });
-                                      final scheduleMedicineSnackBar = SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: MyColors.black,
-                                          content: MyFonts().body(
-                                              "${medicineData[i]['Name']} has been scheduled",
-                                              MyColors.white));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                              scheduleMedicineSnackBar);
-                                      scheduleMedicine(medicineData[i]);
-                                    }
+                          for (int i = 0; i < medicineData.length; i++)
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    globals.timingsAndNotesArray[0] =
+                                        List.from(medicineData[i]['Monday']);
+                                    globals.timingsAndNotesArray[1] =
+                                        List.from(medicineData[i]['Tuesday']);
+                                    globals.timingsAndNotesArray[2] =
+                                        List.from(medicineData[i]['Wednesday']);
+                                    globals.timingsAndNotesArray[3] =
+                                        List.from(medicineData[i]['Thursday']);
+                                    globals.timingsAndNotesArray[4] =
+                                        List.from(medicineData[i]['Friday']);
+                                    globals.timingsAndNotesArray[5] =
+                                        List.from(medicineData[i]['Saturday']);
+                                    globals.timingsAndNotesArray[6] =
+                                        List.from(medicineData[i]['Sunday']);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ViewMedicine(
+                                                  medicineData: medicineData[i],
+                                                  medicineID: medicineID[i],
+                                                )));
                                   },
-                                  icon: icon[i],
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.all(10),
+                                    tileColor: MyColors.white,
+                                    leading: Image(
+                                        image: AssetImage(
+                                            'assets/icons/pills.png')),
+                                    title: MyFonts().heading2(
+                                        medicineData[i]['Name'],
+                                        MyColors.black),
+                                    subtitle: MyFonts().body(
+                                        'Ends On: ${medicineData[i]['End Date']}',
+                                        MyColors.gray),
+                                    trailing: Container(
+                                      decoration: BoxDecoration(
+                                          color: icon[i] == schedule
+                                              ? MyColors.redLighter
+                                              : Colors.greenAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          if (icon[i] == schedule) {
+                                            setState(() {
+                                              FirebaseFirestore
+                                                  firestoreInstance =
+                                                  FirebaseFirestore.instance;
+                                              firestoreInstance
+                                                  .collection('Medicines')
+                                                  .doc(medicineID[i])
+                                                  .update({
+                                                'medicineScheduled': true
+                                              });
+                                            });
+                                            final scheduleMedicineSnackBar =
+                                                SnackBar(
+                                                    behavior: SnackBarBehavior
+                                                        .floating,
+                                                    backgroundColor:
+                                                        MyColors.black,
+                                                    content: MyFonts().body(
+                                                        "${medicineData[i]['Name']} has been scheduled",
+                                                        MyColors.white));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                                    scheduleMedicineSnackBar);
+                                            scheduleMedicine(medicineData[i]);
+                                          }
+                                        },
+                                        icon: icon[i],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                MySpaces.vGapInBetween,
+                              ],
                             ),
-                          ),
-                          MySpaces.vGapInBetween,
                         ],
-                      ),
-                  ],
-                );
+                      );
               }
             }),
       ]),

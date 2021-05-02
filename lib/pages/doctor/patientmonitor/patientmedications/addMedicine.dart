@@ -15,6 +15,7 @@ import 'medicineGlobals.dart' as globals;
 class AddMedicine extends StatefulWidget {
   static String id = 'add-medicine';
   final String patientUID;
+
   AddMedicine({@required this.patientUID});
 
   @override
@@ -23,10 +24,12 @@ class AddMedicine extends StatefulWidget {
 
 class _AddMedicineState extends State<AddMedicine> {
   final String patientUID;
+
   _AddMedicineState({@required this.patientUID});
 
   TextEditingController medicineNameController = new TextEditingController();
   TextEditingController lastDateController = new TextEditingController();
+  final FocusNode medicineFocusNode = FocusNode();
 
   List<String> day = [
     'Monday',
@@ -45,7 +48,8 @@ class _AddMedicineState extends State<AddMedicine> {
       TextEditingController controller,
       TextInputType textInputType,
       int lines,
-      bool toggleEnabled) {
+      bool toggleEnabled,
+      FocusNode focusNode) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -55,9 +59,10 @@ class _AddMedicineState extends State<AddMedicine> {
         ),
         InkWell(
           onTap: () {
-            if (heading == 'End Date')
+            if (heading == 'End Date') {
+              medicineFocusNode.unfocus();
               _selectDate(context, controller);
-            else
+            } else
               print(false);
           },
           child: CupertinoTextField(
@@ -76,6 +81,7 @@ class _AddMedicineState extends State<AddMedicine> {
                 color: (toggleEnabled) ? MyColors.black : MyColors.gray),
             controller: controller,
             keyboardType: textInputType,
+            focusNode: focusNode,
           ),
         ),
       ],
@@ -150,7 +156,8 @@ class _AddMedicineState extends State<AddMedicine> {
                             medicineNameController,
                             TextInputType.text,
                             1,
-                            true),
+                            true,
+                            medicineFocusNode),
                         _getMedicineDetails(
                             'End Date',
                             'dd-mm-yyyy',
@@ -158,7 +165,8 @@ class _AddMedicineState extends State<AddMedicine> {
                             lastDateController,
                             TextInputType.datetime,
                             1,
-                            false),
+                            false,
+                            null),
                         MySpaces.vGapInBetween,
                         MyFonts().heading2('Timings and Notes', MyColors.gray),
                         Divider(color: Colors.black),
@@ -167,6 +175,7 @@ class _AddMedicineState extends State<AddMedicine> {
                             children: [
                               TimingsAndNotes(
                                 day: day[i],
+                                focusNode: medicineFocusNode,
                               ),
                             ],
                           ),
@@ -211,14 +220,14 @@ class _AddMedicineState extends State<AddMedicine> {
                                       'End Date': lastDateController.text,
                                       'Monday': globals.timingsAndNotesArray[0],
                                       'Tuesday':
-                                      globals.timingsAndNotesArray[1],
+                                          globals.timingsAndNotesArray[1],
                                       'Wednesday':
-                                      globals.timingsAndNotesArray[2],
+                                          globals.timingsAndNotesArray[2],
                                       'Thursday':
-                                      globals.timingsAndNotesArray[3],
+                                          globals.timingsAndNotesArray[3],
                                       'Friday': globals.timingsAndNotesArray[4],
                                       'Saturday':
-                                      globals.timingsAndNotesArray[5],
+                                          globals.timingsAndNotesArray[5],
                                       'Sunday': globals.timingsAndNotesArray[6]
                                     });
                                     globals.timingsAndNotesArray = temp;

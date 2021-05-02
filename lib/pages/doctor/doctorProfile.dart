@@ -53,6 +53,14 @@ Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
         },
         child: MyFonts().heading2('Logout', MyColors.blueLighter),
       ),
+      // ignore: deprecated_member_use
+      FlatButton(
+        color: MyColors.backgroundColor,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: MyFonts().heading2('No', MyColors.blueLighter),
+      ),
     ],
   );
 }

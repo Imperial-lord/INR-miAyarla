@@ -57,7 +57,6 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                 3,
               ));
       }
-
       return Consumer<LoginStore>(
         builder: (_, loginStore, __) {
           return Scaffold(
@@ -115,59 +114,67 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
   Widget _buildItem(String item, Animation animation, int index) {
     return SizeTransition(
       sizeFactor: animation,
-      child: Card(
-        child: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection('Doctors').snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                String name = '';
-                String photo = '';
-                for (int i = 0; i < snapshot.data.docs.length; i++) {
-                  if (snapshot.data.docs[i].data()['PhoneNumber'] == item) {
-                    name = snapshot.data.docs[i].data()['Name'];
-                    photo = snapshot.data.docs[i].data()['Photo'];
+      child: Consumer<LoginStore>(builder: (_, loginStore, __) {
+        String doctorUID = loginStore.firebaseUser.uid;
+        return Card(
+          child: StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection('Doctors').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  String name = '';
+                  String photo = '';
+                  bool allowDelete = false;
+                  for (int i = 0; i < snapshot.data.docs.length; i++) {
+                    if (snapshot.data.docs[i].data()['PhoneNumber'] == item) {
+                      name = snapshot.data.docs[i].data()['Name'];
+                      photo = snapshot.data.docs[i].data()['Photo'];
+                      if (doctorUID == snapshot.data.docs[i].id)
+                        allowDelete = true;
+                    }
                   }
-                }
-                return ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  leading: ClipOval(
-                    child: Image(
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
-                      image: photo == ''
-                          ? AssetImage('assets/icons/doctor.png')
-                          : NetworkImage(photo),
+                  return ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    leading: ClipOval(
+                      child: Image(
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
+                        image: photo == ''
+                            ? AssetImage('assets/icons/doctor.png')
+                            : NetworkImage(photo),
+                      ),
                     ),
-                  ),
-                  title: MyFonts().heading1(item, MyColors.black),
-                  subtitle: MyFonts().heading2(
-                      name != '' ? name : 'Doctor not registered',
-                      MyColors.gray),
-                  trailing: IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
-                        // pass index to remove an item
-                        print('remove');
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              _removeDocPopup(item, index),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.delete_rounded,
-                        size: 30,
-                        color: MyColors.red,
-                      )),
-                );
-              }
-            }),
-      ),
+                    title: MyFonts().heading1(item, MyColors.black),
+                    subtitle: MyFonts().heading2(
+                        name != '' ? name : 'Doctor not registered',
+                        MyColors.gray),
+                    trailing: (allowDelete == true)
+                        ? IconButton(
+                            padding: EdgeInsets.all(0),
+                            onPressed: () {
+                              // pass index to remove an item
+                              print('remove');
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _removeDocPopup(item, index),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.delete_rounded,
+                              size: 30,
+                              color: MyColors.red,
+                            ))
+                        : null,
+                  );
+                }
+              }),
+        );
+      }),
     );
   }
 

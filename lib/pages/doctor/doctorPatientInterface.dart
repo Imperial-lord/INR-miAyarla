@@ -233,6 +233,33 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                   ),
                                 ],
                               ),
+                              MySpaces.vSmallGapInBetween,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                      },
+                                      padding: EdgeInsets.all(15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.offline_share_rounded,
+                                            color: MyColors.white,
+                                          ),
+                                          MySpaces.hGapInBetween,
+                                          MyFonts().heading2(
+                                              'Transfer Patient',
+                                              MyColors.white),
+                                        ],
+                                      ),
+                                      color: MyColors.redLighter,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               MySpaces.vLargeGapInBetween,
                             ],
                           ),

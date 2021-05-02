@@ -11,17 +11,18 @@ class TimingsAndNotes extends StatefulWidget {
   static String id = 'timings-and-notes';
 
   final String day;
+  final FocusNode focusNode;
 
-  TimingsAndNotes({@required this.day});
+  TimingsAndNotes({@required this.day, this.focusNode});
 
   @override
-  _TimingsAndNotesState createState() => _TimingsAndNotesState(day: day);
+  _TimingsAndNotesState createState() => _TimingsAndNotesState(day: day, focusNode:focusNode);
 }
 
 class _TimingsAndNotesState extends State<TimingsAndNotes> {
   final String day;
-
-  _TimingsAndNotesState({@required this.day});
+  final FocusNode focusNode;
+  _TimingsAndNotesState({@required this.day, this.focusNode});
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
@@ -248,6 +249,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
               // ignore: deprecated_member_use
               RaisedButton(
                   onPressed: () {
+                    if(focusNode.hasPrimaryFocus) focusNode.unfocus();
                     _insertSingleItem();
                   },
                   color: MyColors.white,
