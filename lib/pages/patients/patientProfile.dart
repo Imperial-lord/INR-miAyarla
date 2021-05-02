@@ -54,6 +54,13 @@ Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
         },
         child: MyFonts().heading2('Logout', MyColors.blueLighter),
       ),
+      FlatButton(
+        color: MyColors.backgroundColor,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: MyFonts().heading2('No', MyColors.blueLighter),
+      ),
     ],
   );
 }

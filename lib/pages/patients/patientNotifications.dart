@@ -59,7 +59,10 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                                 patientUID)
                               notificationData
                                   .add(snapshot.data.docs[i].data());
-                          return Column(
+                          return (notificationData.length==0)?MyFonts().body(
+                              'Sorry you have no notifications at the moment!',
+                              MyColors.gray):
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               for (int i = 0; i < notificationData.length; i++)

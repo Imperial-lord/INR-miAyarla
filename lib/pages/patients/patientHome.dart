@@ -246,15 +246,22 @@ class _PatientHomeState extends State<PatientHome> {
                                       return Container();
                                     else {
                                       var notes = snapshot.data.data()['Note'];
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          for (int i = 0; i < notes.length; i++)
-                                            MyFonts().body('• ${notes[i]}',
-                                                MyColors.blueLighter)
-                                        ],
-                                      );
+                                      return (notes.length == 0)
+                                          ? MyFonts().body(
+                                              'Sorry you doctor has not added any notes at the moment.',
+                                              MyColors.gray)
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                for (int i = 0;
+                                                    i < notes.length;
+                                                    i++)
+                                                  MyFonts().body(
+                                                      '• ${notes[i]}',
+                                                      MyColors.blueLighter)
+                                              ],
+                                            );
                                     }
                                   }),
                               MySpaces.vSmallGapInBetween,
@@ -280,9 +287,13 @@ class _PatientHomeState extends State<PatientHome> {
                                               MyFonts().heading2(
                                                   '• Last Visit: ',
                                                   MyColors.blueLighter),
-                                              MyFonts().heading2(
-                                                  dates['LastVisit'],
-                                                  MyColors.redLighter)
+                                              (dates['LastVisit'] == '')
+                                                  ? MyFonts().body(
+                                                      'Not available',
+                                                      MyColors.gray)
+                                                  : MyFonts().heading2(
+                                                      dates['LastVisit'],
+                                                      MyColors.redLighter)
                                             ],
                                           ),
                                           Row(
@@ -290,9 +301,13 @@ class _PatientHomeState extends State<PatientHome> {
                                               MyFonts().heading2(
                                                   '• Next Visit: ',
                                                   MyColors.blueLighter),
-                                              MyFonts().heading2(
-                                                  dates['NextVisit'],
-                                                  MyColors.redLighter)
+                                              (dates['NextVisit'] == '')
+                                                  ? MyFonts().body(
+                                                      'Not available',
+                                                      MyColors.gray)
+                                                  : MyFonts().heading2(
+                                                      dates['NextVisit'],
+                                                      MyColors.redLighter)
                                             ],
                                           ),
                                         ],

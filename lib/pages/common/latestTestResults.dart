@@ -177,76 +177,90 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                         ],
                       ),
                       MySpaces.vGapInBetween,
-                      Column(
-                        children: [
-                          for (int i = 0; i < reportList.length; i++)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
-                              child: Card(
-                                elevation: 3,
-                                child: ListTile(
-                                  onTap: () async {
-                                    Directory appDir =
-                                        await getExternalStorageDirectory();
-                                    Directory directory = Directory(
-                                        createDownloadDirectory(appDir));
-                                    if (!await directory.exists()) {
-                                      await directory.create(recursive: true);
-                                    }
-                                    if (await directory.exists()) {
-                                      final downloadingPhotoSnackBar = SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: MyColors.black,
-                                          content: MyFonts().body(
-                                              'Opening ${reportList[i].data()['File Name']}',
-                                              MyColors.white));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                              downloadingPhotoSnackBar);
-                                      String filePath = await (downloadFile(
-                                          reportList[i].data()['File Url'],
-                                          reportList[i].data()['File Name'],
-                                          directory.path));
-                                      var _openResult = 'Unknown';
-                                      final result =
-                                          await OpenFile.open(filePath);
-                                      setState(() {
-                                        _openResult =
-                                            "type=${result.type}  message=${result.message}";
-                                      });
-                                    }
-                                  },
-                                  leading: Container(
-                                      height: double.infinity,
-                                      child: Icon(CupertinoIcons.doc_chart)),
-                                  title: MyFonts().heading2(
-                                      changeFileName(
-                                          reportList[i].data()['File Name']),
-                                      MyColors.blueLighter),
-                                  subtitle: MyFonts().subHeadline(
-                                      formatDateTime(reportList[i]
-                                              .data()['Upload Time']
-                                              .toDate()
-                                              .toString()) +
-                                          '\t\t' +
-                                          DateFormat.jm().format(reportList[i]
-                                              .data()['Upload Time']
-                                              .toDate()),
-                                      MyColors.gray),
-                                  trailing: Icon(
-                                    Icons.download_rounded,
-                                    color: MyColors.blueLighter,
-                                  ),
-                                ),
-                              ),
+                      (reportList.length == 0)
+                          ? MyFonts().body(
+                              'No test result or prescription has been shared by you or your doctor. Click on the Upload button to share.',
+                              MyColors.gray)
+                          : Column(
+                              children: [
+                                for (int i = 0; i < reportList.length; i++)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 2),
+                                    child: Card(
+                                      elevation: 3,
+                                      child: ListTile(
+                                        onTap: () async {
+                                          Directory appDir =
+                                              await getExternalStorageDirectory();
+                                          Directory directory = Directory(
+                                              createDownloadDirectory(appDir));
+                                          if (!await directory.exists()) {
+                                            await directory.create(
+                                                recursive: true);
+                                          }
+                                          if (await directory.exists()) {
+                                            final downloadingPhotoSnackBar =
+                                                SnackBar(
+                                                    behavior: SnackBarBehavior
+                                                        .floating,
+                                                    backgroundColor:
+                                                        MyColors.black,
+                                                    content: MyFonts().body(
+                                                        'Opening ${reportList[i].data()['File Name']}',
+                                                        MyColors.white));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                                    downloadingPhotoSnackBar);
+                                            String filePath =
+                                                await (downloadFile(
+                                                    reportList[i]
+                                                        .data()['File Url'],
+                                                    reportList[i]
+                                                        .data()['File Name'],
+                                                    directory.path));
+                                            var _openResult = 'Unknown';
+                                            final result =
+                                                await OpenFile.open(filePath);
+                                            setState(() {
+                                              _openResult =
+                                                  "type=${result.type}  message=${result.message}";
+                                            });
+                                          }
+                                        },
+                                        leading: Container(
+                                            height: double.infinity,
+                                            child:
+                                                Icon(CupertinoIcons.doc_chart)),
+                                        title: MyFonts().heading2(
+                                            changeFileName(reportList[i]
+                                                .data()['File Name']),
+                                            MyColors.blueLighter),
+                                        subtitle: MyFonts().subHeadline(
+                                            formatDateTime(reportList[i]
+                                                    .data()['Upload Time']
+                                                    .toDate()
+                                                    .toString()) +
+                                                '\t\t' +
+                                                DateFormat.jm().format(
+                                                    reportList[i]
+                                                        .data()['Upload Time']
+                                                        .toDate()),
+                                            MyColors.gray),
+                                        trailing: Icon(
+                                          Icons.download_rounded,
+                                          color: MyColors.blueLighter,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
                             )
-                        ],
-                      )
                     ],
                   ),
-                  isLoading
-                      ? Container(
-                          height: (70 + reportList.length * 80).toDouble(),
+                  isLoading?
+                       Container(
+                          height: (120 + reportList.length * 80).toDouble(),
                           child: Center(
                             child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(

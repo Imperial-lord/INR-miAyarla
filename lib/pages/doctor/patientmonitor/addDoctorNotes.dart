@@ -101,7 +101,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            MyFonts().heading1('Add a doctor', MyColors.blue),
+            MyFonts().heading1('Add a note', MyColors.blue),
             MySpaces.vGapInBetween,
             CupertinoTextField(
               padding: EdgeInsets.all(10),

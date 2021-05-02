@@ -152,7 +152,8 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
     ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
 
-    pickedFile = await imagePicker.getImage(source: ImageSource.gallery, imageQuality: 75);
+    pickedFile = await imagePicker.getImage(
+        source: ImageSource.gallery, imageQuality: 75);
     File image;
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -543,10 +544,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                     'SignUpDate': signUpDateController.text,
                                   }).then((value) => print(
                                           'Successfully added new patient data'));
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      PatientManagement.id,
-                                      (Route<dynamic> route) => false);
+                                  Navigator.pop(context);
                                 }
                               },
                               padding: EdgeInsets.all(15),
