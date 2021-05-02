@@ -30,63 +30,61 @@ class _PatientManagementState extends State<PatientManagement> {
       AboutApp(),
     ];
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
-        return Scaffold(
-          body: pages[_selectedIndex],
-          bottomNavigationBar: BottomNavyBar(
-            backgroundColor: MyColors.white,
-            selectedIndex: _selectedIndex,
-            onItemSelected: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            items: [
-              BottomNavyBarItem(
-                  inactiveColor: MyColors.gray,
-                  activeColor: MyColors.blueLighter,
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: MyFonts().subHeadline('Home', MyColors.blueLighter),
-                  ),
-                  icon: Icon(
-                    CupertinoIcons.house_fill,
-                  )),
-              BottomNavyBarItem(
-                  inactiveColor: MyColors.gray,
-                  activeColor: MyColors.blueLighter,
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: MyFonts().subHeadline('Notifications', MyColors.blueLighter),
-                  ),
-                  icon: Icon(
-                    CupertinoIcons.bell_fill,
-                  )
-              ),
-              BottomNavyBarItem(
-                  inactiveColor: MyColors.gray,
-                  activeColor: MyColors.blueLighter,
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: MyFonts().subHeadline('Profile', MyColors.blueLighter),
-                  ),
-                  icon: Icon(
-                    CupertinoIcons.person_alt,
-                  )
-              ),
-              BottomNavyBarItem(
-                  inactiveColor: MyColors.gray,
-                  activeColor: MyColors.blueLighter,
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: MyFonts().subHeadline('About', MyColors.blueLighter),
-                  ),
-                  icon: Icon(
-                    CupertinoIcons.info_circle_fill,
-                  )
-              ),
-            ],
-          ),
-        );
+      return Scaffold(
+        body: pages[_selectedIndex],
+        bottomNavigationBar: BottomNavyBar(
+          backgroundColor: MyColors.white,
+          selectedIndex: _selectedIndex,
+          onItemSelected: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          items: [
+            BottomNavyBarItem(
+                inactiveColor: MyColors.gray,
+                activeColor: MyColors.blueLighter,
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: MyFonts().subHeadline('Home', MyColors.blueLighter),
+                ),
+                icon: Icon(
+                  CupertinoIcons.house_fill,
+                )),
+            BottomNavyBarItem(
+                inactiveColor: MyColors.gray,
+                activeColor: MyColors.blueLighter,
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: MyFonts()
+                      .subHeadline('Notifications', MyColors.blueLighter),
+                ),
+                icon: Icon(
+                  CupertinoIcons.bell_fill,
+                )),
+            BottomNavyBarItem(
+                inactiveColor: MyColors.gray,
+                activeColor: MyColors.blueLighter,
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: MyFonts().subHeadline('Profile', MyColors.blueLighter),
+                ),
+                icon: Icon(
+                  CupertinoIcons.person_alt,
+                )),
+            BottomNavyBarItem(
+                inactiveColor: MyColors.gray,
+                activeColor: MyColors.blueLighter,
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: MyFonts().subHeadline('About', MyColors.blueLighter),
+                ),
+                icon: Icon(
+                  CupertinoIcons.info_circle_fill,
+                )),
+          ],
+        ),
+      );
     });
   }
 }

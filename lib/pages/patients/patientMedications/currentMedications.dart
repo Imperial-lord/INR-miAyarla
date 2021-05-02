@@ -142,7 +142,10 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                       icon.add(done);
                   }
                 }
-                return Column(
+                return (medicineData.length==0)? MyFonts().body(
+                    'Sorry you doctor has not added any medicine for you at the moment.',
+                    MyColors.gray):
+                Column(
                   children: [
                     for (int i = 0; i < medicineData.length; i++)
                       Column(

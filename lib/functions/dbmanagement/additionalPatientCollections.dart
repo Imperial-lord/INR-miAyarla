@@ -15,9 +15,6 @@ class AdditionalPatientCollections {
         .collection('Important Dates')
         .doc(uid)
         .set({'LastVisit': '', 'NextVisit': ''});
-    firestoreInstance.collection('Prescription and Test Results').doc(uid).set({
-      'Photo': [],
-    });
     firestoreInstance.collection('Doctor Notes').doc(uid).set({
       'Note': [],
     });
