@@ -7,6 +7,7 @@ import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
+import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/monitorPatientHealth.dart';
 import 'package:health_bag/stores/login_store.dart';
@@ -32,7 +33,8 @@ Widget _getRow(String key, String val) {
         children: [
           MyFonts().heading2(key, MyColors.blueLighter),
           MySpaces.hLargeGapInBetween,
-          Flexible(child: Text(
+          Flexible(
+              child: Text(
             val,
             textAlign: TextAlign.justify,
             style: TextStyle(
@@ -44,6 +46,145 @@ Widget _getRow(String key, String val) {
         ],
       ),
       Divider(),
+    ],
+  );
+}
+
+Widget _transferAlertPopup(BuildContext context, String patientName,
+    String doctorName, String patientUID, String doctorUID) {
+  return new AlertDialog(
+    title: MyFonts().body(
+        "Are you sure you want to transfer $patientName to $doctorName?",
+        MyColors.black),
+    actions: <Widget>[
+      // ignore: deprecated_member_use
+      FlatButton(
+        onPressed: () {
+          FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+          firestoreInstance
+              .collection('Patients')
+              .doc(patientUID)
+              .update({'DoctorUID': doctorUID});
+          firestoreInstance
+              .collection('Assigned Doctor')
+              .doc(patientUID)
+              .update({'DoctorUID': doctorUID});
+          final patientTransferredSnackBar = SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: MyColors.black,
+              content: MyFonts()
+                  .body('The patient has been successfully transferred!', MyColors.white));
+          ScaffoldMessenger.of(context).showSnackBar(patientTransferredSnackBar);
+          Navigator.pushNamedAndRemoveUntil(context, DoctorManagement.id, (route) => false);
+        },
+        child: MyFonts().heading2('Yes', MyColors.blueLighter),
+      ),
+      // ignore: deprecated_member_use
+      FlatButton(
+        color: MyColors.backgroundColor,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: MyFonts().heading2('No', MyColors.blueLighter),
+      ),
+    ],
+  );
+}
+
+Widget _transferPatientPopup(BuildContext context, String patientUID,
+    String doctorUID, String patientName) {
+  return AlertDialog(
+    titlePadding: EdgeInsets.all(0),
+    title: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(15),
+          child: MyFonts().title1('Transfer patient', MyColors.red),
+        ),
+        Padding(
+          padding: EdgeInsets.all(15),
+          child: MyFonts().subHeadline(
+              'By transferring a patient you will lose access to his account.'
+              ' You can request the concerned doctor to re-transfer him back to you in the future!',
+              MyColors.gray),
+        ),
+        Divider(
+          color: MyColors.black,
+        ),
+        StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection('Doctors').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              } else {
+                List<String> docUIDs = [];
+                List<String> docNames = [];
+                List<String> docNumbers = [];
+                List<String> docPhotos = [];
+                for (int i = 0; i < snapshot.data.docs.length; i++) {
+                  if (snapshot.data.docs[i].id != doctorUID) {
+                    docUIDs.add(snapshot.data.docs[i].id);
+                    docNames.add(snapshot.data.docs[i].data()['Name']);
+                    docNumbers.add(snapshot.data.docs[i].data()['PhoneNumber']);
+                    docPhotos.add(snapshot.data.docs[i].data()['Photo']);
+                  }
+                }
+                return Container(
+                  height: 0.4 * MediaQuery.of(context).size.height,
+                  child: Scrollbar(
+                    child: ListView.builder(
+                      itemCount: docUIDs.length,
+                      itemBuilder: (context, i) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _transferAlertPopup(context, patientName,
+                                          docNames[i], patientUID, docUIDs[i]),
+                                );
+                              },
+                              child: ListTile(
+                                leading: ClipOval(
+                                  child: Image(
+                                      height: 40,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(docPhotos[i])),
+                                ),
+                                title: MyFonts()
+                                    .heading2(docNumbers[i], MyColors.black),
+                                subtitle:
+                                    MyFonts().body(docNames[i], MyColors.gray),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: MyColors.white, elevation: 0),
+                            ),
+                            Divider(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }
+            }),
+      ],
+    ),
+    actions: [
+      // ignore: deprecated_member_use
+      FlatButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: MyFonts().heading2('Back', MyColors.blueLighter),
+      ),
     ],
   );
 }
@@ -177,7 +318,8 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                   'Email Address', userData['EmailAddress']),
                               _getRow(
                                   'Residential Address', userData['Address']),
-                              _getRow('Sign-up Date', formatDateTime(userData['SignUpDate'])),
+                              _getRow('Sign-up Date',
+                                  formatDateTime(userData['SignUpDate'])),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
                                   .heading1('Medical History', MyColors.black),
@@ -239,19 +381,28 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                   Expanded(
                                     child: RaisedButton(
                                       onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              _transferPatientPopup(
+                                                  context,
+                                                  patientUID,
+                                                  doctorUid,
+                                                  userData['Name']),
+                                        );
                                       },
                                       padding: EdgeInsets.all(15),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            Icons.offline_share_rounded,
+                                            CupertinoIcons
+                                                .arrowshape_turn_up_right_fill,
                                             color: MyColors.white,
                                           ),
                                           MySpaces.hGapInBetween,
-                                          MyFonts().heading2(
-                                              'Transfer Patient',
+                                          MyFonts().heading2('Transfer Patient',
                                               MyColors.white),
                                         ],
                                       ),
