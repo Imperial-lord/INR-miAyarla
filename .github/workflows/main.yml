@@ -44,4 +44,4 @@ jobs:
         artifacts: "build/app/outputs/apk/release/*.apk"
         token: ${{ secrets.TOKEN }}
         commit: main
-        tag: v1.0.${{ github.run_number }}-beta
+        tag: v1.1.${{ github.run_number }}-beta
