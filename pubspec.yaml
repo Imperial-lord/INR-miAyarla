@@ -52,6 +52,7 @@ dependencies:
   permission_handler:
   flutter_local_notifications: ^4.0.1+2
   path_provider: ^2.0.1
+  receive_sharing_intent: ^1.4.5
 
 dev_dependencies:
   flutter_test:

@@ -52,16 +52,17 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
         new NotificationDetails(android: androidNotificationDetails);
     for (int i = 0; i < medicineNotification.length; i++) {
       print(medicineNotification[i]['Time']);
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        new Random().nextInt(100000),
-        'Time to take your medicine',
-        "Name: ${medicineNotification[i]['Name']}\nDosage: ${medicineNotification[i]['Dosage']}\nNotes: ${medicineNotification[i]['Notes']}",
-        medicineNotification[i]['Time'],
-        notificationDetails,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true,
-      );
+      if (medicineNotification[i]['Time'].isAfter(tz.TZDateTime.now(tz.local)))
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          new Random().nextInt(100000),
+          'Time to take your medicine',
+          "Name: ${medicineNotification[i]['Name']}\nDosage: ${medicineNotification[i]['Dosage']}\nNotes: ${medicineNotification[i]['Notes']}",
+          medicineNotification[i]['Time'],
+          notificationDetails,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          androidAllowWhileIdle: true,
+        );
     }
   }
 

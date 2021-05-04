@@ -7,6 +7,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
@@ -17,11 +18,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Chat extends StatelessWidget {
+class Chat extends StatefulWidget {
   final String id;
   final String peerId;
   final String peerAvatar;
   final String peerName;
+  static String classID='chat-screen';
 
   /* We will need 4 stuff here.
   * 1. Peer Name
@@ -37,6 +39,31 @@ class Chat extends StatelessWidget {
       @required this.peerId,
       @required this.peerAvatar})
       : super(key: key);
+
+  @override
+  _ChatState createState() => _ChatState(peerName: peerName, id: id, peerId: peerId, peerAvatar: peerAvatar);
+}
+
+class _ChatState extends State<Chat> {
+
+  final String id;
+  final String peerId;
+  final String peerAvatar;
+  final String peerName;
+
+  /* We will need 4 stuff here.
+  * 1. Peer Name
+  * 2. Peer ID
+  * 3. Peer Image
+  * 4. My ID
+  * */
+
+  _ChatState(
+      {Key key,
+        @required this.peerName,
+        @required this.id,
+        @required this.peerId,
+        @required this.peerAvatar});
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +213,8 @@ class ChatScreenState extends State<ChatScreen> {
     ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
 
-    pickedFile = await imagePicker.getImage(source: ImageSource.gallery, imageQuality: 75);
+    pickedFile = await imagePicker.getImage(
+        source: ImageSource.gallery, imageQuality: 75);
     imageFile = File(pickedFile.path);
 
     if (imageFile != null) {
