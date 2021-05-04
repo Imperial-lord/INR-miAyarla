@@ -88,6 +88,11 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
                                 'Body': notificationBodyController.text,
                                 'TimeOfCreation': DateTime.now(),
                               });
+                              FirebaseFirestore firestoreInstance1 = FirebaseFirestore.instance;
+                              firestoreInstance1
+                                  .collection('Notification Bubbles')
+                                  .doc(patientUID)
+                                  .set({'bubble': true});
                               Navigator.pop(context);
                             },
                             padding: EdgeInsets.all(15),

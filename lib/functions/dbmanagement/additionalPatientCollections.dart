@@ -24,5 +24,8 @@ class AdditionalPatientCollections {
     firestoreInstance.collection('Doctor Chat Bubbles').doc(uid).set({
       'bubble': false,
     });
+    firestoreInstance.collection('Notification Bubbles').doc(uid).set({
+      'bubble': false,
+    });
   }
 }

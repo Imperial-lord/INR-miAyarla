@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -20,6 +21,11 @@ class _PatientNotificationsState extends State<PatientNotifications> {
   Widget build(BuildContext context) {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       String patientUID = loginStore.firebaseUser.uid;
+      FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+      firestoreInstance
+          .collection('Notification Bubbles')
+          .doc(patientUID)
+          .set({'bubble': false});
       return Scaffold(
         body: SafeArea(
           child: Stack(
@@ -47,18 +53,24 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                 child: SingleChildScrollView(
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('Notifications').orderBy('TimeOfCreation',descending: true)
+                          .collection('Notifications')
+                          .orderBy('TimeOfCreation', descending: true)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData)
                           return Container();
                         else {
                           List<Map> notificationData = [];
-                          for (int i = 0; i < snapshot.data.docs.length; i++)
+                          List<String> notificationID = [];
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
                             if (snapshot.data.docs[i].data()['PatientUID'] ==
-                                patientUID)
+                                patientUID) {
                               notificationData
                                   .add(snapshot.data.docs[i].data());
+                              notificationID.add(snapshot.data.docs[i].id);
+                              if (notificationData.length > 20) break;
+                            }
+                          }
                           return (notificationData.length == 0)
                               ? MyFonts().body(
                                   'Sorry you have no notifications at the moment!',
@@ -74,17 +86,47 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                                           contentPadding: EdgeInsets.all(10),
                                           leading: Container(
                                               height: double.infinity,
+                                              padding: EdgeInsets.only(left: 5),
                                               child: Icon(
                                                   Icons.notifications_active,
                                                   color: MyColors.redLighter)),
                                           title: MyFonts().heading2(
                                               notificationData[i]['Title'],
                                               MyColors.blueLighter),
-                                          subtitle: MyFonts().body(
-                                              notificationData[i]['Body'],
-                                              MyColors.gray),
-                                          trailing:
-                                              Icon(CupertinoIcons.wrench_fill),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              MyFonts().body(
+                                                  (notificationData[i]
+                                                              ['Body'] ==
+                                                          '')
+                                                      ? 'This notification has no body.'
+                                                      : notificationData[i]
+                                                          ['Body'],
+                                                  MyColors.gray),
+                                              MySpaces.vSmallestGapInBetween,
+                                              MyFonts().caption(
+                                                  formatDateTime(DateTime.now()
+                                                      .toString()),
+                                                  MyColors.gray),
+                                            ],
+                                          ),
+                                          trailing: IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: MyColors.redLighter,
+                                            ),
+                                            onPressed: () {
+                                              FirebaseFirestore
+                                                  firestoreInstance =
+                                                  FirebaseFirestore.instance;
+                                              firestoreInstance
+                                                  .collection('Notifications')
+                                                  .doc(notificationID[i])
+                                                  .delete();
+                                            },
+                                          ),
                                         ),
                                       ),
                                     MySpaces.vSmallGapInBetween,

@@ -16,26 +16,30 @@ class EditMedicine extends StatefulWidget {
   static String id = 'edit-medicine';
   final Map medicineData;
   final String medicineID;
+
   EditMedicine({@required this.medicineData, @required this.medicineID});
 
   @override
-  _EditMedicineState createState() => _EditMedicineState(medicineData: medicineData, medicineID: medicineID);
+  _EditMedicineState createState() =>
+      _EditMedicineState(medicineData: medicineData, medicineID: medicineID);
 }
 
 class _EditMedicineState extends State<EditMedicine> {
   final Map medicineData;
   final String medicineID;
+
   _EditMedicineState({@required this.medicineData, @required this.medicineID});
 
   TextEditingController medicineNameController = new TextEditingController();
   TextEditingController lastDateController = new TextEditingController();
+  final FocusNode medicineFocusNode = FocusNode();
 
   @override
-  initState(){
+  initState() {
     super.initState();
     setState(() {
-      medicineNameController.text=medicineData['Name'];
-      lastDateController.text=medicineData['End Date'];
+      medicineNameController.text = medicineData['Name'];
+      lastDateController.text = medicineData['End Date'];
     });
   }
 
@@ -56,7 +60,7 @@ class _EditMedicineState extends State<EditMedicine> {
       TextEditingController controller,
       TextInputType textInputType,
       int lines,
-      bool toggleEnabled) {
+      bool toggleEnabled, FocusNode focusNode) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,9 +70,10 @@ class _EditMedicineState extends State<EditMedicine> {
         ),
         InkWell(
           onTap: () {
-            if (heading == 'End Date')
+            if (heading == 'End Date') {
+              medicineFocusNode.unfocus();
               _selectDate(context, controller);
-            else
+            } else
               print(false);
           },
           child: CupertinoTextField(
@@ -87,6 +92,7 @@ class _EditMedicineState extends State<EditMedicine> {
                 color: (toggleEnabled) ? MyColors.black : MyColors.gray),
             controller: controller,
             keyboardType: textInputType,
+            focusNode: focusNode,
           ),
         ),
       ],
@@ -113,8 +119,8 @@ class _EditMedicineState extends State<EditMedicine> {
         initialDate: (textEditingController.text == '')
             ? DateTime.now()
             : DateTime.parse(
-            textEditingController.text.split('-').reversed.join('-') +
-                " 00:00:00"));
+                textEditingController.text.split('-').reversed.join('-') +
+                    " 00:00:00"));
     if (picked != null) {
       setState(() {
         textEditingController.text =
@@ -144,7 +150,8 @@ class _EditMedicineState extends State<EditMedicine> {
                       left: 15,
                       right: 15,
                     ),
-                    child: MyFonts().title1('Edit medicine details', MyColors.white)),
+                    child: MyFonts()
+                        .title1('Edit medicine details', MyColors.white)),
                 Container(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.15,
@@ -162,7 +169,7 @@ class _EditMedicineState extends State<EditMedicine> {
                             medicineNameController,
                             TextInputType.text,
                             1,
-                            true),
+                            true, medicineFocusNode),
                         _getMedicineDetails(
                             'End Date',
                             'dd-mm-yyyy',
@@ -170,7 +177,7 @@ class _EditMedicineState extends State<EditMedicine> {
                             lastDateController,
                             TextInputType.datetime,
                             1,
-                            false),
+                            false, null),
                         MySpaces.vGapInBetween,
                         MyFonts().heading2('Timings and Notes', MyColors.gray),
                         Divider(color: Colors.black),
@@ -179,6 +186,7 @@ class _EditMedicineState extends State<EditMedicine> {
                             children: [
                               TimingsAndNotes(
                                 day: day[i],
+                                focusNode: medicineFocusNode,
                               ),
                             ],
                           ),
@@ -189,8 +197,12 @@ class _EditMedicineState extends State<EditMedicine> {
                                 padding: EdgeInsets.all(15),
                                 color: MyColors.redLighter,
                                 onPressed: () {
-                                  FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
-                                  firestoreInstance.collection('Medicines').doc(medicineID).delete();
+                                  FirebaseFirestore firestoreInstance =
+                                      FirebaseFirestore.instance;
+                                  firestoreInstance
+                                      .collection('Medicines')
+                                      .doc(medicineID)
+                                      .delete();
                                   List<List<Map>> temp = [
                                     [],
                                     [],
@@ -247,14 +259,14 @@ class _EditMedicineState extends State<EditMedicine> {
                                       'End Date': lastDateController.text,
                                       'Monday': globals.timingsAndNotesArray[0],
                                       'Tuesday':
-                                      globals.timingsAndNotesArray[1],
+                                          globals.timingsAndNotesArray[1],
                                       'Wednesday':
-                                      globals.timingsAndNotesArray[2],
+                                          globals.timingsAndNotesArray[2],
                                       'Thursday':
-                                      globals.timingsAndNotesArray[3],
+                                          globals.timingsAndNotesArray[3],
                                       'Friday': globals.timingsAndNotesArray[4],
                                       'Saturday':
-                                      globals.timingsAndNotesArray[5],
+                                          globals.timingsAndNotesArray[5],
                                       'Sunday': globals.timingsAndNotesArray[6]
                                     });
                                     globals.timingsAndNotesArray = temp;

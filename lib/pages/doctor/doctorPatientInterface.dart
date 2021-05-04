@@ -72,10 +72,13 @@ Widget _transferAlertPopup(BuildContext context, String patientName,
           final patientTransferredSnackBar = SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: MyColors.black,
-              content: MyFonts()
-                  .body('The patient has been successfully transferred!', MyColors.white));
-          ScaffoldMessenger.of(context).showSnackBar(patientTransferredSnackBar);
-          Navigator.pushNamedAndRemoveUntil(context, DoctorManagement.id, (route) => false);
+              content: MyFonts().body(
+                  'The patient has been successfully transferred!',
+                  MyColors.white));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(patientTransferredSnackBar);
+          Navigator.pushNamedAndRemoveUntil(
+              context, DoctorManagement.id, (route) => false);
         },
         child: MyFonts().heading2('Yes', MyColors.blueLighter),
       ),
@@ -251,35 +254,70 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                               MySpaces.vSmallGapInBetween,
                               Row(
                                 children: [
-                                  // ignore: deprecated_member_use
-                                  RaisedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  Chat(
-                                                    peerName: userData['Name'],
-                                                    id: doctorUid,
-                                                    peerId: patientUID,
-                                                    peerAvatar:
-                                                        userData['Photo'],
-                                                  )));
-                                    },
-                                    padding: EdgeInsets.all(10),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.paperplane_fill,
-                                          color: MyColors.white,
-                                        ),
-                                        MySpaces.hGapInBetween,
-                                        MyFonts()
-                                            .heading2('Chat', MyColors.white),
-                                      ],
-                                    ),
-                                    color: MyColors.blueLighter,
-                                  ),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Doctor Chat Bubbles')
+                                          .doc(patientUID)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData)
+                                          return Container();
+                                        else {
+                                          bool isUnread =
+                                              snapshot.data.data()['bubble'];
+                                          return Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              RaisedButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              Chat(
+                                                                peerName:
+                                                                    userData[
+                                                                        'Name'],
+                                                                id: doctorUid,
+                                                                peerId:
+                                                                    patientUID,
+                                                                peerAvatar:
+                                                                    userData[
+                                                                        'Photo'],
+                                                              )));
+                                                },
+                                                padding: EdgeInsets.all(10),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      CupertinoIcons
+                                                          .paperplane_fill,
+                                                      color: MyColors.white,
+                                                    ),
+                                                    MySpaces.hGapInBetween,
+                                                    MyFonts().heading2(
+                                                        'Chat', MyColors.white),
+                                                  ],
+                                                ),
+                                                color: MyColors.blueLighter,
+                                              ),
+                                              Visibility(
+                                                visible: isUnread,
+                                                child: Positioned(
+                                                  top: -5,
+                                                  right: -5,
+                                                  child: Icon(
+                                                    Icons.brightness_1,
+                                                    color: MyColors.redLighter,
+                                                    size: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                      }),
                                   Spacer(),
                                   // ignore: deprecated_member_use
                                   RaisedButton(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
@@ -19,36 +20,28 @@ class PatientHome extends StatefulWidget {
   _PatientHomeState createState() => _PatientHomeState();
 }
 
-Widget _medicineCard(String name) {
-  return Expanded(
-    child: Card(
-        elevation: 3,
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Image(
-                image: NetworkImage('https://i.ibb.co/fv0ztpr/medicine.png'),
-                fit: BoxFit.contain,
-              ),
-              MyFonts().heading2(name, MyColors.blueLighter),
-              MyFonts().body('Medicine Notes', MyColors.gray),
-              MySpaces.vSmallestGapInBetween,
-              MyFonts().subHeadline('9:00 AM  6:00 PM', MyColors.redLighter)
-            ],
-          ),
-        )),
-  );
-}
-
 class _PatientHomeState extends State<PatientHome> {
+  static const platform = const MethodChannel('app.channel.shared.data');
+  String dataShared = "No data";
+
   @override
   void initState() {
     super.initState();
+    getSharedText();
+  }
+
+  getSharedText() async {
+    var sharedData = await platform.invokeMethod("getSharedText");
+    if (sharedData != null) {
+      setState(() {
+        dataShared = sharedData;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(dataShared);
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       String uid = loginStore.firebaseUser.uid;
       return Scaffold(
@@ -206,26 +199,70 @@ class _PatientHomeState extends State<PatientHome> {
                                                     }
                                                   }),
                                               Spacer(),
-                                              RaisedButton(
-                                                onPressed: () {
-                                                  Navigator.pushNamed(context,
-                                                      PatientNotifications.id);
-                                                },
-                                                padding: EdgeInsets.all(15),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      CupertinoIcons.bell_solid,
-                                                      color: MyColors.white,
-                                                    ),
-                                                    MySpaces.hGapInBetween,
-                                                    MyFonts().heading2(
-                                                        'Show Notification',
-                                                        MyColors.white),
-                                                  ],
-                                                ),
-                                                color: MyColors.redLighter,
-                                              ),
+                                              StreamBuilder(
+                                                  stream: FirebaseFirestore
+                                                      .instance
+                                                      .collection(
+                                                          'Notification Bubbles')
+                                                      .doc(uid)
+                                                      .snapshots(),
+                                                  builder: (context, snapshot) {
+                                                    if (!snapshot.hasData)
+                                                      return Container();
+                                                    else {
+                                                      bool isUnread = snapshot
+                                                          .data
+                                                          .data()['bubble'];
+                                                      return Stack(
+                                                        clipBehavior: Clip.none,
+                                                        children: [
+                                                          RaisedButton(
+                                                            onPressed: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  PatientNotifications
+                                                                      .id);
+                                                            },
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    15),
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  CupertinoIcons
+                                                                      .bell_solid,
+                                                                  color: MyColors
+                                                                      .white,
+                                                                ),
+                                                                MySpaces
+                                                                    .hGapInBetween,
+                                                                MyFonts().heading2(
+                                                                    'Show Notification',
+                                                                    MyColors
+                                                                        .white),
+                                                              ],
+                                                            ),
+                                                            color: MyColors
+                                                                .redLighter,
+                                                          ),
+                                                          Visibility(
+                                                            visible: isUnread,
+                                                            child: Positioned(
+                                                              top: 0,
+                                                              right: 0,
+                                                              child: Icon(
+                                                                Icons
+                                                                    .brightness_1,
+                                                                color: MyColors
+                                                                    .white,
+                                                                size: 15,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }
+                                                  }),
                                             ],
                                           ),
                                         ],
