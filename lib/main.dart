@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/common/auth/signin.dart';
+import 'package:health_bag/pages/common/privacyPolicy.dart';
 import 'package:health_bag/pages/common/splash.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
@@ -109,6 +110,7 @@ class _MyAppState extends State<MyApp> {
                     DoctorSendNotifications(),
                 AddMedicine.id: (context) => AddMedicine(),
                 TimingsAndNotes.id: (context) => TimingsAndNotes(),
+                PrivacyPolicy.id: (context) => PrivacyPolicy(),
               },
             ),
           );
