@@ -23,7 +23,7 @@ class Chat extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
   final String peerName;
-  static String classID='chat-screen';
+  final String sharedMessage;
 
   /* We will need 4 stuff here.
   * 1. Peer Name
@@ -32,24 +32,30 @@ class Chat extends StatefulWidget {
   * 4. My ID
   * */
 
-  Chat(
-      {Key key,
-      @required this.peerName,
-      @required this.id,
-      @required this.peerId,
-      @required this.peerAvatar})
-      : super(key: key);
+  Chat({
+    Key key,
+    @required this.peerName,
+    @required this.id,
+    @required this.peerId,
+    @required this.peerAvatar,
+    @required this.sharedMessage,
+  }) : super(key: key);
 
   @override
-  _ChatState createState() => _ChatState(peerName: peerName, id: id, peerId: peerId, peerAvatar: peerAvatar);
+  _ChatState createState() => _ChatState(
+      peerName: peerName,
+      id: id,
+      peerId: peerId,
+      peerAvatar: peerAvatar,
+      sharedMessage: sharedMessage);
 }
 
 class _ChatState extends State<Chat> {
-
   final String id;
   final String peerId;
   final String peerAvatar;
   final String peerName;
+  final String sharedMessage;
 
   /* We will need 4 stuff here.
   * 1. Peer Name
@@ -60,10 +66,11 @@ class _ChatState extends State<Chat> {
 
   _ChatState(
       {Key key,
-        @required this.peerName,
-        @required this.id,
-        @required this.peerId,
-        @required this.peerAvatar});
+      @required this.peerName,
+      @required this.id,
+      @required this.peerId,
+      @required this.peerAvatar,
+      @required this.sharedMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +115,7 @@ class _ChatState extends State<Chat> {
         id: id,
         peerId: peerId,
         peerAvatar: peerAvatar,
+        sharedMessage: sharedMessage,
       ),
     );
   }
@@ -118,18 +126,24 @@ class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
   final String peerName;
+  final String sharedMessage;
 
   ChatScreen(
       {Key key,
       @required this.peerName,
       @required this.id,
       @required this.peerId,
-      @required this.peerAvatar})
+      @required this.peerAvatar,
+      @required this.sharedMessage})
       : super(key: key);
 
   @override
   State createState() => ChatScreenState(
-      id: id, peerId: peerId, peerAvatar: peerAvatar, peerName: peerName);
+      id: id,
+      peerId: peerId,
+      peerAvatar: peerAvatar,
+      peerName: peerName,
+      sharedMessage: sharedMessage);
 }
 
 class ChatScreenState extends State<ChatScreen> {
@@ -138,12 +152,14 @@ class ChatScreenState extends State<ChatScreen> {
       @required this.peerName,
       @required this.id,
       @required this.peerId,
-      @required this.peerAvatar});
+      @required this.peerAvatar,
+      @required this.sharedMessage});
 
   String peerId;
   String peerAvatar;
   String id;
   String peerName;
+  String sharedMessage;
 
   List<QueryDocumentSnapshot> listMessage = new List.from([]);
   int _limit = 20;
@@ -174,7 +190,7 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
     focusNode.addListener(onFocusChange);
     listScrollController.addListener(_scrollListener);
-
+    if (sharedMessage != null) textEditingController.text = sharedMessage;
     groupChatId = '';
 
     isLoading = false;

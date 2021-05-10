@@ -14,6 +14,7 @@ import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/medici
 import 'package:health_bag/pages/patients/patientMedications/viewMedicine.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:workmanager/workmanager.dart';
 
 class CurrentMedications extends StatefulWidget {
   static String id = 'current-medications';
@@ -46,6 +47,7 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
         new AndroidNotificationDetails('nch', 'Medicine Notification Channel',
             'Receive medicine notifications',
             icon: 'app_icon',
+            importance: Importance.max, priority: Priority.high,
             largeIcon: DrawableResourceAndroidBitmap('pills_icon'),
             styleInformation: BigTextStyleInformation(''));
     NotificationDetails notificationDetails =

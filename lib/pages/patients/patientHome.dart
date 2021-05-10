@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,20 @@ class PatientHome extends StatefulWidget {
   _PatientHomeState createState() => _PatientHomeState();
 }
 
+Future<DocumentSnapshot> getPatientData(String patientUID) async {
+  return await FirebaseFirestore.instance
+      .collection('Patients')
+      .doc(patientUID)
+      .get();
+}
+
+Future<DocumentSnapshot> getDoctorData(String doctorUID) async {
+  return await FirebaseFirestore.instance
+      .collection('Doctors')
+      .doc(doctorUID)
+      .get();
+}
+
 class _PatientHomeState extends State<PatientHome> {
   static const platform = const MethodChannel('app.channel.shared.data');
   String dataShared = "No data";
@@ -27,21 +42,43 @@ class _PatientHomeState extends State<PatientHome> {
   @override
   void initState() {
     super.initState();
-    getSharedText();
+    String patientUID = FirebaseAuth.instance.currentUser.uid;
+    getPatientData(patientUID).then((patientData) {
+      getDoctorData(patientData.data()['DoctorUID']).then((doctorData) => {
+            print(doctorData.data()),
+            print(patientData.data()),
+            getSharedText(doctorData.data()['Name'], patientUID,
+                patientData.data()['DoctorUID'], doctorData.data()['Photo']),
+          });
+    });
   }
 
-  getSharedText() async {
+  getSharedText(String doctorName, String patientUID, String doctorUID,
+      String doctorPhoto) async {
     var sharedData = await platform.invokeMethod("getSharedText");
     if (sharedData != null) {
       setState(() {
         dataShared = sharedData;
       });
     }
+    if (dataShared != "No data") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => Chat(
+            peerName: doctorName,
+            id: patientUID,
+            peerId: doctorUID,
+            peerAvatar: doctorPhoto,
+            sharedMessage: dataShared,
+          ),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(dataShared);
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       String uid = loginStore.firebaseUser.uid;
       return Scaffold(
@@ -148,15 +185,19 @@ class _PatientHomeState extends State<PatientHome> {
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                      builder: (BuildContext context) => Chat(
-                                                                          peerName: doctorInfo[
-                                                                              'Name'],
-                                                                          id:
-                                                                              uid,
-                                                                          peerId:
-                                                                              doctorUID,
-                                                                          peerAvatar:
-                                                                              doctorInfo['Photo'])));
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          Chat(
+                                                                            peerName:
+                                                                                doctorInfo['Name'],
+                                                                            id: uid,
+                                                                            peerId:
+                                                                                doctorUID,
+                                                                            peerAvatar:
+                                                                                doctorInfo['Photo'],
+                                                                            sharedMessage:
+                                                                                null,
+                                                                          )));
                                                             },
                                                             padding:
                                                                 EdgeInsets.all(
@@ -216,6 +257,7 @@ class _PatientHomeState extends State<PatientHome> {
                                                       return Stack(
                                                         clipBehavior: Clip.none,
                                                         children: [
+                                                          // ignore: deprecated_member_use
                                                           RaisedButton(
                                                             onPressed: () {
                                                               Navigator.pushNamed(
