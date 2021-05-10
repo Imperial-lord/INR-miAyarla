@@ -285,6 +285,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                                                 peerAvatar:
                                                                     userData[
                                                                         'Photo'],
+                                                                sharedMessage: null,
                                                               )));
                                                 },
                                                 padding: EdgeInsets.all(10),
