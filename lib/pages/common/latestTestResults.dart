@@ -258,13 +258,21 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                             )
                     ],
                   ),
-                  isLoading?
-                       Container(
+                  isLoading
+                      ? Container(
                           height: (120 + reportList.length * 80).toDouble(),
                           child: Center(
-                            child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    MyColors.blueLighter)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        MyColors.blueLighter)),
+                                MySpaces.vMediumGapInBetween,
+                                MyFonts().body('Uploading', MyColors.black),
+                              ],
+                            ),
                           ),
                           color: MyColors.backgroundColor.withOpacity(0.8),
                         )
