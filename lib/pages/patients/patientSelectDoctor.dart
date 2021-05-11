@@ -167,14 +167,17 @@ class _PatientSelectDoctorState extends State<PatientSelectDoctor> {
                                             AdditionalPatientCollections()
                                                 .createAdditionalCollections(
                                                     uid);
-                                            FirebaseFirestore patientInstance = FirebaseFirestore.instance;
+                                            FirebaseFirestore patientInstance =
+                                                FirebaseFirestore.instance;
                                             patientInstance
                                                 .collection('Patients')
                                                 .doc(uid)
                                                 .update(
                                                     {'DoctorUID': doctorUID});
-                                            Navigator.pushNamed(
-                                                context, PatientManagement.id);
+                                            Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                PatientManagement.id,
+                                                (route) => false);
                                           }
                                         },
                                         padding: EdgeInsets.all(15),

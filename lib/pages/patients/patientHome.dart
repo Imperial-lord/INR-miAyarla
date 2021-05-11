@@ -45,8 +45,6 @@ class _PatientHomeState extends State<PatientHome> {
     String patientUID = FirebaseAuth.instance.currentUser.uid;
     getPatientData(patientUID).then((patientData) {
       getDoctorData(patientData.data()['DoctorUID']).then((doctorData) => {
-            print(doctorData.data()),
-            print(patientData.data()),
             getSharedText(doctorData.data()['Name'], patientUID,
                 patientData.data()['DoctorUID'], doctorData.data()['Photo']),
           });

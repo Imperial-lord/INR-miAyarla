@@ -160,7 +160,7 @@ class _DoctorUploadPhotoState extends State<DoctorUploadPhoto> {
                                     // ignore: deprecated_member_use
                                     child: RaisedButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(context, DoctorManagement.id);
+                                        Navigator.pushNamedAndRemoveUntil(context, DoctorManagement.id, (route) => false);
                                       },
                                       padding: EdgeInsets.all(20),
                                       child: Row(
