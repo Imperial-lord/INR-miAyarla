@@ -41,6 +41,12 @@ class _AddMedicineState extends State<AddMedicine> {
     'Sunday'
   ];
 
+  @override
+  void initState(){
+    super.initState();
+    globals.timingsAndNotesArray = [[], [], [], [], [], [], []];
+  }
+
   Widget _getMedicineDetails(
       String heading,
       String placeholder,
