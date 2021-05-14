@@ -1,4 +1,4 @@
-package com.example.health_bag
+package com.meceware.inr_mi_ayarla
 
 import android.content.Intent;
 import android.os.Bundle;

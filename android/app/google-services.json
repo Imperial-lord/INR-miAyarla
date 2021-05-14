@@ -7,25 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:114001846106:android:1861a6dbf7b7843e805d63",
+        "mobilesdk_app_id": "1:114001846106:android:16920b929af79d87805d63",
         "android_client_info": {
-          "package_name": "com.example.health_bag"
+          "package_name": "com.meceware.inr_mi_ayarla"
         }
       },
       "oauth_client": [
         {
-          "client_id": "114001846106-30l2iu1loujvo8qvd5r3vfmcst6elk91.apps.googleusercontent.com",
+          "client_id": "114001846106-clccv30crip79b61ljbs8lern77h6foi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.health_bag",
-            "certificate_hash": "8fbf625270ebe21f09a0edd536f3ab368419da0a"
+            "package_name": "com.meceware.inr_mi_ayarla",
+            "certificate_hash": "95b2e8c70ef83ea925a3a3f642275dec3754aad7"
           }
         },
         {
-          "client_id": "114001846106-kk14619b3p6b1poc9umv3us860pr6a0j.apps.googleusercontent.com",
+          "client_id": "114001846106-ic4dtn17rdvfkm75b6ju6d7c3jegtd2c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.health_bag",
+            "package_name": "com.meceware.inr_mi_ayarla",
             "certificate_hash": "a2875fee29be788d608ba9683c6a1a6c75757287"
           }
         },

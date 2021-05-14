@@ -51,7 +51,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.health_bag"
+        applicationId "com.meceware.inr_mi_ayarla"
         multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 29
