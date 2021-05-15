@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/timingsNotes.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -65,7 +66,7 @@ class _AddMedicineState extends State<AddMedicine> {
         ),
         InkWell(
           onTap: () {
-            if (heading == 'End Date') {
+            if (heading == MyStrings().addMedicineEndDate) {
               medicineFocusNode.unfocus();
               _selectDate(context, controller);
             } else
@@ -144,7 +145,7 @@ class _AddMedicineState extends State<AddMedicine> {
                       left: 15,
                       right: 15,
                     ),
-                    child: MyFonts().title1('Add a medicine', MyColors.white)),
+                    child: MyFonts().title1(MyStrings().addMedicineTitle, MyColors.white)),
                 Container(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.15,
@@ -156,8 +157,8 @@ class _AddMedicineState extends State<AddMedicine> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _getMedicineDetails(
-                            'Medicine Name',
-                            'Eg. Paracetamol',
+                            MyStrings().addMedicineMedicineName,
+                            MyStrings().addMedicineMedicinePlaceholder,
                             Icon(Icons.sanitizer_rounded),
                             medicineNameController,
                             TextInputType.text,
@@ -165,7 +166,7 @@ class _AddMedicineState extends State<AddMedicine> {
                             true,
                             medicineFocusNode),
                         _getMedicineDetails(
-                            'End Date',
+                            MyStrings().addMedicineEndDate,
                             'dd-mm-yyyy',
                             Icon(EvaIcons.calendar),
                             lastDateController,
@@ -174,7 +175,7 @@ class _AddMedicineState extends State<AddMedicine> {
                             false,
                             null),
                         MySpaces.vGapInBetween,
-                        MyFonts().heading2('Timings and Notes', MyColors.gray),
+                        MyFonts().heading2(MyStrings().addMedicineTimingsAndNotes, MyColors.gray),
                         Divider(color: Colors.black),
                         for (int i = 0; i < 7; i++)
                           Column(
@@ -208,7 +209,7 @@ class _AddMedicineState extends State<AddMedicine> {
                                     final noTimingEntrySnackBar = SnackBar(
                                         backgroundColor: MyColors.black,
                                         content: MyFonts().body(
-                                            'Please add at least 1 timing entry',
+                                            MyStrings().addMedicineSnackbar,
                                             MyColors.white));
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(noTimingEntrySnackBar);
@@ -241,7 +242,7 @@ class _AddMedicineState extends State<AddMedicine> {
                                   }
                                 },
                                 child: MyFonts()
-                                    .heading2('Add medicine', MyColors.white),
+                                    .heading2(MyStrings().addMedicineButton, MyColors.white),
                               ),
                             ),
                           ],

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/patients/patientHome.dart';
 import 'package:health_bag/pages/patients/patientNotifications.dart';
@@ -45,7 +46,8 @@ class _PatientManagementState extends State<PatientManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('Home', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(
+                      MyStrings().patientManagementHome, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.house_fill,
@@ -55,8 +57,9 @@ class _PatientManagementState extends State<PatientManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts()
-                      .subHeadline('Notifications', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(
+                      MyStrings().patientManagementNotifications,
+                      MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.bell_fill,
@@ -66,7 +69,9 @@ class _PatientManagementState extends State<PatientManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('Profile', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(
+                      MyStrings().patientManagementProfile,
+                      MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.person_alt,
@@ -76,7 +81,8 @@ class _PatientManagementState extends State<PatientManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('About', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(
+                      MyStrings().patientManagementAbout, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.info_circle_fill,

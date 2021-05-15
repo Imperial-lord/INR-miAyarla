@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/widgets/backgrounds/firstBackground.dart';
 
 import 'auth/signin.dart';
@@ -29,17 +30,17 @@ class _WelcomeState extends State<Welcome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyFonts().largeTitle('Welcome', MyColors.black),
+                          MyFonts().largeTitle(MyStrings().welcomeHeader, MyColors.black),
                           Row(
                             children: [
-                              MyFonts().largeTitle('to ', MyColors.black),
+                              MyFonts().largeTitle(MyStrings().welcomeTo, MyColors.black),
                               MyFonts().largeTitle(
                                   "INR'mi Ayarla", MyColors.blueLighter),
                             ],
                           ),
                           MySpaces.vSmallGapInBetween,
                           MyFonts().heading2(
-                              'The one-stop solution for all your health needs. Get in touch with your doctors right from your phone!',
+                              MyStrings().welcomeOneStopSol,
                               MyColors.gray),
                         ],
                       ),

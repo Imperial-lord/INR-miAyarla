@@ -5,6 +5,7 @@ import 'package:health_bag/functions/dbmanagement/additionalPatientCollections.d
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/patients/patientManagement.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -37,7 +38,7 @@ class _PatientSelectDoctorState extends State<PatientSelectDoctor> {
                     left: 20,
                     right: 20,
                   ),
-                  child: MyFonts().title1('Select a Doctor', MyColors.white),
+                  child: MyFonts().title1(MyStrings().patientSelectDoctorTitle, MyColors.white),
                 ),
                 Container(
                   padding: EdgeInsets.only(
@@ -151,7 +152,7 @@ class _PatientSelectDoctorState extends State<PatientSelectDoctor> {
                                                     backgroundColor:
                                                         MyColors.black,
                                                     content: MyFonts().body(
-                                                        'Please select at least one doctor',
+                                                        MyStrings().patientSelectDoctorNoDoctorSelected,
                                                         MyColors.white));
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -191,7 +192,7 @@ class _PatientSelectDoctorState extends State<PatientSelectDoctor> {
                                               color: MyColors.white,
                                             ),
                                             MySpaces.hGapInBetween,
-                                            MyFonts().heading1('Select Doctor',
+                                            MyFonts().heading1(MyStrings().patientSelectDoctorButton,
                                                 MyColors.white),
                                           ],
                                         ),

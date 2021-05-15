@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/addMedicine.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/editMedicine.dart';
 import 'medicineGlobals.dart' as globals;
@@ -33,7 +34,7 @@ class _MedicationsState extends State<Medications> {
         MySpaces.vGapInBetween,
         Row(
           children: [
-            MyFonts().heading1('Medications', MyColors.black),
+            MyFonts().heading1(MyStrings().medicationsTitle, MyColors.black),
             Spacer(),
             ElevatedButton(
               onPressed: () {
@@ -43,7 +44,7 @@ class _MedicationsState extends State<Medications> {
                         builder: (BuildContext context) =>
                             AddMedicine(patientUID: patientUID)));
               },
-              child: MyFonts().body('Add a medicine', MyColors.white),
+              child: MyFonts().body(MyStrings().addMedicineTitle, MyColors.white),
               style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
             ),
           ],
@@ -89,7 +90,7 @@ class _MedicationsState extends State<Medications> {
                               title: MyFonts().heading2(
                                   medicineData[i]['Name'], MyColors.black),
                               subtitle: MyFonts().body(
-                                  'Ending Date: ${medicineData[i]['End Date']}',
+                                  '${MyStrings().medicationsEndingDate}: ${medicineData[i]['End Date']}',
                                   MyColors.gray),
                             ),
                           ),

@@ -9,6 +9,7 @@ import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/patients/patientUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
@@ -139,17 +140,17 @@ class _PatientRegState extends State<PatientReg> {
                               Row(
                                 children: [
                                   MyFonts()
-                                      .largeTitle('Hello ', MyColors.black),
+                                      .largeTitle('${MyStrings().patientRegistrationTitle.split(' ')[0]} ', MyColors.black),
                                   MyFonts().largeTitle(
-                                      'there!', MyColors.blueLighter),
+                                      MyStrings().patientRegistrationTitle.split(' ')[1], MyColors.blueLighter),
                                 ],
                               ),
                               MyFonts().heading2(
-                                  "Let's get you all set up!", MyColors.gray),
+                                  MyStrings().patientRegistrationAllSetUp, MyColors.gray),
                               MySpaces.vGapInBetween,
                               _getRowPatientReg(
-                                  'Your full name',
-                                  'Enter your name',
+                                  MyStrings().patientRegistrationName,
+                                  MyStrings().patientRegistrationNamePlaceholder,
                                   Icon(EvaIcons.personOutline),
                                   nameController,
                                   TextInputType.name,
@@ -166,14 +167,14 @@ class _PatientRegState extends State<PatientReg> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10),
                                       child: MyFonts().heading2(
-                                          'Your date of birth', MyColors.gray),
+                                          MyStrings().patientRegistrationDOB, MyColors.gray),
                                     ),
                                     CupertinoTextField(
                                       enabled: false,
                                       expands: false,
                                       padding: EdgeInsets.all(15),
                                       maxLines: 1,
-                                      placeholder: 'Select a date',
+                                      placeholder: MyStrings().patientRegistrationDOBPlaceholder,
                                       decoration: BoxDecoration(
                                           color: MyColors.backgroundColor,
                                           borderRadius: const BorderRadius.all(
@@ -195,8 +196,8 @@ class _PatientRegState extends State<PatientReg> {
                                 ),
                               ),
                               _getRowPatientReg(
-                                  'Your age',
-                                  'Enter your age',
+                                  MyStrings().patientRegistrationAge,
+                                  MyStrings().patientRegistrationAgePlaceholder,
                                   Icon(EvaIcons.menu),
                                   ageController,
                                   TextInputType.number,
@@ -209,17 +210,17 @@ class _PatientRegState extends State<PatientReg> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     child: MyFonts().heading2(
-                                        'Your gender', MyColors.gray),
+                                        MyStrings().patientRegistrationGender, MyColors.gray),
                                   ),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: RaisedButton(
-                                          child: MyFonts().heading2('Male', contentColor[0]),
+                                          child: MyFonts().heading2(MyStrings().patientRegistrationGenderMale, contentColor[0]),
                                           onPressed: (){
                                             setState(() {
                                               if (bodyColor[0] == MyColors.white) {
-                                                genderController.text='Male';
+                                                genderController.text=MyStrings().patientRegistrationGenderMale;
                                                 bodyColor[0] = MyColors.red;
                                                 contentColor[0] = MyColors.white;
                                                 // make the other button unselected!
@@ -239,11 +240,11 @@ class _PatientRegState extends State<PatientReg> {
                                       MySpaces.hLargeGapInBetween,
                                       Expanded(
                                         child: RaisedButton(
-                                          child: MyFonts().heading2('Female', contentColor[1]),
+                                          child: MyFonts().heading2(MyStrings().patientRegistrationGenderFemale, contentColor[1]),
                                           onPressed: (){
                                             setState(() {
                                               if (bodyColor[1] == MyColors.white) {
-                                                genderController.text='Female';
+                                                genderController.text=MyStrings().patientRegistrationGenderFemale;
                                                 bodyColor[1] = MyColors.red;
                                                 contentColor[1] = MyColors.white;
                                                 // make the other button unselected!
@@ -265,48 +266,48 @@ class _PatientRegState extends State<PatientReg> {
                                 ],
                               ),
                               _getRowPatientReg(
-                                  'Your phone number',
-                                  'Enter your phone number',
+                                  MyStrings().patientRegistrationPhoneNumber,
+                                  MyStrings().patientRegistrationPhoneNumberPlaceholder,
                                   Icon(EvaIcons.phoneCallOutline),
                                   phoneNumberController,
                                   TextInputType.number,
                                   1,
                                   false),
                               _getRowPatientReg(
-                                  'Your email address',
-                                  'Enter your email',
+                                  MyStrings().patientRegistrationEmailAddress,
+                                  MyStrings().patientRegistrationEmailAddressPlaceholder,
                                   Icon(EvaIcons.emailOutline),
                                   emailController,
                                   TextInputType.emailAddress,
                                   1,
                                   true),
                               MultilineRow().getMultilineRow(
-                                  'Your residence address',
-                                  'Enter your complete address',
+                                  MyStrings().patientRegistrationResidenceAddress,
+                                  MyStrings().patientRegistrationResidenceAddressPlaceholder,
                                   Icon(CupertinoIcons.location),
                                   addressController,
                                   TextInputType.multiline,
                                   4,
                                   true),
                               MultilineRow().getMultilineRow(
-                                  'Your ailments',
-                                  'What diseases are you suffering from?',
+                                  MyStrings().patientRegistrationAilments,
+                                  MyStrings().patientRegistrationAilmentsPlaceholder,
                                   Icon(Icons.local_hospital_outlined),
                                   illnessController,
                                   TextInputType.multiline,
                                   4,
                                   true),
                               MultilineRow().getMultilineRow(
-                                  'Your allergies',
-                                  'Do you have any specific allergies?',
+                                  MyStrings().patientRegistrationAllergies,
+                                  MyStrings().patientRegistrationAllergiesPlaceholder,
                                   Icon(CupertinoIcons.doc),
                                   allergyController,
                                   TextInputType.multiline,
                                   4,
                                   true),
                               MultilineRow().getMultilineRow(
-                                  'Your genetic disorders',
-                                  'Do you have any genetic disorders?',
+                                  MyStrings().patientRegistrationGeneticDisorder,
+                                  MyStrings().patientRegistrationGeneticDisorderPlaceholder,
                                   Icon(Icons.account_tree_outlined),
                                   geneticController,
                                   TextInputType.multiline,
@@ -344,7 +345,7 @@ class _PatientRegState extends State<PatientReg> {
                                             behavior: SnackBarBehavior.floating,
                                             backgroundColor: MyColors.black,
                                             content: MyFonts().body(
-                                                'One or more fields are empty',
+                                                MyStrings().patientRegistrationEmptyFields,
                                                 MyColors.white)),
                                       );
                                     else if (FormValidation()
@@ -355,7 +356,7 @@ class _PatientRegState extends State<PatientReg> {
                                             behavior: SnackBarBehavior.floating,
                                             backgroundColor: MyColors.black,
                                             content: MyFonts().body(
-                                                'Please enter a valid date of birth',
+                                                MyStrings().patientRegistrationInvalidDOB,
                                                 MyColors.white)),
                                       );
                                     else if (FormValidation()
@@ -366,7 +367,7 @@ class _PatientRegState extends State<PatientReg> {
                                             behavior: SnackBarBehavior.floating,
                                             backgroundColor: MyColors.black,
                                             content: MyFonts().body(
-                                                'Please enter a valid email',
+                                                MyStrings().patientRegistrationInvalidEmail,
                                                 MyColors.white)),
                                       );
                                     else {
@@ -402,7 +403,7 @@ class _PatientRegState extends State<PatientReg> {
                                   },
                                   padding: EdgeInsets.all(15),
                                   child: MyFonts()
-                                      .heading1('Submit', MyColors.white),
+                                      .heading1(MyStrings().patientRegistrationSubmit, MyColors.white),
                                   color: MyColors.blueLighter,
                                 )),
                               ]),

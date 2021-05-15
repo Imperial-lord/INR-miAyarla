@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/privacyPolicy.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,7 +42,7 @@ class AboutApp extends StatelessWidget {
                 left: 20,
                 right: 20,
               ),
-              child: MyFonts().title1('About App', MyColors.white),
+              child: MyFonts().title1(MyStrings().aboutAppHeader, MyColors.white),
             ),
             Container(
               padding: EdgeInsets.only(
@@ -73,13 +74,13 @@ class AboutApp extends StatelessWidget {
                                 primary: MyColors.blueLighter,
                                 padding: EdgeInsets.all(10)),
                             child: MyFonts()
-                                .body('Privacy Policy', MyColors.white),
+                                .body(MyStrings().aboutAppPrivacyPolicy, MyColors.white),
                           ),
                         ),
                       ],
                     ),
                     MySpaces.vLargeGapInBetween,
-                    MyFonts().caption('App Version - v1.0.0', MyColors.gray),
+                    MyFonts().caption(MyStrings().aboutAppAppVersion, MyColors.gray),
                     MySpaces.vGapInBetween,
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'package:health_bag/functions/general/getDayFromWeek.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/medicineGlobals.dart'
     as globals;
 
@@ -38,13 +39,18 @@ class _PatientTimingsNotesState extends State<PatientTimingsNotes> {
           tileColor: MyColors.white,
           title: Row(
             children: [
-              MyFonts().body('Time: ${item['Time']}', MyColors.black),
+              MyFonts().body(
+                  '${MyStrings().patientTimingsNotesTime} ${item['Time']}',
+                  MyColors.black),
               Spacer(),
-              MyFonts().body('Dosage: ${item['Dosage']}', MyColors.black),
+              MyFonts().body(
+                  '${MyStrings().patientTimingsNotesDosage} ${item['Dosage']}',
+                  MyColors.black),
             ],
           ),
-          subtitle:
-              MyFonts().subHeadline('Notes: ${item['Notes']}', MyColors.gray),
+          subtitle: MyFonts().subHeadline(
+              '${MyStrings().patientTimingsNotesNotes} ${item['Notes']}',
+              MyColors.gray),
         ),
       ),
     );
@@ -60,7 +66,8 @@ class _PatientTimingsNotesState extends State<PatientTimingsNotes> {
           MyFonts().heading1(day, MyColors.blue),
           MySpaces.vGapInBetween,
           (globals.timingsAndNotesArray[getDayFromWeek(day)].length == 0)
-              ? MyFonts().body('No medicines for this day', MyColors.gray)
+              ? MyFonts()
+                  .body(MyStrings().patientTimingsNotesNoMeds, MyColors.gray)
               : AnimatedList(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),

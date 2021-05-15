@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
 import 'package:health_bag/widgets/loaderHud.dart';
@@ -47,13 +48,13 @@ class _SignInState extends State<SignIn> {
                           children: [
                             Row(
                               children: [
-                                MyFonts().largeTitle('Sign ', MyColors.black),
+                                MyFonts().largeTitle(MyStrings().signInSign, MyColors.black),
                                 MyFonts()
-                                    .largeTitle('In', MyColors.blueLighter),
+                                    .largeTitle(MyStrings().signInIn, MyColors.blueLighter),
                               ],
                             ),
                             MyFonts().heading2(
-                                'Enter your mobile number to get an OTP',
+                                MyStrings().signInEnterMobileNumber,
                                 MyColors.gray),
                             MySpaces.vMediumGapInBetween,
                             Row(
@@ -80,7 +81,7 @@ class _SignInState extends State<SignIn> {
                                               BorderSide(color: MyColors.gray),
                                           borderRadius:
                                               BorderRadius.circular(7)),
-                                      hintText: 'Search Country or Code',
+                                      hintText: MyStrings().signInSearchCountryOrCode,
                                       hintStyle: TextStyle(
                                           fontFamily: 'poppins-semi',
                                           fontSize: 15,
@@ -131,7 +132,7 @@ class _SignInState extends State<SignIn> {
                                       expands: false,
                                       padding: EdgeInsets.all(15),
                                       maxLines: 1,
-                                      placeholder: '10 digit number',
+                                      placeholder: MyStrings().signIn10DigitNumber,
                                       decoration: BoxDecoration(
                                           color: MyColors.backgroundColor,
                                           borderRadius: const BorderRadius.all(
@@ -156,7 +157,7 @@ class _SignInState extends State<SignIn> {
                                     child: RaisedButton(
                                   padding: EdgeInsets.all(15),
                                   child: MyFonts()
-                                      .heading1('Get OTP', MyColors.white),
+                                      .heading1(MyStrings().signInGetOTP, MyColors.white),
                                   onPressed: () {
                                     if (phoneController.text.isNotEmpty) {
                                       print(countryCode.split(' ')[0] +
@@ -172,7 +173,7 @@ class _SignInState extends State<SignIn> {
                                             behavior: SnackBarBehavior.floating,
                                             backgroundColor: MyColors.black,
                                             content: MyFonts().body(
-                                                'Please enter a phone number',
+                                                MyStrings().signInNoPhoneNumber,
                                                 MyColors.white)),
                                       );
                                     }

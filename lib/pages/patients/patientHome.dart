@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
 import 'package:health_bag/pages/common/latestTestResults.dart';
 import 'package:health_bag/pages/patients/patientMedications/currentMedications.dart';
@@ -90,7 +91,8 @@ class _PatientHomeState extends State<PatientHome> {
                   left: 20,
                   right: 20,
                 ),
-                child: MyFonts().title1('Home', MyColors.white),
+                child: MyFonts()
+                    .title1(MyStrings().patientHomeTitle, MyColors.white),
               ),
               Container(
                 padding: EdgeInsets.only(
@@ -113,8 +115,9 @@ class _PatientHomeState extends State<PatientHome> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              MyFonts()
-                                  .heading1('Doctor Details', MyColors.black),
+                              MyFonts().heading1(
+                                  MyStrings().patientHomeDoctorDetails,
+                                  MyColors.black),
                               MySpaces.vGapInBetween,
                               StreamBuilder(
                                   stream: FirebaseFirestore.instance
@@ -150,7 +153,7 @@ class _PatientHomeState extends State<PatientHome> {
                                                             'Specialisation'],
                                                         MyColors.blueLighter),
                                                     MyFonts().subHeadline(
-                                                        '${doctorInfo['HospitalName']}, ${doctorInfo['DepartmentName']} Department',
+                                                        '${doctorInfo['HospitalName']}, ${doctorInfo['DepartmentName']} ${MyStrings().patientHomeDepartment}',
                                                         MyColors.blueLighter),
                                                   ],
                                                 ),
@@ -211,7 +214,8 @@ class _PatientHomeState extends State<PatientHome> {
                                                                 MySpaces
                                                                     .hGapInBetween,
                                                                 MyFonts().heading2(
-                                                                    'Chat',
+                                                                    MyStrings()
+                                                                        .patientHomeChat,
                                                                     MyColors
                                                                         .white),
                                                               ],
@@ -277,7 +281,8 @@ class _PatientHomeState extends State<PatientHome> {
                                                                 MySpaces
                                                                     .hGapInBetween,
                                                                 MyFonts().heading2(
-                                                                    'Show Notification',
+                                                                    MyStrings()
+                                                                        .patientHomeShowNotification,
                                                                     MyColors
                                                                         .white),
                                                               ],
@@ -310,8 +315,9 @@ class _PatientHomeState extends State<PatientHome> {
                                     }
                                   }),
                               MySpaces.vSmallGapInBetween,
-                              MyFonts()
-                                  .heading1('Doctor Notes', MyColors.black),
+                              MyFonts().heading1(
+                                  MyStrings().patientHomeDoctorNotes,
+                                  MyColors.black),
                               MySpaces.vGapInBetween,
                               StreamBuilder(
                                   stream: FirebaseFirestore.instance
@@ -325,7 +331,8 @@ class _PatientHomeState extends State<PatientHome> {
                                       var notes = snapshot.data.data()['Note'];
                                       return (notes.length == 0)
                                           ? MyFonts().body(
-                                              'Sorry you doctor has not added any notes at the moment.',
+                                              MyStrings()
+                                                  .patientHomeNoDoctorNotes,
                                               MyColors.gray)
                                           : Column(
                                               crossAxisAlignment:
@@ -342,8 +349,9 @@ class _PatientHomeState extends State<PatientHome> {
                                     }
                                   }),
                               MySpaces.vSmallGapInBetween,
-                              MyFonts()
-                                  .heading1('Important Dates', MyColors.black),
+                              MyFonts().heading1(
+                                  MyStrings().patientHomeImportantDates,
+                                  MyColors.black),
                               MySpaces.vGapInBetween,
                               StreamBuilder(
                                   stream: FirebaseFirestore.instance
@@ -362,11 +370,13 @@ class _PatientHomeState extends State<PatientHome> {
                                           Row(
                                             children: [
                                               MyFonts().heading2(
-                                                  '• Last Visit: ',
+                                                  MyStrings()
+                                                      .patientHomeLastVisit,
                                                   MyColors.blueLighter),
                                               (dates['LastVisit'] == '')
                                                   ? MyFonts().body(
-                                                      'Not available',
+                                                      MyStrings()
+                                                          .patientHomeNotAvailable,
                                                       MyColors.gray)
                                                   : MyFonts().heading2(
                                                       dates['LastVisit'],
@@ -376,11 +386,13 @@ class _PatientHomeState extends State<PatientHome> {
                                           Row(
                                             children: [
                                               MyFonts().heading2(
-                                                  '• Next Visit: ',
+                                                  MyStrings()
+                                                      .patientHomeNextVisit,
                                                   MyColors.blueLighter),
                                               (dates['NextVisit'] == '')
                                                   ? MyFonts().body(
-                                                      'Not available',
+                                                      MyStrings()
+                                                          .patientHomeNotAvailable,
                                                       MyColors.gray)
                                                   : MyFonts().heading2(
                                                       dates['NextVisit'],

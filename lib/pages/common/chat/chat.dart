@@ -7,12 +7,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/widgets/fullPhoto.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -671,7 +671,7 @@ class ChatScreenState extends State<ChatScreen> {
               style: TextStyle(
                   fontFamily: 'lato', color: MyColors.black, fontSize: 16),
               controller: textEditingController,
-              placeholder: 'Write a message',
+              placeholder: MyStrings().chatWriteMessage,
               focusNode: focusNode,
             ),
           ),

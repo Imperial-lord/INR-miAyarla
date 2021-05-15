@@ -5,6 +5,7 @@ import 'package:health_bag/functions/general/getDayFromWeek.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'medicineGlobals.dart' as globals;
 
 class TimingsAndNotes extends StatefulWidget {
@@ -91,7 +92,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
           children: [
             Padding(
                 padding: const EdgeInsets.all(10), child: Icon(Icons.alarm)),
-            MyFonts().heading2('Time', MyColors.gray),
+            MyFonts().heading2(MyStrings().timingsAndNotesTime, MyColors.gray),
           ],
         ),
         InkWell(
@@ -124,7 +125,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
     TextEditingController medicineDosageController =
         new TextEditingController();
     medicineTimeController.text = '10:00 AM';
-    medicineDosageController.text = '1 tablet';
+    medicineDosageController.text = MyStrings().timingsAndNotesDosageValue;
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(15),
@@ -140,8 +141,8 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
                 MySpaces.hGapInBetween,
                 Expanded(
                   child: _getMedicineTimingDetails(
-                      'Dosage',
-                      'Eg. 1 drop',
+                      MyStrings().timingsAndNotesDosage,
+                      MyStrings().timingsAndNotesDosagePlaceholder,
                       Icon(CupertinoIcons.drop_fill),
                       medicineDosageController,
                       TextInputType.text,
@@ -151,8 +152,8 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
               ],
             ),
             _getMedicineTimingDetails(
-                'Notes',
-                'Eg. After meal',
+                MyStrings().timingsAndNotesNotes,
+                MyStrings().timingsAndNotesNotesPlaceholder,
                 Icon(CupertinoIcons.text_quote),
                 medicineNotesController,
                 TextInputType.text,
@@ -164,7 +165,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
                 Spacer(),
                 RaisedButton(
                   color: MyColors.blueLighter,
-                  child: MyFonts().body('Save', MyColors.white),
+                  child: MyFonts().body(MyStrings().timingsAndNotesSave, MyColors.white),
                   onPressed: () {
                     Map item = {
                       'Time': medicineTimeController.text,
@@ -261,7 +262,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
                         size: 20,
                       ),
                       MySpaces.hSmallestGapInBetween,
-                      MyFonts().subHeadline('Add an entry', MyColors.black)
+                      MyFonts().subHeadline(MyStrings().timingsAndNotesAddAnEntry, MyColors.black)
                     ],
                   )),
             ],

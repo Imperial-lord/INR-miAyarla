@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/timingsNotes.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -70,7 +71,7 @@ class _EditMedicineState extends State<EditMedicine> {
         ),
         InkWell(
           onTap: () {
-            if (heading == 'End Date') {
+            if (heading == MyStrings().addMedicineEndDate) {
               medicineFocusNode.unfocus();
               _selectDate(context, controller);
             } else
@@ -151,7 +152,7 @@ class _EditMedicineState extends State<EditMedicine> {
                       right: 15,
                     ),
                     child: MyFonts()
-                        .title1('Edit medicine details', MyColors.white)),
+                        .title1(MyStrings().editMedicineTitle, MyColors.white)),
                 Container(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.15,
@@ -163,15 +164,15 @@ class _EditMedicineState extends State<EditMedicine> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _getMedicineDetails(
-                            'Medicine Name',
-                            'Eg. Paracetamol',
+                            MyStrings().addMedicineMedicineName,
+                            MyStrings().addMedicineMedicinePlaceholder,
                             Icon(Icons.sanitizer_rounded),
                             medicineNameController,
                             TextInputType.text,
                             1,
                             true, medicineFocusNode),
                         _getMedicineDetails(
-                            'End Date',
+                            MyStrings().addMedicineEndDate,
                             'dd-mm-yyyy',
                             Icon(EvaIcons.calendar),
                             lastDateController,
@@ -179,7 +180,7 @@ class _EditMedicineState extends State<EditMedicine> {
                             1,
                             false, null),
                         MySpaces.vGapInBetween,
-                        MyFonts().heading2('Timings and Notes', MyColors.gray),
+                        MyFonts().heading2(MyStrings().addMedicineTimingsAndNotes, MyColors.gray),
                         Divider(color: Colors.black),
                         for (int i = 0; i < 7; i++)
                           Column(
@@ -216,7 +217,7 @@ class _EditMedicineState extends State<EditMedicine> {
                                   Navigator.pop(context);
                                 },
                                 child: MyFonts()
-                                    .heading2('Delete', MyColors.white),
+                                    .heading2(MyStrings().editMedicineDelete, MyColors.white),
                               ),
                             ),
                             MySpaces.hLargeGapInBetween,
@@ -274,7 +275,7 @@ class _EditMedicineState extends State<EditMedicine> {
                                   }
                                 },
                                 child: MyFonts()
-                                    .heading2('Update', MyColors.white),
+                                    .heading2(MyStrings().editMedicineUpdate, MyColors.white),
                               ),
                             ),
                           ],

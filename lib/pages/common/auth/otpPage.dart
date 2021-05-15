@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
@@ -79,13 +80,13 @@ class _OtpPageState extends State<OtpPage> {
                             children: <Widget>[
                               Row(
                                 children: [
-                                  MyFonts().largeTitle('Enter ', MyColors.black),
+                                  MyFonts().largeTitle(MyStrings().otpPageEnter, MyColors.black),
                                   MyFonts()
-                                      .largeTitle('OTP', MyColors.blueLighter),
+                                      .largeTitle(MyStrings().otpPageOTP, MyColors.blueLighter),
                                 ],
                               ),
                               MyFonts().heading2(
-                                  'Enter the 6 digit OTP we sent to your mobile',
+                                  MyStrings().otpPageEnter6DigitCode,
                                   MyColors.gray),
                               GestureDetector(
                                 onTap: (){
@@ -94,7 +95,7 @@ class _OtpPageState extends State<OtpPage> {
                                 child: Row(
                                   children: [
                                     MyFonts().body(
-                                        'Resend OTP',
+                                        MyStrings().otpPageResendOTP,
                                         MyColors.blue),
                                     MySpaces.hSmallestGapInBetween,
                                     Icon(EvaIcons.refresh, color: MyColors.blue, size: 15,)
@@ -128,7 +129,7 @@ class _OtpPageState extends State<OtpPage> {
                                       },
                                       padding: EdgeInsets.all(15),
                                       child: MyFonts()
-                                          .heading1('Confirm', MyColors.white),
+                                          .heading1(MyStrings().otpPageConfirm, MyColors.white),
                                       color: MyColors.blueLighter,
                                     ),
                                   ),

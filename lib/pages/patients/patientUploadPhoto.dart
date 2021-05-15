@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/patients/patientSelectDoctor.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
@@ -56,7 +57,7 @@ class _PatientUploadPhotoState extends State<PatientUploadPhoto> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: MyColors.black,
             content: MyFonts()
-                .body('Please choose a photo of size < 2 MB', MyColors.white));
+                .body(MyStrings().patientUploadPhotoBigPhotoSnackBar, MyColors.white));
         ScaffoldMessenger.of(context).showSnackBar(bigPhotoSnackBar);
       });
     } else
@@ -107,17 +108,17 @@ class _PatientUploadPhotoState extends State<PatientUploadPhoto> {
                               Row(
                                 children: [
                                   MyFonts()
-                                      .largeTitle('Smile ', MyColors.black),
+                                      .largeTitle('${MyStrings().patientUploadPhotoSmile.split(' ')[0]} ', MyColors.black),
                                   MyFonts().largeTitle(
-                                      'Please! 😇', MyColors.blueLighter),
+                                      MyStrings().patientUploadPhotoSmile.split(' ')[1], MyColors.blueLighter),
                                 ],
                               ),
                               MyFonts().heading2(
-                                  "We are almost done! We just need you to upload a profile picture.",
+                                  MyStrings().patientUploadPhotoAlmostDone,
                                   MyColors.gray),
                               MySpaces.vSmallestGapInBetween,
                               MyFonts().subHeadline(
-                                  "Kindly upload a photo of size < 2 MB",
+                                  MyStrings().patientUploadPhotoSizeWarning,
                                   MyColors.blueLighter),
                               MySpaces.vLargeGapInBetween,
                               Stack(
@@ -166,7 +167,7 @@ class _PatientUploadPhotoState extends State<PatientUploadPhoto> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          MyFonts().heading1('Save and proceed',
+                                          MyFonts().heading1(MyStrings().patientUploadPhotoSave,
                                               MyColors.white),
                                           MySpaces.hSmallestGapInBetween,
                                           Icon(EvaIcons.arrowRight,

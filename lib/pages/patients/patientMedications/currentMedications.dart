@@ -9,12 +9,12 @@ import 'package:health_bag/functions/general/getDayFromWeek.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/medicineGlobals.dart'
     as globals;
 import 'package:health_bag/pages/patients/patientMedications/viewMedicine.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:workmanager/workmanager.dart';
 
 class CurrentMedications extends StatefulWidget {
   static String id = 'current-medications';
@@ -47,7 +47,8 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
         new AndroidNotificationDetails('nch', 'Medicine Notification Channel',
             'Receive medicine notifications',
             icon: 'app_icon',
-            importance: Importance.max, priority: Priority.high,
+            importance: Importance.max,
+            priority: Priority.high,
             largeIcon: DrawableResourceAndroidBitmap('pills_icon'),
             styleInformation: BigTextStyleInformation(''));
     NotificationDetails notificationDetails =
@@ -57,7 +58,7 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
       if (medicineNotification[i]['Time'].isAfter(tz.TZDateTime.now(tz.local)))
         await flutterLocalNotificationsPlugin.zonedSchedule(
           new Random().nextInt(100000),
-          'Time to take your medicine',
+          MyStrings().currentMedicationsTimeForMeds,
           "Name: ${medicineNotification[i]['Name']}\nDosage: ${medicineNotification[i]['Dosage']}\nNotes: ${medicineNotification[i]['Notes']}",
           medicineNotification[i]['Time'],
           notificationDetails,
@@ -118,7 +119,7 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
       color: Colors.transparent,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         MySpaces.vGapInBetween,
-        MyFonts().heading1('Current Medications', MyColors.black),
+        MyFonts().heading1(MyStrings().currentMedicationsHeading, MyColors.black),
         MySpaces.vGapInBetween,
         StreamBuilder(
             stream:
@@ -147,7 +148,7 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                 }
                 return (medicineData.length == 0)
                     ? MyFonts().body(
-                        'Sorry you doctor has not added any medicine for you at the moment.',
+                    MyStrings().currentMedicationsNoMedicines,
                         MyColors.gray)
                     : Column(
                         children: [

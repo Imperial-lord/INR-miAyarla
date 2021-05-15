@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:health_bag/functions/search/fuzzySearchListManagement.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/doctorPatientInterface.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -148,7 +149,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                     left: 20,
                     right: 20,
                   ),
-                  child: MyFonts().title1('Your Patients', MyColors.white),
+                  child: MyFonts().title1(MyStrings().doctorHomeYourPatients, MyColors.white),
                 ),
                 Container(
                   padding: EdgeInsets.only(
@@ -161,7 +162,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                     child: CupertinoTextField(
                       padding: EdgeInsets.all(15),
                       maxLines: 1,
-                      placeholder: 'Search a name or number',
+                      placeholder: MyStrings().doctorHomeSearchNameorNumber,
                       decoration: BoxDecoration(
                           color: MyColors.white,
                           borderRadius:
@@ -193,7 +194,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                   child: _data.length == 0
                       ? Center(
                           child: MyFonts()
-                              .heading2('No results found', MyColors.gray),
+                              .heading2(MyStrings().doctorHomeNoResults, MyColors.gray),
                         )
                       : RefreshIndicator(
                           onRefresh: () async {

@@ -6,6 +6,7 @@ import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/chat/chat.dart';
 import 'package:health_bag/pages/doctor/doctorManagement.dart';
 import 'package:health_bag/pages/doctor/doctorSendNotifications.dart';
@@ -73,14 +74,14 @@ Widget _transferAlertPopup(BuildContext context, String patientName,
               behavior: SnackBarBehavior.floating,
               backgroundColor: MyColors.black,
               content: MyFonts().body(
-                  'The patient has been successfully transferred!',
+                  MyStrings().doctorPatientInterfaceSuccessfulTransfer,
                   MyColors.white));
           ScaffoldMessenger.of(context)
               .showSnackBar(patientTransferredSnackBar);
           Navigator.pushNamedAndRemoveUntil(
               context, DoctorManagement.id, (route) => false);
         },
-        child: MyFonts().heading2('Yes', MyColors.blueLighter),
+        child: MyFonts().heading2(MyStrings().doctorPatientInterfaceYes, MyColors.blueLighter),
       ),
       // ignore: deprecated_member_use
       FlatButton(
@@ -88,7 +89,7 @@ Widget _transferAlertPopup(BuildContext context, String patientName,
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: MyFonts().heading2('No', MyColors.blueLighter),
+        child: MyFonts().heading2(MyStrings().doctorPatientInterfaceNo, MyColors.blueLighter),
       ),
     ],
   );
@@ -104,14 +105,13 @@ Widget _transferPatientPopup(BuildContext context, String patientUID,
       children: [
         Padding(
           padding: EdgeInsets.all(15),
-          child: MyFonts().title1('Transfer patient', MyColors.red),
+          child: MyFonts().title1(
+              MyStrings().doctorPatientInterfaceTransferTitle, MyColors.red),
         ),
         Padding(
           padding: EdgeInsets.all(15),
           child: MyFonts().subHeadline(
-              'By transferring a patient you will lose access to his account.'
-              ' You can request the concerned doctor to re-transfer him back to you in the future!',
-              MyColors.gray),
+              MyStrings().doctorPatientInterfaceTransferWarning, MyColors.gray),
         ),
         Divider(
           color: MyColors.black,
@@ -186,7 +186,8 @@ Widget _transferPatientPopup(BuildContext context, String patientUID,
         onPressed: () {
           Navigator.pop(context);
         },
-        child: MyFonts().heading2('Back', MyColors.blueLighter),
+        child: MyFonts().heading2(
+            MyStrings().doctorPatientInterfaceBack, MyColors.blueLighter),
       ),
     ],
   );
@@ -285,7 +286,8 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                                                 peerAvatar:
                                                                     userData[
                                                                         'Photo'],
-                                                                sharedMessage: null,
+                                                                sharedMessage:
+                                                                    null,
                                                               )));
                                                 },
                                                 padding: EdgeInsets.all(10),
@@ -298,7 +300,9 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                                     ),
                                                     MySpaces.hGapInBetween,
                                                     MyFonts().heading2(
-                                                        'Chat', MyColors.white),
+                                                        MyStrings()
+                                                            .doctorPatientInterfaceChat,
+                                                        MyColors.white),
                                                   ],
                                                 ),
                                                 color: MyColors.blueLighter,
@@ -338,7 +342,9 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                           color: MyColors.white,
                                         ),
                                         MySpaces.hGapInBetween,
-                                        MyFonts().heading2('Send Notification',
+                                        MyFonts().heading2(
+                                            MyStrings()
+                                                .doctorPatientInterfaceSendNotification,
                                             MyColors.white),
                                       ],
                                     ),
@@ -347,36 +353,36 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                 ],
                               ),
                               MySpaces.vSmallGapInBetween,
-                              MyFonts().heading1('Personal', MyColors.black),
+                              MyFonts().heading1(MyStrings().doctorPatientInterfacePersonal, MyColors.black),
                               MySpaces.vGapInBetween,
-                              _getRow('DOB', formatDateTime(userData['DOB'])),
-                              _getRow('Age', userData['Age']),
-                              _getRow('Gender', userData['Gender']),
-                              _getRow('Phone Number', userData['PhoneNumber']),
+                              _getRow(MyStrings().doctorPatientInterfaceDOB, formatDateTime(userData['DOB'])),
+                              _getRow(MyStrings().doctorPatientInterfaceAge, userData['Age']),
+                              _getRow(MyStrings().doctorPatientInterfaceGender, userData['Gender']),
+                              _getRow(MyStrings().doctorPatientInterfacePhoneNumber, userData['PhoneNumber']),
                               _getRow(
-                                  'Email Address', userData['EmailAddress']),
+                                  MyStrings().doctorPatientInterfaceEmailAddress, userData['EmailAddress']),
                               _getRow(
-                                  'Residential Address', userData['Address']),
-                              _getRow('Sign-up Date',
+                                  MyStrings().doctorPatientInterfaceResidentialAddress, userData['Address']),
+                              _getRow(MyStrings().doctorPatientInterfaceSignUpDate,
                                   formatDateTime(userData['SignUpDate'])),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
-                                  .heading1('Medical History', MyColors.black),
+                                  .heading1(MyStrings().doctorPatientInterfaceMedicalHistory, MyColors.black),
                               MySpaces.vGapInBetween,
                               _getRow(
-                                  'Illness',
+                                  MyStrings().doctorPatientInterfaceIllness,
                                   userData['Illness'] == ''
-                                      ? 'No Data Available'
+                                      ? MyStrings().doctorPatientInterfaceNoDataAvailable
                                       : userData['Illness']),
                               _getRow(
-                                  'Allergies',
+                                  MyStrings().doctorPatientInterfaceAllergies,
                                   userData['Allergies'] == ''
-                                      ? 'No Data Available'
+                                      ? MyStrings().doctorPatientInterfaceNoDataAvailable
                                       : userData['Allergies']),
                               _getRow(
-                                  'Genetic Diseases',
+                                  MyStrings().doctorPatientInterfaceGeneticDiseases,
                                   userData['GeneticDiseases'] == ''
-                                      ? 'No Data Available'
+                                      ? MyStrings().doctorPatientInterfaceNoDataAvailable
                                       : userData['GeneticDiseases']),
                               MySpaces.vSmallGapInBetween,
                               Row(
@@ -405,7 +411,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                           ),
                                           MySpaces.hGapInBetween,
                                           MyFonts().heading2(
-                                              'Monitor Patient Health',
+                                              MyStrings().doctorPatientInterfaceMonitorPatientHealth,
                                               MyColors.blueLighter),
                                         ],
                                       ),
@@ -441,7 +447,7 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                                             color: MyColors.white,
                                           ),
                                           MySpaces.hGapInBetween,
-                                          MyFonts().heading2('Transfer Patient',
+                                          MyFonts().heading2(MyStrings().doctorPatientInterfaceTransferTitle,
                                               MyColors.white),
                                         ],
                                       ),

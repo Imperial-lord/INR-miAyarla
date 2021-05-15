@@ -7,6 +7,7 @@ import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/doctorUploadPhoto.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
@@ -110,57 +111,57 @@ class _DoctorRegState extends State<DoctorReg> {
                               Row(
                                 children: [
                                   MyFonts()
-                                      .largeTitle('Hello ', MyColors.black),
+                                      .largeTitle('${MyStrings().doctorRegHello.split(' ')[0]} ', MyColors.black),
                                   MyFonts().largeTitle(
-                                      'there!', MyColors.blueLighter),
+                                      '${MyStrings().doctorRegHello.split(' ')[1]}', MyColors.blueLighter),
                                 ],
                               ),
                               MyFonts().heading2(
-                                  "Let's get you all set up!", MyColors.gray),
+                                  MyStrings().doctorRegSetUp, MyColors.gray),
                               MySpaces.vGapInBetween,
                               _getRowDoctorReg(
-                                  'Your full name',
-                                  'Enter your name',
+                                  MyStrings().doctorRegName,
+                                  MyStrings().doctorRegNamePlaceholder,
                                   Icon(EvaIcons.personOutline),
                                   nameController,
                                   TextInputType.name,
                                   1,
                                   true),
                               _getRowDoctorReg(
-                                  'Your phone number',
-                                  'Enter your phone number',
+                                  MyStrings().doctorRegPhoneNumber,
+                                  MyStrings().doctorRegPhoneNumberPlaceholder,
                                   Icon(EvaIcons.phoneCallOutline),
                                   phoneNumberController,
                                   TextInputType.number,
                                   1,
                                   false),
                               _getRowDoctorReg(
-                                  'Your specialisation',
-                                  'What do you specialise in?',
+                                  MyStrings().doctorRegSpecialisation,
+                                  MyStrings().doctorRegSpecialisationPlaceholder,
                                   Icon(EvaIcons.shoppingBagOutline),
                                   specialisationController,
                                   TextInputType.text,
                                   2,
                                   true),
                               _getRowDoctorReg(
-                                  'Hospital Name',
-                                  'Which hospital do you work in?',
+                                  MyStrings().doctorRegHospitalName,
+                                  MyStrings().doctorRegHospitalNamePlaceholder,
                                   Icon(Icons.local_hospital_outlined),
                                   hospitalController,
                                   TextInputType.text,
                                   2,
                                   true),
                               _getRowDoctorReg(
-                                  'Your City Name',
-                                  'Enter your city name',
+                                  MyStrings().doctorRegCityName,
+                                  MyStrings().doctorRegCityNamePlaceholder,
                                   Icon(CupertinoIcons.building_2_fill),
                                   cityController,
                                   TextInputType.text,
                                   1,
                                   true),
                               _getRowDoctorReg(
-                                  'Your Department Name',
-                                  'Enter your department name',
+                                  MyStrings().doctorRegDeptName,
+                                  MyStrings().doctorRegDeptNamePlaceholder,
                                   Icon(CupertinoIcons.home),
                                   deptController,
                                   TextInputType.text,
@@ -201,7 +202,7 @@ class _DoctorRegState extends State<DoctorReg> {
                                                   SnackBarBehavior.floating,
                                               backgroundColor: MyColors.black,
                                               content: MyFonts().body(
-                                                  'One or more fields are empty',
+                                                  MyStrings().doctorRegEmptyFieldsSnackBar,
                                                   MyColors.white));
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(emptyFieldSnackbar);
@@ -224,7 +225,7 @@ class _DoctorRegState extends State<DoctorReg> {
                                       },
                                       padding: EdgeInsets.all(15),
                                       child: MyFonts()
-                                          .heading1('Submit', MyColors.white),
+                                          .heading1(MyStrings().doctorRegButtonSubmit, MyColors.white),
                                       color: MyColors.blueLighter,
                                     ),
                                   ),
