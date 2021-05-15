@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fifthBackground.dart';
 import 'package:health_bag/widgets/multilineRow.dart';
@@ -41,7 +42,7 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
               left: 20,
               right: 20,
             ),
-            child: MyFonts().title1("Send a Notification", MyColors.white),
+            child: MyFonts().title1(MyStrings().doctorSendNotificationsHeading, MyColors.white),
           ),
           Container(
               padding: EdgeInsets.only(
@@ -54,16 +55,16 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MultilineRow().getMultilineRow(
-                        'Title',
-                        'Add a notification title',
+                        MyStrings().doctorSendNotificationsTitle,
+                        MyStrings().doctorSendNotificationsTitleDesc,
                         Icon(CupertinoIcons.textbox),
                         notificationTitleController,
                         TextInputType.multiline,
                         2,
                         true),
                     MultilineRow().getMultilineRow(
-                        'Body',
-                        'Add a notification body',
+                        MyStrings().doctorSendNotificationsBody,
+                        MyStrings().doctorSendNotificationsBodyDesc,
                         Icon(CupertinoIcons.text_quote),
                         notificationBodyController,
                         TextInputType.multiline,
@@ -97,7 +98,7 @@ class _DoctorSendNotificationsState extends State<DoctorSendNotifications> {
                             },
                             padding: EdgeInsets.all(15),
                             child: MyFonts()
-                                .heading1('Send notification', MyColors.white),
+                                .heading1(MyStrings().doctorSendNotificationButtonText, MyColors.white),
                             color: MyColors.blueLighter,
                           ),
                         ),

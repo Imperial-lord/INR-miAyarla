@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 
 class AddDoctorNotes extends StatefulWidget {
   static String id = 'add-doc-notes';
@@ -101,14 +102,14 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            MyFonts().heading1('Add a note', MyColors.blue),
+            MyFonts().heading1(MyStrings().addDoctorNotesHeader, MyColors.blue),
             MySpaces.vGapInBetween,
             CupertinoTextField(
               padding: EdgeInsets.all(10),
               expands: true,
               maxLines: null,
               minLines: null,
-              placeholder: "Enter a note",
+              placeholder: MyStrings().addDoctorNotesPlaceholder,
               decoration: BoxDecoration(
                   color: MyColors.backgroundColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -131,7 +132,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: MyColors.black,
                           content: MyFonts()
-                              .body("Can't add a blank note", MyColors.white));
+                              .body(MyStrings().addDoctorNotesPlaceholder, MyColors.white));
                       ScaffoldMessenger.of(context)
                           .showSnackBar(emptyNoteSnackBar);
                     } else {
@@ -148,7 +149,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
                       Navigator.pop(context);
                     }
                   },
-                  child: MyFonts().heading2('Add', MyColors.white),
+                  child: MyFonts().heading2(MyStrings().addDoctorNotesAdd, MyColors.white),
                   style: ElevatedButton.styleFrom(
                       primary: MyColors.blueLighter,
                       padding:
@@ -173,7 +174,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
           MySpaces.vGapInBetween,
           Row(
             children: [
-              MyFonts().heading1('Doctor Notes', MyColors.black),
+              MyFonts().heading1(MyStrings().addDoctorNotesTitle, MyColors.black),
               Spacer(),
               ElevatedButton(
                 onPressed: () {
@@ -183,7 +184,7 @@ class _AddDoctorNotesState extends State<AddDoctorNotes> {
                   );
                 },
                 child: MyFonts()
-                    .body('Add a note', MyColors.white),
+                    .body(MyStrings().addDoctorNotesHeader, MyColors.white),
                 style: ElevatedButton.styleFrom(primary: MyColors.blueLighter),
               ),
             ],

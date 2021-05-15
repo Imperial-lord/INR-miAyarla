@@ -5,6 +5,7 @@ import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/patients/patientEditProfile.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -46,20 +47,22 @@ Widget _getRow(String key, String val) {
 Widget _logoutPopup(BuildContext context, LoginStore loginStore) {
   return new AlertDialog(
     title:
-        MyFonts().heading1('Are you sure you want to logout?', MyColors.black),
+        MyFonts().heading1(MyStrings().patientProfileCheckLogout, MyColors.black),
     actions: <Widget>[
+      // ignore: deprecated_member_use
       FlatButton(
         onPressed: () {
           loginStore.signOut(context);
         },
-        child: MyFonts().heading2('Logout', MyColors.blueLighter),
+        child: MyFonts().heading2(MyStrings().patientProfileLogout, MyColors.blueLighter),
       ),
+      // ignore: deprecated_member_use
       FlatButton(
         color: MyColors.backgroundColor,
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: MyFonts().heading2('No', MyColors.blueLighter),
+        child: MyFonts().heading2(MyStrings().patientProfileNo, MyColors.blueLighter),
       ),
     ],
   );
@@ -82,7 +85,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     left: 20,
                     right: 20,
                   ),
-                  child: MyFonts().title1('Your Profile', MyColors.white),
+                  child: MyFonts().title1(MyStrings().patientProfileTitle, MyColors.white),
                 ),
                 Container(
                   padding: EdgeInsets.only(
@@ -104,13 +107,13 @@ class _PatientProfileState extends State<PatientProfile> {
                           var userProfileData = snapshot.data.data();
                           userProfileData.forEach((k, v) {
                             if (v == '')
-                              userProfileData[k] = 'No data available';
+                              userProfileData[k] = MyStrings().patientProfileNoDataAvailable;
                           });
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              MyFonts().heading1('Personal', MyColors.black),
+                              MyFonts().heading1(MyStrings().patientProfilePersonal, MyColors.black),
                               MySpaces.vGapInBetween,
                               Center(
                                 child: CircleAvatar(
@@ -122,16 +125,16 @@ class _PatientProfileState extends State<PatientProfile> {
                                 ),
                               ),
                               MySpaces.vGapInBetween,
-                              _getRow('Name', userProfileData['Name']),
-                              _getRow('DOB',
+                              _getRow(MyStrings().patientProfileName, userProfileData['Name']),
+                              _getRow(MyStrings().patientProfileDOB,
                                   formatDateTime(userProfileData['DOB'])),
-                              _getRow('Age', userProfileData['Age']),
-                              _getRow('Gender', userProfileData['Gender']),
-                              _getRow('Phone Number',
+                              _getRow(MyStrings().patientProfileAge, userProfileData['Age']),
+                              _getRow(MyStrings().patientProfileGender, userProfileData['Gender']),
+                              _getRow(MyStrings().patientProfilePhoneNumber,
                                   userProfileData['PhoneNumber']),
-                              _getRow('Email Address',
+                              _getRow(MyStrings().patientProfileEmailAddress,
                                   userProfileData['EmailAddress']),
-                              _getRow('Residential Address',
+                              _getRow(MyStrings().patientProfileResidentialAddress,
                                   userProfileData['Address']),
                               Visibility(
                                 visible: false,
@@ -140,12 +143,12 @@ class _PatientProfileState extends State<PatientProfile> {
                               ),
                               MySpaces.vSmallGapInBetween,
                               MyFonts()
-                                  .heading1('Medical History', MyColors.black),
+                                  .heading1(MyStrings().patientProfileMedicalHistory, MyColors.black),
                               MySpaces.vGapInBetween,
-                              _getRow('Illness', userProfileData['Illness']),
+                              _getRow(MyStrings().patientProfileIllness, userProfileData['Illness']),
                               _getRow(
-                                  'Allergies', userProfileData['Allergies']),
-                              _getRow('Genetic Diseases',
+                                  MyStrings().patientProfileAllergies, userProfileData['Allergies']),
+                              _getRow(MyStrings().patientProfileGeneticDiseases,
                                   userProfileData['GeneticDiseases']),
                               MySpaces.vLargeGapInBetween,
                               RaisedButton(
@@ -167,7 +170,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                     ),
                                     MySpaces.hGapInBetween,
                                     MyFonts().heading2(
-                                        'Edit Profile', MyColors.white),
+                                        MyStrings().patientProfileEditProfile, MyColors.white),
                                   ],
                                 ),
                                 color: MyColors.blueLighter,
@@ -191,7 +194,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                     ),
                                     MySpaces.hGapInBetween,
                                     MyFonts()
-                                        .heading2('Log Out', MyColors.white),
+                                        .heading2(MyStrings().patientProfileLogOut, MyColors.white),
                                   ],
                                 ),
                                 color: MyColors.redLighter,

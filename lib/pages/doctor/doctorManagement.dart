@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/aboutApp.dart';
 import 'package:health_bag/pages/doctor/addMoreDoctors.dart';
 import 'package:health_bag/pages/doctor/doctorHome.dart';
@@ -48,7 +49,7 @@ class _DoctorManagementState extends State<DoctorManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('Home', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(MyStrings().doctorManagementHome, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.house_fill,
@@ -58,7 +59,7 @@ class _DoctorManagementState extends State<DoctorManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('Profile', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(MyStrings().doctorManagementProfile, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.person_alt,
@@ -69,7 +70,7 @@ class _DoctorManagementState extends State<DoctorManagement> {
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
                   child: MyFonts()
-                      .subHeadline('Add Doctors', MyColors.blueLighter),
+                      .subHeadline(MyStrings().doctorManagementAddDoctors, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.person_add_solid,
@@ -79,7 +80,7 @@ class _DoctorManagementState extends State<DoctorManagement> {
                 activeColor: MyColors.blueLighter,
                 title: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: MyFonts().subHeadline('About', MyColors.blueLighter),
+                  child: MyFonts().subHeadline(MyStrings().doctorManagementAbout, MyColors.blueLighter),
                 ),
                 icon: Icon(
                   CupertinoIcons.info_circle_fill,

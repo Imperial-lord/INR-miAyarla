@@ -8,6 +8,7 @@ import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                       left: 20,
                       right: 20,
                     ),
-                    child: MyFonts().title1('Add Doctors', MyColors.white),
+                    child: MyFonts().title1(MyStrings().addMoreDoctorsTitle, MyColors.white),
                   ),
                   Container(
                     padding: EdgeInsets.only(
@@ -150,7 +151,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                     ),
                     title: MyFonts().heading1(item, MyColors.black),
                     subtitle: MyFonts().heading2(
-                        name != '' ? name : 'Doctor not registered',
+                        name != '' ? name : MyStrings().addMoreDoctorsNotRegistered,
                         MyColors.gray),
                     trailing: (allowDelete == true)
                         ? IconButton(
@@ -185,7 +186,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: MyFonts().heading2('Phone number', MyColors.gray),
+          child: MyFonts().heading2(MyStrings().addMoreDoctorsPhoneNumber, MyColors.gray),
         ),
         Row(
           children: [
@@ -206,7 +207,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: MyColors.gray),
                       borderRadius: BorderRadius.circular(7)),
-                  hintText: 'Search Country or Code',
+                  hintText: MyStrings().addMoreDoctorsSearchCountry,
                   hintStyle: TextStyle(
                       fontFamily: 'poppins-semi',
                       fontSize: 15,
@@ -248,7 +249,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
               child: CupertinoTextField(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 maxLines: 1,
-                placeholder: "Doctor's Number",
+                placeholder: MyStrings().addMoreDoctorsNumberPlaceholder,
                 decoration: BoxDecoration(
                     color: MyColors.backgroundColor,
                     borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -276,7 +277,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            MyFonts().heading1('Add a doctor', MyColors.blue),
+            MyFonts().heading1(MyStrings().addMoreDoctorsAddADoc, MyColors.blue),
             MySpaces.vGapInBetween,
             _getRowAddDoctor(phoneNumberController),
             MySpaces.vMediumGapInBetween,
@@ -295,13 +296,13 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: MyColors.black,
                           content: MyFonts().body(
-                              'Please enter a valid phone number',
+                              MyStrings().addMoreDoctorsInvalidNumber,
                               MyColors.white));
                       ScaffoldMessenger.of(context)
                           .showSnackBar(incorrectNumberSnackBar);
                     }
                   },
-                  child: MyFonts().heading2('Add', MyColors.white),
+                  child: MyFonts().heading2(MyStrings().addDoctorNotesAdd, MyColors.white),
                   style: ElevatedButton.styleFrom(
                       primary: MyColors.blueLighter,
                       padding:
@@ -321,7 +322,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
           'Are you sure you want to delete $number from the database?',
           MyColors.black),
       content: MyFonts().body(
-          'The selected doctor will lose access to the application',
+          MyStrings().addMoreDoctorsDeleteWarningLoseAccess,
           MyColors.gray),
       actions: <Widget>[
         // ignore: deprecated_member_use

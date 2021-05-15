@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/timingsNotes.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/patients/patientMedications/patientTimingsNotes.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
@@ -101,7 +100,7 @@ class _ViewMedicineState extends State<ViewMedicine> {
                     right: 15,
                   ),
                   child: MyFonts()
-                      .title1('View medicine details', MyColors.white)),
+                      .title1(MyStrings().viewMedicineTitle, MyColors.white)),
               Container(
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * 0.15,
@@ -113,21 +112,21 @@ class _ViewMedicineState extends State<ViewMedicine> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _getMedicineDetails(
-                          'Medicine Name',
-                          'Eg. Paracetamol',
+                          MyStrings().viewMedicineMedicineName,
+                          MyStrings().viewMedicineMedicinePlaceholder,
                           Icon(Icons.sanitizer_rounded),
                           medicineNameController,
                           TextInputType.text,
                           1),
                       _getMedicineDetails(
-                          'End Date',
+                          MyStrings().viewMedicineEndDate,
                           'dd-mm-yyyy',
                           Icon(EvaIcons.calendar),
                           lastDateController,
                           TextInputType.datetime,
                           1),
                       MySpaces.vGapInBetween,
-                      MyFonts().heading2('Timings and Notes', MyColors.gray),
+                      MyFonts().heading2(MyStrings().viewMedicineTimingsAndNotes, MyColors.gray),
                       Divider(color: Colors.black),
                       for (int i = 0; i < 7; i++)
                         PatientTimingsNotes(day: day[i]),

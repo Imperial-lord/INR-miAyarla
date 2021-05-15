@@ -5,6 +5,7 @@ import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/fourthBackground.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    MyFonts().title1('Your notifications', MyColors.white),
+                    MyFonts().title1(MyStrings().patientNotificationsTitle, MyColors.white),
                   ],
                 ),
               ),
@@ -73,7 +74,7 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                           }
                           return (notificationData.length == 0)
                               ? MyFonts().body(
-                                  'Sorry you have no notifications at the moment!',
+                                  MyStrings().patientNotificationsNoNotifications,
                                   MyColors.gray)
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +102,7 @@ class _PatientNotificationsState extends State<PatientNotifications> {
                                                   (notificationData[i]
                                                               ['Body'] ==
                                                           '')
-                                                      ? 'This notification has no body.'
+                                                      ? MyStrings().patientNotificationsNoBody
                                                       : notificationData[i]
                                                           ['Body'],
                                                   MyColors.gray),

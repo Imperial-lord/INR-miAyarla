@@ -10,7 +10,7 @@ import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/doctor/doctorManagement.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:image_picker/image_picker.dart';
@@ -68,7 +68,7 @@ var map = {};
 
 String setControllerText(
     TextEditingController controller, var userProfileData) {
-  if (userProfileData == 'No data available') userProfileData = '';
+  if (userProfileData == MyStrings().doctorProfileNoDataAvailable) userProfileData = '';
   String ans;
   if (controller.text == '' && !map.containsKey(controller))
     ans = userProfileData;
@@ -125,7 +125,7 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: MyColors.black,
             content: MyFonts()
-                .body('Please choose a photo of size < 2 MB', MyColors.white));
+                .body(MyStrings().doctorEditProfileBigPicSnackbar, MyColors.white));
         ScaffoldMessenger.of(context).showSnackBar(bigPhotoSnackBar);
       });
     } else
@@ -192,9 +192,9 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                         children: <Widget>[
                           Row(
                             children: [
-                              MyFonts().largeTitle('Edit ', MyColors.black),
+                              MyFonts().largeTitle('${MyStrings().doctorEditProfileTitle.split(' ')[0]} ', MyColors.black),
                               MyFonts()
-                                  .largeTitle('Profile!', MyColors.blueLighter),
+                                  .largeTitle('${MyStrings().doctorEditProfileTitle.split(' ')[1]}', MyColors.blueLighter),
                             ],
                           ),
                           MySpaces.vGapInBetween,
@@ -230,48 +230,48 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                           ),
                           MySpaces.vGapInBetween,
                           _getRowDoctorEditProfile(
-                              'Your full name',
-                              'Enter your name',
+                              MyStrings().doctorEditProfileName,
+                              MyStrings().doctorEditProfileNamePlaceholder,
                               Icon(EvaIcons.personOutline),
                               nameController,
                               TextInputType.name,
                               1,
                               true),
                           _getRowDoctorEditProfile(
-                              'Your phone number',
-                              'Enter your phone number',
+                              MyStrings().doctorEditProfilePhoneNumber,
+                              MyStrings().doctorEditProfilePhoneNumberPlaceholder,
                               Icon(EvaIcons.phoneCallOutline),
                               phoneNumberController,
                               TextInputType.number,
                               1,
                               false),
                           _getRowDoctorEditProfile(
-                              'Your specialisation',
-                              'What do you specialise in?',
+                              MyStrings().doctorEditProfileSpecialisation,
+                              MyStrings().doctorEditProfileSpecialisationPlaceholder,
                               Icon(EvaIcons.shoppingBagOutline),
                               specialisationController,
                               TextInputType.text,
                               2,
                               true),
                           _getRowDoctorEditProfile(
-                              'Hospital Name',
-                              'Which hospital do you work in?',
+                              MyStrings().doctorEditProfileHospitalName,
+                              MyStrings().doctorEditProfileHospitalNamePlaceholder,
                               Icon(Icons.local_hospital_outlined),
                               hospitalController,
                               TextInputType.text,
                               2,
                               true),
                           _getRowDoctorEditProfile(
-                              'Your City Name',
-                              'Enter your city name',
+                              MyStrings().doctorEditProfileCityName,
+                              MyStrings().doctorEditProfileCityNamePlaceholder,
                               Icon(CupertinoIcons.building_2_fill),
                               cityController,
                               TextInputType.text,
                               1,
                               true),
                           _getRowDoctorEditProfile(
-                              'Your Department Name',
-                              'Enter your department name',
+                              MyStrings().doctorEditProfileDeptName,
+                              MyStrings().doctorEditProfileDeptNamePlaceholder,
                               Icon(CupertinoIcons.home),
                               deptController,
                               TextInputType.text,
@@ -280,7 +280,7 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                           Visibility(
                             visible: true,
                             child: _getRowDoctorEditProfile(
-                                'Your sign up date',
+                                MyStrings().doctorEditProfileSignUpDate,
                                 "Today's date",
                                 Icon(EvaIcons.calendarOutline),
                                 signUpDateController,
@@ -307,7 +307,7 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: MyColors.black,
                                       content: MyFonts().body(
-                                          'One or more fields are empty',
+                                          MyStrings().doctorEditProfileEmptyFiledsSnackbar,
                                           MyColors.white));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(emptyFieldSnackbar);
@@ -335,7 +335,7 @@ class _DoctorEditProfileState extends State<DoctorEditProfile> {
                               },
                               padding: EdgeInsets.all(15),
                               child: MyFonts()
-                                  .heading1('Update Profile', MyColors.white),
+                                  .heading1(MyStrings().doctorEditProfileButtonUpdate, MyColors.white),
                               color: MyColors.blueLighter,
                             )),
                           ]),

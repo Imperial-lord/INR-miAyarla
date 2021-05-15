@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
 
@@ -31,13 +32,13 @@ class _DoctorRejectedState extends State<DoctorRejected> {
                     width: 150,
                   ),
                   MySpaces.vLargeGapInBetween,
-                  MyFonts().title1('Sorry, you are not in our database!',
+                  MyFonts().title1(MyStrings().doctorRejectedDB,
                       MyColors.redLighter),
                   MyFonts().body(
-                      'For security reasons, you need to first ask a colleague to add your phone number to the database.',
+                      MyStrings().doctorRejectedSecurity,
                       MyColors.gray),
                   MySpaces.vLargeGapInBetween,
-                  MyFonts().title1('Are you a patient?', MyColors.black),
+                  MyFonts().title1(MyStrings().doctorRejectedYouPatient, MyColors.black),
                   MySpaces.vGapInBetween,
                   Row(
                     children: [
@@ -52,7 +53,7 @@ class _DoctorRejectedState extends State<DoctorRejected> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               MyFonts()
-                                  .heading1('Continue as a patient', MyColors.white),
+                                  .heading1(MyStrings().doctorRejectedContinueAsPatient, MyColors.white),
                               MySpaces.hSmallestGapInBetween,
                               Icon(EvaIcons.arrowRight, color: MyColors.white),
                             ],

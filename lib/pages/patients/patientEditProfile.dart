@@ -11,13 +11,14 @@ import 'package:health_bag/functions/validations/formValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
-import 'package:health_bag/pages/patients/patientManagement.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:health_bag/widgets/backgrounds/thirdBackground.dart';
 import 'package:health_bag/widgets/multilineRow.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class PatientEditProfile extends StatefulWidget {
   static String id = 'patient-edit-profile';
   var userProfileData;
@@ -69,7 +70,7 @@ var map = {};
 
 String setControllerText(
     TextEditingController controller, var userProfileData) {
-  if (userProfileData == 'No data available') userProfileData = '';
+  if (userProfileData == MyStrings().patientEditProfileNoData) userProfileData = '';
   String ans;
   if (controller.text == '' && !map.containsKey(controller))
     ans = userProfileData;
@@ -103,7 +104,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
   @override
   void initState() {
     super.initState();
-    if (userProfileData['Gender'] == 'Male') {
+    if (userProfileData['Gender'] == MyStrings().patientRegistrationGenderMale) {
       setState(() {
         bodyColor[0] = MyColors.redLighter;
         contentColor[0] = MyColors.white;
@@ -178,7 +179,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: MyColors.black,
             content: MyFonts()
-                .body('Please choose a photo of size < 2 MB', MyColors.white));
+                .body(MyStrings().patientEditProfileBigPhotoSnackBar, MyColors.white));
         ScaffoldMessenger.of(context).showSnackBar(bigPhotoSnackBar);
       });
     } else
@@ -253,9 +254,9 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                         children: <Widget>[
                           Row(
                             children: [
-                              MyFonts().largeTitle('Edit ', MyColors.black),
+                              MyFonts().largeTitle('${MyStrings().patientEditProfileTitle.split(' ')[0]} ', MyColors.black),
                               MyFonts()
-                                  .largeTitle('Profile!', MyColors.blueLighter),
+                                  .largeTitle(MyStrings().patientEditProfileTitle.split(' ')[1], MyColors.blueLighter),
                             ],
                           ),
                           MySpaces.vGapInBetween,
@@ -291,8 +292,8 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                           ),
                           MySpaces.vGapInBetween,
                           _getRowPatientEditProfile(
-                              'Your full name',
-                              'Enter your name',
+                              MyStrings().patientEditProfileName,
+                              MyStrings().patientEditProfileNamePlaceholder,
                               Icon(EvaIcons.personOutline),
                               nameController,
                               TextInputType.name,
@@ -309,14 +310,14 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 10),
                                   child: MyFonts().heading2(
-                                      'Your date of birth', MyColors.gray),
+                                      MyStrings().patientEditProfileDOB, MyColors.gray),
                                 ),
                                 CupertinoTextField(
                                   enabled: false,
                                   expands: false,
                                   padding: EdgeInsets.all(15),
                                   maxLines: 1,
-                                  placeholder: 'Select a date',
+                                  placeholder: MyStrings().patientEditProfileDOBPlaceholder,
                                   decoration: BoxDecoration(
                                       color: MyColors.backgroundColor,
                                       borderRadius: const BorderRadius.all(
@@ -338,8 +339,8 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                             ),
                           ),
                           _getRowPatientEditProfile(
-                              'Your age',
-                              'Enter your age',
+                              MyStrings().patientEditProfileAge,
+                              MyStrings().patientEditProfileAgePlaceholder,
                               Icon(EvaIcons.menu),
                               ageController,
                               TextInputType.number,
@@ -360,18 +361,18 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: MyFonts()
-                                    .heading2('Your gender', MyColors.gray),
+                                    .heading2(MyStrings().patientEditProfileGender, MyColors.gray),
                               ),
                               Row(
                                 children: [
                                   Expanded(
                                     child: RaisedButton(
                                       child: MyFonts()
-                                          .heading2('Male', contentColor[0]),
+                                          .heading2(MyStrings().patientEditProfileGenderMale, contentColor[0]),
                                       onPressed: () {
                                         setState(() {
                                           if (bodyColor[0] == MyColors.white) {
-                                            genderController.text = 'Male';
+                                            genderController.text = MyStrings().patientRegistrationGenderMale;
                                             bodyColor[0] = MyColors.redLighter;
                                             contentColor[0] = MyColors.white;
                                             // make the other button unselected!
@@ -393,11 +394,11 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                   Expanded(
                                     child: RaisedButton(
                                       child: MyFonts()
-                                          .heading2('Female', contentColor[1]),
+                                          .heading2(MyStrings().patientEditProfileGenderFemale, contentColor[1]),
                                       onPressed: () {
                                         setState(() {
                                           if (bodyColor[1] == MyColors.white) {
-                                            genderController.text = 'Female';
+                                            genderController.text = MyStrings().patientRegistrationGenderFemale;
                                             bodyColor[1] = MyColors.redLighter;
                                             contentColor[1] = MyColors.white;
                                             // make the other button unselected!
@@ -420,48 +421,48 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                             ],
                           ),
                           _getRowPatientEditProfile(
-                              'Your phone number',
-                              'Enter your phone number',
+                              MyStrings().patientEditProfilePhoneNumber,
+                              MyStrings().patientEditProfilePhoneNumberPlaceholder,
                               Icon(EvaIcons.phoneCallOutline),
                               phoneNumberController,
                               TextInputType.number,
                               1,
                               false),
                           _getRowPatientEditProfile(
-                              'Your email address',
-                              'Enter your email',
+                              MyStrings().patientEditProfileEmailAddress,
+                              MyStrings().patientEditProfileEmailAddressPlaceholder,
                               Icon(EvaIcons.emailOutline),
                               emailController,
                               TextInputType.emailAddress,
                               1,
                               true),
                           MultilineRow().getMultilineRow(
-                              'Your residence address',
-                              'Enter your complete address',
+                              MyStrings().patientEditProfileResidenceAddress,
+                              MyStrings().patientEditProfileResidenceAddressPlaceholder,
                               Icon(CupertinoIcons.location),
                               addressController,
                               TextInputType.multiline,
                               3,
                               true),
                           MultilineRow().getMultilineRow(
-                              'Your ailments',
-                              'What diseases are you suffering from?',
+                              MyStrings().patientEditProfileAilments,
+                              MyStrings().patientEditProfileAilmentsPlaceholder,
                               Icon(Icons.local_hospital_outlined),
                               illnessController,
                               TextInputType.multiline,
                               4,
                               true),
                           MultilineRow().getMultilineRow(
-                              'Your allergies',
-                              'Do you have any specific allergies?',
+                              MyStrings().patientEditProfileAllergies,
+                              MyStrings().patientEditProfileAllergiesPlaceholder,
                               Icon(CupertinoIcons.doc),
                               allergyController,
                               TextInputType.multiline,
                               4,
                               true),
                           MultilineRow().getMultilineRow(
-                              'Your genetic disorders',
-                              'Do you have any genetic disorders?',
+                              MyStrings().patientEditProfileGeneticDisorder,
+                              MyStrings().patientEditProfileGeneticDisorderPlaceholder,
                               Icon(Icons.account_tree_outlined),
                               geneticController,
                               TextInputType.multiline,
@@ -497,7 +498,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: MyColors.black,
                                       content: MyFonts().body(
-                                          'One or more fields are empty',
+                                          MyStrings().patientEditProfileEmptyFields,
                                           MyColors.white));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(emptyFieldsSnackbar);
@@ -507,7 +508,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: MyColors.black,
                                       content: MyFonts().body(
-                                          'Please enter a valid date of birth',
+                                          MyStrings().patientEditProfileInvalidDOB,
                                           MyColors.white));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(validDOBSnackBar);
@@ -517,7 +518,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: MyColors.black,
                                       content: MyFonts().body(
-                                          'Please enter a valid email',
+                                          MyStrings().patientEditProfileInvalidEmail,
                                           MyColors.white));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(validEmailSnackBar);
@@ -549,7 +550,7 @@ class _PatientEditProfileState extends State<PatientEditProfile> {
                               },
                               padding: EdgeInsets.all(15),
                               child: MyFonts()
-                                  .heading1('Update Profile', MyColors.white),
+                                  .heading1(MyStrings().patientEditProfileUpdateProfile, MyColors.white),
                               color: MyColors.blueLighter,
                             )),
                           ]),

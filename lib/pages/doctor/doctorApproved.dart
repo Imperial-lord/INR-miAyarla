@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/doctor/doctorReg.dart';
 import 'package:health_bag/stores/login_store.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,7 @@ class _DoctorApprovedState extends State<DoctorApproved> {
                   width: 150,
                 ),
                 MySpaces.vLargeGapInBetween,
-                MyFonts().largeTitle('Approved!', MyColors.gray),
+                MyFonts().largeTitle(MyStrings().doctorApproved, MyColors.gray),
               ],
             ),
           ),

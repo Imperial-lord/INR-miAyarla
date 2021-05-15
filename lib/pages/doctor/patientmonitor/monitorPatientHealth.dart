@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/latestTestResults.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/patientmedications/medications.dart';
 import 'package:health_bag/pages/doctor/patientmonitor/addVisitDates.dart';
@@ -81,7 +82,7 @@ class _MonitorPatientHealthState extends State<MonitorPatientHealth> {
                         String title =
                             snapshot.data.data()['Name'].split(' ')[0];
                         return MyFonts()
-                            .title1("$title's Health 📈", MyColors.white);
+                            .title1("$title's ${MyStrings().monitorPatientHealthTitle} 📈", MyColors.white);
                       } else
                         return CircularProgressIndicator();
                     }),

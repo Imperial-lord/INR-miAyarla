@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/functions/validations/userTypeValidation.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:health_bag/pages/common/auth/otpPage.dart';
 import 'package:health_bag/pages/common/userType.dart';
 import 'package:health_bag/pages/common/welcome.dart';
@@ -69,7 +70,7 @@ abstract class LoginStoreBase with Store {
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: MyColors.black,
                 content: MyFonts().body(
-                    'Invalid code/invalid authentication', MyColors.white),
+                    MyStrings().loginStoreInvalidCodeOrAuth, MyColors.white),
               ));
             }
           }).catchError((error) {
@@ -77,7 +78,7 @@ abstract class LoginStoreBase with Store {
               behavior: SnackBarBehavior.floating,
               backgroundColor: MyColors.black,
               content: MyFonts().body(
-                  'Something has gone wrong, please try later', MyColors.white),
+                  MyStrings().loginStoreSomethingGoneWrong, MyColors.white),
             ));
           });
         },
@@ -87,7 +88,7 @@ abstract class LoginStoreBase with Store {
             behavior: SnackBarBehavior.floating,
             backgroundColor: MyColors.black,
             content: MyFonts().body(
-                'The phone number format is incorrect. Please enter your number in E.164 format. [+][country code][number]',
+                MyStrings().loginStoreWrongPhoneNumber,
                 MyColors.white),
           ));
           isLoginLoading = false;
@@ -115,7 +116,7 @@ abstract class LoginStoreBase with Store {
         behavior: SnackBarBehavior.floating,
         backgroundColor: MyColors.black,
         content: MyFonts().body(
-            'Wrong code ! Please enter the last code received.',
+            MyStrings().loginStoreWrongCode,
             MyColors.white),
       ));
       // ignore: non_constant_identifier_names

@@ -11,6 +11,7 @@ import 'package:health_bag/functions/general/formatDateTime.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -109,7 +110,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
             behavior: SnackBarBehavior.floating,
             backgroundColor: MyColors.black,
             content: MyFonts()
-                .body('Please choose a file of size < 2 MB', MyColors.white));
+                .body(MyStrings().latestTestResultsSizeLimit, MyColors.white));
         ScaffoldMessenger.of(context).showSnackBar(bigPhotoSnackBar);
       });
     } else
@@ -163,7 +164,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                       Row(
                         children: [
                           MyFonts()
-                              .heading1('Latest Test Results', MyColors.black),
+                              .heading1(MyStrings().latestTestResultsHeader, MyColors.black),
                           Spacer(),
                           // ignore: deprecated_member_use
                           RaisedButton(
@@ -171,7 +172,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                             onPressed: () {
                               getFile();
                             },
-                            child: MyFonts().body('Upload', MyColors.white),
+                            child: MyFonts().body(MyStrings().latestTestResultsUpload, MyColors.white),
                             color: MyColors.blueLighter,
                           ),
                         ],
@@ -207,7 +208,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                                                     backgroundColor:
                                                         MyColors.black,
                                                     content: MyFonts().body(
-                                                        'Opening ${reportList[i].data()['File Name']}',
+                                                        '${MyStrings().latestTestResultsOpening} ${reportList[i].data()['File Name']}',
                                                         MyColors.white));
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -270,7 +271,7 @@ class _LatestTestResultsState extends State<LatestTestResults> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         MyColors.blueLighter)),
                                 MySpaces.vMediumGapInBetween,
-                                MyFonts().body('Uploading', MyColors.black),
+                                MyFonts().body(MyStrings().latestTestResultsUploading, MyColors.black),
                               ],
                             ),
                           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
 
 class LoaderHUD extends StatelessWidget {
   final bool inAsyncCall;
@@ -21,7 +22,7 @@ class LoaderHUD extends StatelessWidget {
           children: [
             CircularProgressIndicator(),
             Spacer(),
-            MyFonts().body('Loading', MyColors.black)
+            MyFonts().body(MyStrings().loaderHudLoading, MyColors.black)
           ],
         ),
       ),

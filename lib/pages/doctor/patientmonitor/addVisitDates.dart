@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:health_bag/globals/myColors.dart';
 import 'package:health_bag/globals/myFonts.dart';
 import 'package:health_bag/globals/mySpaces.dart';
+import 'package:health_bag/globals/myStrings.dart';
+import 'package:health_bag/globals/myStrings.dart';
+import 'package:health_bag/globals/myStrings.dart';
 
 class AddVisitDates extends StatefulWidget {
   static String id = 'add-visit-dates';
@@ -33,7 +36,7 @@ class _AddVisitDatesState extends State<AddVisitDates> {
   TextEditingController lastVisitController = new TextEditingController();
   TextEditingController nextVisitController = new TextEditingController();
   bool toggleEnabled = false;
-  String buttonText = 'Edit';
+  String buttonText = MyStrings().addVisitDatesEdit;
 
   @override
   initState() {
@@ -125,16 +128,17 @@ class _AddVisitDatesState extends State<AddVisitDates> {
           MySpaces.vGapInBetween,
           Row(
             children: [
-              MyFonts().heading1('Important Dates', MyColors.black),
+              MyFonts().heading1(
+                  MyStrings().addVisitDatesImportantDates, MyColors.black),
               Spacer(),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
                     toggleEnabled = !toggleEnabled;
-                    if (buttonText == 'Edit')
-                      buttonText = 'Save';
+                    if (buttonText == MyStrings().addVisitDatesEdit)
+                      buttonText = MyStrings().addVisitDatesSave;
                     else {
-                      buttonText = 'Edit';
+                      buttonText = MyStrings().addVisitDatesEdit;
                       FirebaseFirestore firestoreInstance =
                           FirebaseFirestore.instance;
                       firestoreInstance
@@ -152,10 +156,10 @@ class _AddVisitDatesState extends State<AddVisitDates> {
               ),
             ],
           ),
-          _getRowDoctorAddVisitDates('Last visit date', 'dd-mm-yyyy',
-              lastVisitController, toggleEnabled),
-          _getRowDoctorAddVisitDates('Next visit date', 'dd-mm-yyyy',
-              nextVisitController, toggleEnabled),
+          _getRowDoctorAddVisitDates(MyStrings().addVisitDatesLastVisitDate,
+              'dd-mm-yyyy', lastVisitController, toggleEnabled),
+          _getRowDoctorAddVisitDates(MyStrings().addVisitDatesNextVisitDate,
+              'dd-mm-yyyy', nextVisitController, toggleEnabled),
         ],
       ),
     );
