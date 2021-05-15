@@ -24,7 +24,7 @@ Future<QuerySnapshot> getData() async {
   return await FirebaseFirestore.instance.collection('Doctors Database').get();
 }
 
-String countryCode = '+91';
+String countryCode = '+90';
 
 class _AddMoreDoctorsState extends State<AddMoreDoctors> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey(); // backing data
@@ -180,7 +180,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
   }
 
   Widget _getRowAddDoctor(TextEditingController controller) {
-    countryCode = '+91';
+    countryCode = '+90';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -230,7 +230,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                 showDropDownButton: true,
                 showFlag: false,
                 showFlagDialog: true,
-                favorite: ['+91', 'IN'],
+                favorite: ['+90', 'TR'],
                 boxDecoration: BoxDecoration(
                   color: MyColors.backgroundColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -319,7 +319,8 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
   Widget _removeDocPopup(String number, int index) {
     return AlertDialog(
       title: MyFonts().heading1(
-          'Are you sure you want to delete $number from the database?',
+          // 'Are you sure you want to delete $number from the database?',
+          '$number numarasını veritabanından silmek istediğinizden emin misiniz?',
           MyColors.black),
       content: MyFonts().body(
           MyStrings().addMoreDoctorsDeleteWarningLoseAccess,
@@ -331,7 +332,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
             _removeSingleItems(index);
             Navigator.pop(context);
           },
-          child: MyFonts().heading2('Delete', MyColors.blueLighter),
+          child: MyFonts().heading2(MyStrings().addMoreDoctorsDelete, MyColors.blueLighter),
         ),
       ],
     );

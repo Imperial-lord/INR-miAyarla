@@ -59,7 +59,8 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
         await flutterLocalNotificationsPlugin.zonedSchedule(
           new Random().nextInt(100000),
           MyStrings().currentMedicationsTimeForMeds,
-          "Name: ${medicineNotification[i]['Name']}\nDosage: ${medicineNotification[i]['Dosage']}\nNotes: ${medicineNotification[i]['Notes']}",
+          // "Name: ${medicineNotification[i]['Name']}\nDosage: ${medicineNotification[i]['Dosage']}\nNotes: ${medicineNotification[i]['Notes']}",
+          "İsim: ${medicineNotification[i]['Name']}\nDoz: ${medicineNotification[i]['Dosage']}\nNotlar: ${medicineNotification[i]['Notes']}",
           medicineNotification[i]['Time'],
           notificationDetails,
           uiLocalNotificationDateInterpretation:
@@ -119,7 +120,8 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
       color: Colors.transparent,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         MySpaces.vGapInBetween,
-        MyFonts().heading1(MyStrings().currentMedicationsHeading, MyColors.black),
+        MyFonts()
+            .heading1(MyStrings().currentMedicationsHeading, MyColors.black),
         MySpaces.vGapInBetween,
         StreamBuilder(
             stream:
@@ -147,8 +149,7 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                   }
                 }
                 return (medicineData.length == 0)
-                    ? MyFonts().body(
-                    MyStrings().currentMedicationsNoMedicines,
+                    ? MyFonts().body(MyStrings().currentMedicationsNoMedicines,
                         MyColors.gray)
                     : Column(
                         children: [
@@ -190,7 +191,8 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                                         medicineData[i]['Name'],
                                         MyColors.black),
                                     subtitle: MyFonts().body(
-                                        'Ends On: ${medicineData[i]['End Date']}',
+                                        // 'Ends On: ${medicineData[i]['End Date']}',
+                                        'Bitiş Tarihi: ${medicineData[i]['End Date']}',
                                         MyColors.gray),
                                     trailing: Container(
                                       decoration: BoxDecoration(
@@ -220,7 +222,8 @@ class _CurrentMedicationsState extends State<CurrentMedications> {
                                                     backgroundColor:
                                                         MyColors.black,
                                                     content: MyFonts().body(
-                                                        "${medicineData[i]['Name']} has been scheduled",
+                                                        // "${medicineData[i]['Name']} has been scheduled",
+                                                        "${medicineData[i]['Name']} zamanlandı",
                                                         MyColors.white));
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(

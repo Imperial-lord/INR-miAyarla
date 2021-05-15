@@ -55,7 +55,8 @@ Widget _transferAlertPopup(BuildContext context, String patientName,
     String doctorName, String patientUID, String doctorUID) {
   return new AlertDialog(
     title: MyFonts().body(
-        "Are you sure you want to transfer $patientName to $doctorName?",
+        // "Are you sure you want to transfer $patientName to $doctorName?",
+        '$patientName isimli hastayı $doctorName isimli doktora transfer etmek istediğinize emin misiniz?',
         MyColors.black),
     actions: <Widget>[
       // ignore: deprecated_member_use
@@ -228,7 +229,10 @@ class _DoctorPatientInterfaceState extends State<DoctorPatientInterface> {
                           right: 20,
                         ),
                         child: MyFonts()
-                            .title1("$title's Profile", MyColors.white),
+                            .title1(
+                            // "$title's Profile",
+                            "$title's Profili",
+                            MyColors.white),
                       ),
                       Container(
                         padding: EdgeInsets.only(

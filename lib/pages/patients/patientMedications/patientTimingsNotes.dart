@@ -63,7 +63,7 @@ class _PatientTimingsNotesState extends State<PatientTimingsNotes> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MyFonts().heading1(day, MyColors.blue),
+          MyFonts().heading1(MyStrings().addMedicineDay[getDayFromWeek(day)], MyColors.blue),
           MySpaces.vGapInBetween,
           (globals.timingsAndNotesArray[getDayFromWeek(day)].length == 0)
               ? MyFonts()
