@@ -11,7 +11,7 @@ import 'package:health_bag/widgets/backgrounds/secondBackground.dart';
 import 'package:health_bag/widgets/loaderHud.dart';
 import 'package:provider/provider.dart';
 
-String countryCode = '+91';
+String countryCode = '+90';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key key}) : super(key: key);
@@ -107,7 +107,7 @@ class _SignInState extends State<SignIn> {
                                     showFlagDialog: true,
                                     showCountryOnly: false,
                                     showOnlyCountryWhenClosed: false,
-                                    favorite: ['+91', 'IN'],
+                                    favorite: ['+90', 'TR'],
                                     boxDecoration: BoxDecoration(
                                       color: MyColors.backgroundColor,
                                       borderRadius: const BorderRadius.all(

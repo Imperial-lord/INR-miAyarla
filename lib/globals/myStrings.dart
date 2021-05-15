@@ -1,3 +1,5 @@
+/* English Strings
+
 // List all String here for easy translation to Turkish
 class MyStrings {
   // Widgets -------------------------------------------------------------------------
@@ -122,7 +124,6 @@ class MyStrings {
   String addMoreDoctorsNumberPlaceholder = "Doctor's Number";
   String addMoreDoctorsAddADoc = 'Add a doctor';
   String addMoreDoctorsInvalidNumber = 'Please enter a valid phone number';
-  // TODO: take care of this one!
   String addMoreDoctorsDeleteWarning =
       'Are you sure you want to delete {phoneNumber} from the database?';
   String addMoreDoctorsDeleteWarningLoseAccess =
@@ -171,7 +172,6 @@ class MyStrings {
   ///////////////////////////////////////////////////////////////////////////////////
 
   // Doctor Patient Interface
-  // TODO: Take care of this
   String doctorPatientInterfaceTransferCheck =
       'Are you sure you want to transfer <Patient Name> to <Doctor Name> ?';
   String doctorPatientInterfaceSuccessfulTransfer =
@@ -183,7 +183,6 @@ class MyStrings {
       'By transferring a patient you will lose access to his account.'
       ' You can request the concerned doctor to re-transfer him back to you in the future!';
   String doctorPatientInterfaceBack = 'Back';
-  // TODO: Take care of this
   String doctorPatientInterfaceProfile = "<Patient Name's> Profile";
   String doctorPatientInterfaceChat = 'Chat';
   String doctorPatientInterfaceSendNotification = 'Send Notification';
@@ -264,13 +263,10 @@ class MyStrings {
   // Patient Medications
   // Current Medications
   String currentMedicationsTimeForMeds = 'Time to take your medicine';
-  // TODO: Take care of this
   String currentMedicationsNotificationContent = "Name: <Medicine Name>\nDosage: <Medicine Dosage>\nNotes: <Medicine Notes>";
   String currentMedicationsHeading = 'Current Medications';
   String currentMedicationsNoMedicines = 'Sorry you doctor has not added any medicine for you at the moment.';
-  // TODO: Take care of this
   String currentMedicationsEndsOn = 'Ends on: <date>';
-  // TODO: Take care of this
   String currentMedicationsSnackBar = '<Medicine Name> has been scheduled';
 
   // Patient Timings Notes
@@ -403,7 +399,9 @@ class MyStrings {
   String patientUploadPhotoSave = 'Save and proceed';
 }
 
-/* Translated Turkish Strings
+*/
+
+
 
 // TODO: Change commented parts after verifying all good wrt to String variables.
 // TODO: Add extra variables, and use Google Translate to translate them.
@@ -437,8 +435,8 @@ class MyStrings {
 
   // SignIn
   String signInEnterMobileNumber = 'Kodu almak için cep telefonu numaranızı giriniz';
-  String signInSign = 'Giriş';
-  String signInIn = '';
+  String signInSign = 'Oturum';
+  String signInIn = 'aç';
   String signInSearchCountryOrCode = 'Ülke Ara';
   String signIn10DigitNumber = '10 basamaklı sayı';
   String signInGetOTP = 'Kodu al';
@@ -450,16 +448,20 @@ class MyStrings {
 
   // AboutApp
   String aboutAppHeader = 'Uygulama Hakkında';
+  String aboutAppPrivacyPolicy = 'Gizlilik Politikası';
+  String aboutAppAppVersion = 'Uygulama Sürümü - v1.0.0';
 
   // Latest Test Results
   String latestTestResultsSizeLimit = 'Lütfen boyutu <2 MB olan bir dosya seçin';
   String latestTestResultsHeader = 'En Son Test Sonuçları';
   String latestTestResultsUpload = 'Yükle';
   String latestTestResultsDownloading = 'İndiriliyor';
+  String latestTestResultsUploading = 'Yükleniyor';
+  String latestTestResultsOpening = 'Açılış';
 
   // UserType
-  String userTypeTellUsMore = 'Bize kendinden bahseder misin?';
-  String userTypeAboutYou = '';
+  String userTypeTellUsMore = 'Bize kendinden';
+  String userTypeAboutYou = 'bahseder misin?';
   String userTypeWhoAreYou =
       'Bir hastanın ihtiyaçlarını karşılamaya çalışan doktor musunuz yoksa doktorlarla bağlantı kurmak isteyen bir hasta mısınız?';
   String userTypeDoctor = 'Doktor';
@@ -468,7 +470,7 @@ class MyStrings {
 
   // Welcome
   String welcomeHeader = 'Hoş geldiniz';
-  String welcomeTo = 'To';
+  String welcomeTo = '';
   String welcomeOneStopSol =
       'Sağlık ihtiyaçlarınız için telefonunuzdan doktorlarınız ile iletişime geçin!';
 
@@ -476,7 +478,7 @@ class MyStrings {
   // Patient Monitor
   // Patient Medications
   // Add Medicine
-  List<String> addMedicineday = [
+  List<String> addMedicineDay = [
     'Pazartesi',
     'Salı',
     'Çarşamba',
@@ -518,12 +520,14 @@ class MyStrings {
   String addDoctorNotesPlaceholder = 'Not gir';
   String addDoctorNotesSnackbar = 'Boş not ekleyemezsiniz';
   String addDoctorNotesAdd = 'Ekle';
+  String addDoctorNotesTitle = 'Doktor Notları';
 
   // Add Visit Dates
   String addVisitDatesEdit = 'Düzenle';
   String addVisitDatesImportantDates = 'Önemli Tarihler';
   String addVisitDatesLastVisitDate = 'Son ziyaret tarihi';
   String addVisitDatesNextVisitDate = 'Sonraki ziyaret tarihi';
+  String addVisitDatesSave = 'Kayıt etmek';
 
   // Monitor Patient Health
   String monitorPatientHealthTitle = 'Sağlık';
@@ -540,6 +544,7 @@ class MyStrings {
       '{phone Number} numarasını veritabanından silmek istediğinizden emin misiniz?';
   String addMoreDoctorsDeleteWarningLoseAccess =
       'Seçilen doktor, uygulamaya erişimini kaybedecek!';
+  String addMoreDoctorsDelete = 'Sil';
 
   // Doctor Approved
   String doctorApproved = 'Onaylandı!';
@@ -565,6 +570,7 @@ class MyStrings {
   String doctorEditProfileDeptNamePlaceholder = 'Bölüm adınızı giriniz';
   String doctorEditProfileEmptyFiledsSnackbar = 'Bir veya daha fazla alan boş';
   String doctorEditProfileButtonUpdate = 'Profili Güncelle';
+  String doctorEditProfileSignUpDate = 'Kayıt tarihiniz';
 
   // Doctor Home
   String doctorHomeYourPatients = 'Hastalarınız';
@@ -574,7 +580,7 @@ class MyStrings {
   // Doctor Management
   String doctorManagementHome = 'Ana Sayfa';
   String doctorManagementProfile = 'Profil';
-  String doctorManagamentAbout = 'Hakkında';
+  String doctorManagementAbout = 'Hakkında';
   String doctorManagementAddDoctors = 'Doktor Ekle';
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -703,6 +709,7 @@ class MyStrings {
   String viewMedicineTimingsAndNotes = 'Zamanlama ve Notlar';
 
   // Patient Edit Profile
+  String patientEditProfileNoData = 'Uygun veri yok';
   String patientEditProfileBigPhotoSnackBar = 'Lütfen <2 MB boyutunda bir fotoğraf seçiniz!';
   String patientEditProfileTitle = 'Profili Güncelle';
   String patientEditProfileName = 'Adınız ve Soyadınız';
@@ -817,6 +824,3 @@ class MyStrings {
   String patientUploadPhotoSizeWarning = 'Lütfen boyutu <2 MB olan bir fotoğraf yükleyin';
   String patientUploadPhotoSave = 'Kaydet ve devam et';
 }
-
-
-* */

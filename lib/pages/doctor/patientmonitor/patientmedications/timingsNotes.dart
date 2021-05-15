@@ -200,13 +200,13 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
           tileColor: MyColors.white,
           title: Row(
             children: [
-              MyFonts().body('Time: ${item['Time']}', MyColors.black),
+              MyFonts().body('${MyStrings().patientTimingsNotesTime} ${item['Time']}', MyColors.black),
               Spacer(),
-              MyFonts().body('Dosage: ${item['Dosage']}', MyColors.black),
+              MyFonts().body('${MyStrings().patientTimingsNotesDosage} ${item['Dosage']}', MyColors.black),
             ],
           ),
           subtitle:
-              MyFonts().subHeadline('Notes: ${item['Notes']}', MyColors.gray),
+              MyFonts().subHeadline('${MyStrings().patientTimingsNotesNotes} ${item['Notes']}', MyColors.gray),
           trailing: IconButton(
               onPressed: () {
                 _removeSingleItems(index);
@@ -245,7 +245,7 @@ class _TimingsAndNotesState extends State<TimingsAndNotes> {
         children: [
           Row(
             children: [
-              MyFonts().heading1(day, MyColors.blue),
+              MyFonts().heading1(MyStrings().addMedicineDay[getDayFromWeek(day)], MyColors.blue),
               Spacer(),
               // ignore: deprecated_member_use
               RaisedButton(
