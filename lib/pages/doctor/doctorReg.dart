@@ -111,7 +111,7 @@ class _DoctorRegState extends State<DoctorReg> {
                               Row(
                                 children: [
                                   MyFonts()
-                                      .largeTitle('${MyStrings().doctorRegHello.split(' ')[0]} ', MyColors.black),
+                                      .largeTitle('${MyStrings().doctorRegHello.split(' ')[0]}', MyColors.black),
                                   MyFonts().largeTitle(
                                       '${MyStrings().doctorRegHello.split(' ')[1]}', MyColors.blueLighter),
                                 ],

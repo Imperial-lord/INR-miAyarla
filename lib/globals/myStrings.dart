@@ -435,7 +435,7 @@ class MyStrings {
 
   // SignIn
   String signInEnterMobileNumber = 'Kodu almak için cep telefonu numaranızı giriniz';
-  String signInSign = 'Oturum';
+  String signInSign = 'Oturum ';
   String signInIn = 'aç';
   String signInSearchCountryOrCode = 'Ülke Ara';
   String signIn10DigitNumber = '10 basamaklı sayı';
@@ -636,7 +636,7 @@ class MyStrings {
   String doctorProfileLogOut = 'Çıkış Yap';
 
   // Doctor Registration
-  String doctorRegHello = 'Merhaba!';
+  String doctorRegHello = 'Merhaba !';
   String doctorRegSetUp = "Kurulumunuzu yapmaya başlayalım!";
   String doctorRegNoDataAvailable = 'Yeterli Veri Yok';
   String doctorRegName = 'Adınız ve Soyadınız';
