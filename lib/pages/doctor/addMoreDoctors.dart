@@ -226,7 +226,7 @@ class _AddMoreDoctorsState extends State<AddMoreDoctors> {
                     fontSize: 15,
                     color: MyColors.black),
                 dialogBackgroundColor: MyColors.backgroundColor,
-                initialSelection: 'IN',
+                initialSelection: 'TR',
                 showDropDownButton: true,
                 showFlag: false,
                 showFlagDialog: true,
