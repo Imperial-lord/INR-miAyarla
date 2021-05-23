@@ -784,7 +784,7 @@ class MyStrings {
   String patientProfileLogOut = 'Çıkış Yap';
 
   // Patient Registration
-  String patientRegistrationTitle = 'Merhaba!';
+  String patientRegistrationTitle = 'Merhaba !';
   String patientRegistrationAllSetUp = "Kurulumunuzu yapmaya başlayalım!";
   String patientRegistrationName = 'Adınız ve Soyadınız';
   String patientRegistrationNamePlaceholder = 'Adınızı giriniz';
