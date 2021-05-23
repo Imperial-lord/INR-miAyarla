@@ -1,4 +1,4 @@
-package com.meceware.inr_mi_ayarla
+package com.meceware.inr_ayarla
 
 import android.content.Intent;
 import android.os.Bundle;
