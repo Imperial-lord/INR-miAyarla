@@ -1,4 +1,4 @@
-![INR-miAyarla](https://socialify.git.ci/Imperial-lord/INR-miAyarla/image?description=1&descriptionEditable=INR%27mi%20Ayarla%20is%20a%20health%20monitoring%20mobile%20application.%20&font=Raleway&forks=1&issues=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FLN23p27%2Fblood-drop.png&pulls=1&stargazers=1&theme=Light)
+![INR-miAyarla](https://socialify.git.ci/Imperial-lord/INR-miAyarla/image?description=1&forks=1&issues=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FLN23p27%2Fblood-drop.png&pulls=1&stargazers=1&theme=Light)
 
 # 🙋 So, what is this all about? 
 INR'mi Ayarla is a Turkish phrase, which translates to 'check my INR'.     INR stands for International Normalized Ratio. Read more about INR [here](https://www.urmc.rochester.edu/encyclopedia/content.aspx?contenttypeid=167&contentid=international_normalized_ratio).
