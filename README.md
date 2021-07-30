@@ -38,3 +38,6 @@ A short and simple permissive license with conditions only requiring preservatio
 
 # Privacy policy
 The application has a privacy policy which clearly describes the collection, use, distribution and safety of user-data. This can be found [here](https://github.com/Imperial-lord/INR-miAyarla/blob/main/PRIVACY_POLICY.md).
+
+# Deployment
+The application is currently in production and has been deployed to Google Playstore [here](https://play.google.com/store/apps/details?id=com.meceware.inr_ayarla&hl=en_US&gl=US).
